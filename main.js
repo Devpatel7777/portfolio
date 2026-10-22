@@ -1129,42 +1129,46 @@ function initGitSvgAnimation() {
    18. METRIC COUNTERS
    ========================================================================== */
 function initMetricCounters() {
-  const counters = document.querySelectorAll('.metric-val[data-target]');
+  const counters = document.querySelectorAll('.counter-value, .metric-value[data-target]');
   if (counters.length === 0) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const counter = entry.target;
-          const target = parseFloat(counter.getAttribute('data-target'));
-          const suffix = counter.getAttribute('data-suffix') || '';
-          const duration = 1600;
-          const start = 0;
-          const startTime = performance.now();
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        obs.unobserve(el);
 
-          function updateCounter(now) {
-            const progress = Math.min((now - startTime) / duration, 1);
-            // Ease-out expo
-            const ease = 1 - Math.pow(2, -10 * progress);
-            const current = Math.floor(start + (target - start) * ease);
+        const rawTarget = el.getAttribute('data-target') || '0';
+        const targetVal = parseFloat(rawTarget);
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        const duration = 1400; // ms
+        const startTime = performance.now();
+        const isNegative = targetVal < 0;
+        const absTarget = Math.abs(targetVal);
 
-            counter.textContent = current + suffix;
+        el.classList.add('counting');
 
-            if (progress < 1) {
-              requestAnimationFrame(updateCounter);
-            } else {
-              counter.textContent = target + suffix;
-            }
+        function updateCounter(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          // Ease out exponential curve
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const current = (absTarget * ease).toFixed(decimals);
+          el.textContent = `${prefix}${isNegative ? '-' : ''}${current}${suffix}`;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            el.textContent = `${prefix}${isNegative ? '-' : ''}${absTarget.toFixed(decimals)}${suffix}`;
+            el.classList.remove('counting');
           }
-
-          requestAnimationFrame(updateCounter);
-          observer.unobserve(counter);
         }
-      });
-    },
-    { threshold: 0.3 }
-  );
+
+        requestAnimationFrame(updateCounter);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px 50px 0px' });
 
   counters.forEach((c) => observer.observe(c));
 }
