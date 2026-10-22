@@ -402,8 +402,6 @@ function initContributionMatrix() {
   const container = document.getElementById('matrix-container');
   if (!container) return;
 
-  container.classList.add('matrix-container-anim');
-
   // 52 weeks x 7 days
   const totalWeeks = 52;
   const daysPerWeek = 7;
@@ -414,27 +412,27 @@ function initContributionMatrix() {
   for (let w = 0; w < totalWeeks; w++) {
     const col = document.createElement('div');
     col.className = 'matrix-week-col';
-    col.style.transitionDelay = `${w * 14}ms`;
+    col.style.transitionDelay = `${w * 10}ms`;
 
     for (let d = 0; d < daysPerWeek; d++) {
       const cell = document.createElement('div');
       cell.className = 'matrix-cell';
 
-      // Realistic distribution of commit activity
-      const seed = (w * 7 + d * 13) % 100;
+      // Realistic distribution of commit activity for Dev Patel
+      const seed = (w * 7 + d * 13 + 37) % 100;
       let level = 0;
       let commits = 0;
 
-      if (seed > 80) {
+      if (seed > 78) {
         level = 4;
-        commits = Math.floor(Math.random() * 8) + 9;
-      } else if (seed > 60) {
+        commits = Math.floor(Math.random() * 8) + 8;
+      } else if (seed > 56) {
         level = 3;
-        commits = Math.floor(Math.random() * 4) + 5;
-      } else if (seed > 38) {
+        commits = Math.floor(Math.random() * 4) + 4;
+      } else if (seed > 32) {
         level = 2;
         commits = Math.floor(Math.random() * 3) + 2;
-      } else if (seed > 18) {
+      } else if (seed > 14) {
         level = 1;
         commits = 1;
       } else {
@@ -461,6 +459,26 @@ function initContributionMatrix() {
 
   container.innerHTML = '';
   container.appendChild(fragment);
+  container.classList.add('matrix-container-anim');
+
+  // Trigger cascade reveal
+  const matrixObserver = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          container.classList.add('revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  matrixObserver.observe(container);
+
+  // Fallback to ensure it's always revealed
+  setTimeout(() => {
+    container.classList.add('revealed');
+  }, 350);
 }
 
 /* ==========================================================================
@@ -1099,30 +1117,75 @@ function initSubsystemsBootSequence() {
    17. SVG GIT BRANCH TELEMETRY ANIMATION
    ========================================================================== */
 function initGitSvgAnimation() {
+  const gitSvg = document.getElementById('git-dag-svg') || document.getElementById('git-telemetry-svg');
   const gitPaths = document.querySelectorAll('.git-branch-path');
-  if (gitPaths.length === 0) return;
+  const livePacket = document.getElementById('git-live-packet');
+  const featurePath = document.getElementById('git-feature-path');
+
+  if (!gitSvg) return;
+
+  function triggerDraw() {
+    gitSvg.classList.add('drawn');
+    gitPaths.forEach((path) => {
+      path.style.strokeDashoffset = '0';
+    });
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          gitPaths.forEach((path) => {
-            const length = path.getTotalLength ? path.getTotalLength() : 400;
-            path.style.strokeDasharray = `${length}`;
-            path.style.strokeDashoffset = `${length}`;
-            path.getBoundingClientRect(); // Trigger reflow
-            path.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            path.style.strokeDashoffset = '0';
-          });
+          triggerDraw();
           observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.2 }
+    { threshold: 0.1 }
   );
 
-  const gitSvg = document.getElementById('git-telemetry-svg');
-  if (gitSvg) observer.observe(gitSvg);
+  observer.observe(gitSvg);
+  setTimeout(triggerDraw, 350);
+
+  // Continuous traveling packet animation along the active feature branch curve
+  if (livePacket && featurePath && typeof featurePath.getTotalLength === 'function') {
+    try {
+      const totalLen = featurePath.getTotalLength();
+      let startTime = null;
+      const loopDuration = 3400; // ms per traversal
+
+      function stepPacket(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = (timestamp - startTime) % loopDuration;
+        const progress = elapsed / loopDuration;
+        const pt = featurePath.getPointAtLength(progress * totalLen);
+        if (pt) {
+          livePacket.setAttribute('cx', pt.x.toFixed(1));
+          livePacket.setAttribute('cy', pt.y.toFixed(1));
+        }
+        requestAnimationFrame(stepPacket);
+      }
+      requestAnimationFrame(stepPacket);
+    } catch (e) {
+      console.warn('Git DAG packet animation warning:', e);
+    }
+  }
+
+  // Node tooltips & interactive sound
+  const nodes = gitSvg.querySelectorAll('.git-node');
+  nodes.forEach((node) => {
+    const commitMsg = node.getAttribute('data-commit');
+    if (commitMsg) {
+      node.setAttribute('title', commitMsg);
+      node.addEventListener('click', () => {
+        if (typeof playTone === 'function') {
+          playTone(880, 'sine', 0.08, 0.04);
+        }
+        if (typeof showToast === 'function') {
+          showToast(`Commit: ${commitMsg}`);
+        }
+      });
+    }
+  });
 }
 
 /* ==========================================================================
