@@ -58,11 +58,19 @@
   <!-- HUD: Fixed Top Bar -->
   <header class="hud-top-bar">
     <div class="hud-brand">
-      <span class="hud-indicator-dot"></span>
-      <span class="hud-brand-text">DP — SYSTEMS</span>
+      <div class="hud-monogram-box">
+        <span class="mono-code">DP</span>
+      </div>
+      <div class="hud-brand-text-wrap">
+        <span class="hud-brand-title">DEV PATEL</span>
+        <span class="hud-brand-sub">QUANTUM DATA LABS // AHMEDABAD</span>
+      </div>
     </div>
     <div class="hud-location">
-      <span class="hud-location-text">AHMEDABAD, GUJARAT, INDIA</span>
+      <div class="hud-telemetry-ticker">
+        <span class="hud-ticker-pulse"></span>
+        <span>SYS_CORE // 24ms // OPERATIONAL</span>
+      </div>
     </div>
     <div class="hud-audio-toggle">
       <button id="audio-toggle-btn" class="hud-btn-ghost" title="Toggle audio feedback" aria-label="Toggle SFX">
@@ -99,7 +107,7 @@
       </div>
 
       <button id="open-resume-btn" class="hud-btn-pill" aria-label="Open Resume Summary">
-        <span>RESUME</span>
+        <span>RESUMES</span>
         <svg class="btn-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 17L17 7M17 7H7M17 7V17"/>
         </svg>
@@ -110,7 +118,7 @@
   <!-- Mobile Floating Action Bar -->
   <nav class="mobile-action-bar" aria-label="Quick Actions">
     <a href="#contact" class="mobile-btn-primary">ESTABLISH CONNECTION</a>
-    <button id="mobile-resume-btn" class="mobile-btn-secondary">RESUME</button>
+    <button id="mobile-resume-btn" class="mobile-btn-secondary">RESUMES</button>
   </nav>
 
   <!-- Main Content Structure -->
@@ -124,32 +132,57 @@
       <div class="hero-content">
         <div class="system-badge-tag animate-fade-in">
           <span class="terminal-blink-dot"></span>
-          <span>DATA ANALYST • MACHINE LEARNING • PYTHON &amp; SQL • GENAI</span>
+          <span>DATA ANALYST &bull; MACHINE LEARNING &bull; SQL &bull; POWER BI &bull; GENAI</span>
         </div>
 
         <h1 class="hero-name-heading animate-fade-in delay-1 decrypt-text" id="hero-title" data-value="Dev Patel">
           Dev Patel
         </h1>
 
-        <p class="hero-subtitle animate-fade-in delay-2">
-          Turning data into decisions and AI into useful tools. Data Analyst &amp; Machine Learning Engineer building predictive ML pipelines, business intelligence dashboards, and document-grounded AI applications.
+        <p class="hero-role-lead animate-fade-in delay-2">
+          DATA ANALYST &bull; MACHINE LEARNING ENGINEER
         </p>
 
-        <div class="hero-cta-cluster animate-fade-in delay-3">
-          <a href="#contact" class="btn-primary-glow" id="hero-cta-contact">
-            <span>GET IN TOUCH</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+        <p class="hero-subtitle animate-fade-in delay-2">
+          Transforming complex multi-source data into predictive intelligence, interactive Power BI executive dashboards, normalized SQL architectures, and production GenAI pipelines.
+        </p>
+
+        <!-- Hero Metric Ribbon -->
+        <div class="hero-metric-strip animate-fade-in delay-3">
+          <div class="hero-strip-item">
+            <span class="strip-num counter-value" data-target="10000" data-suffix="+">10000+</span>
+            <span class="strip-label">Sales Modeled</span>
+          </div>
+          <div class="hero-strip-divider"></div>
+          <div class="hero-strip-item">
+            <span class="strip-num counter-value" data-target="22" data-suffix=" Classes">22 Classes</span>
+            <span class="strip-label">Crop ML Model</span>
+          </div>
+          <div class="hero-strip-divider"></div>
+          <div class="hero-strip-item">
+            <span class="strip-num">3NF</span>
+            <span class="strip-label">SQL Schemas</span>
+          </div>
+          <div class="hero-strip-divider"></div>
+          <div class="hero-strip-item">
+            <span class="strip-num counter-value" data-target="99" data-suffix="%">99%</span>
+            <span class="strip-label">Reliability</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-cluster animate-fade-in delay-4">
+          <a href="#projects" class="btn-primary-glow" id="hero-cta-projects">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span>EXPLORE CASE STUDIES</span>
           </a>
-          <a href="#projects" class="btn-outline-cyber" id="hero-cta-projects">
-            <span>EXPLORE PROJECTS</span>
+          <a href="#contact" class="btn-outline-cyber" id="hero-cta-contact">
+            <span>GET IN TOUCH</span>
           </a>
           <button type="button" class="btn-ghost-cyber" id="hero-cta-resume">
-            <span>RESUME SUMMARY (PDF)</span>
+            <span>RESUME (PDF)</span>
           </button>
           <a href="#terminal" class="btn-ghost-cyber" id="hero-cta-terminal">
-            <span>LAUNCH CLI (~$)</span>
+            <span>SYSTEM CLI (~$)</span>
           </a>
         </div>
       </div>
@@ -163,38 +196,138 @@
       </div>
     </section>
 
-    <!-- 02 // WHO I AM (KINETIC TEXT CYCLER) -->
-    <section id="who-i-am" class="section-container kinetic-section" data-section-index="02" data-section-name="WHO I AM">
+    <!-- 02 // CORE ANALYTICAL PILLARS (REPLACED CYCLER) -->
+    <section id="pillars" class="section-container pillars-section" data-section-index="02" data-section-name="PILLARS">
       <div class="section-header-tag reveal-item">
         <span class="tag-accent">02</span>
         <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="WHO I AM">WHO I AM</span>
+        <span class="tag-title decrypt-text" data-value="ANALYTICAL PILLARS">ANALYTICAL PILLARS</span>
       </div>
 
-      <div class="kinetic-wrapper reveal-item">
-        <div class="kinetic-cycler" id="kinetic-cycler">
-          <p class="kinetic-item active" data-index="0">I ANALYZE RAW DATA INTO DECISIONS.</p>
-          <p class="kinetic-item" data-index="1">I TRAIN PREDICTIVE MACHINE LEARNING MODELS.</p>
-          <p class="kinetic-item" data-index="2">I ARCHITECT RELATIONAL SQL &amp; WINDOW QUERIES.</p>
-          <p class="kinetic-item" data-index="3">I DESIGN INTERACTIVE POWER BI KPI DASHBOARDS.</p>
-          <p class="kinetic-item" data-index="4">I BUILD MULTI-DOCUMENT RAG &amp; GENAI AGENTS.</p>
-        </div>
-
-        <div class="kinetic-nav">
-          <button class="kinetic-nav-prev" id="kinetic-prev" aria-label="Previous statement">←</button>
-          <div class="kinetic-progress-indicators" id="kinetic-dots">
-            <span class="kinetic-dot active" data-target="0"></span>
-            <span class="kinetic-dot" data-target="1"></span>
-            <span class="kinetic-dot" data-target="2"></span>
-            <span class="kinetic-dot" data-target="3"></span>
-            <span class="kinetic-dot" data-target="4"></span>
-          </div>
-          <button class="kinetic-nav-next" id="kinetic-next" aria-label="Next statement">→</button>
-        </div>
-
-        <p class="kinetic-caption">
-          Specializing in exploratory data analysis (EDA), statistical modeling, Scikit-learn pipelines, interactive Power BI reporting, and automated LLM tool-calling applications.
+      <div class="pillars-header-block reveal-item">
+        <h2 class="pillars-headline">CORE SPECIALIZATIONS &amp; DATA ARCHITECTURE</h2>
+        <p class="pillars-subtitle">
+          Verified statistical engineering and analytical proficiencies applied across production machine learning pipelines, normalized enterprise relational databases, and executive business intelligence dashboards.
         </p>
+      </div>
+
+      <div class="pillars-grid">
+        <!-- Pillar 1: Exploratory Data Analysis & Statistics -->
+        <div class="pillar-card card-spotlight reveal-item stagger-1">
+          <div class="pillar-top-meta">
+            <span class="pillar-index">PILLAR // 01</span>
+            <span class="pillar-badge">STATISTICAL RIGOR</span>
+          </div>
+          <h3 class="pillar-title">Exploratory Data Analysis &amp; Inference</h3>
+          <p class="pillar-desc">
+            Standardizing unstructured, high-variance datasets. Conducting multivariate distribution modeling, outlier treatment (IQR &amp; Z-score), and Pearson/Spearman pollutant &amp; customer correlation matrices.
+          </p>
+          <div class="pillar-metrics-box">
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>500k+ Records Processed</span>
+            </div>
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>100% Data Integrity</span>
+            </div>
+          </div>
+          <div class="pillar-stack-tags">
+            <span class="pillar-tag">Python</span>
+            <span class="pillar-tag">Pandas</span>
+            <span class="pillar-tag">NumPy</span>
+            <span class="pillar-tag">EDA</span>
+            <span class="pillar-tag">Seaborn</span>
+            <span class="pillar-tag">Matplotlib</span>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Predictive Machine Learning -->
+        <div class="pillar-card card-spotlight reveal-item stagger-2">
+          <div class="pillar-top-meta">
+            <span class="pillar-index">PILLAR // 02</span>
+            <span class="pillar-badge">PREDICTIVE AI</span>
+          </div>
+          <h3 class="pillar-title">Predictive Machine Learning Pipelines</h3>
+          <p class="pillar-desc">
+            Training and benchmarking supervised classification and regression pipelines using Scikit-Learn and XGBoost. Automated feature scaling, one-hot encoding, k-fold cross-validation, and Streamlit deployment.
+          </p>
+          <div class="pillar-metrics-box">
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>22 Crop Classes</span>
+            </div>
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>Sub-1s Inference</span>
+            </div>
+          </div>
+          <div class="pillar-stack-tags">
+            <span class="pillar-tag">Scikit-learn</span>
+            <span class="pillar-tag">XGBoost</span>
+            <span class="pillar-tag">Feature Engineering</span>
+            <span class="pillar-tag">Streamlit</span>
+            <span class="pillar-tag">Model Metrics</span>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Relational SQL Architecture -->
+        <div class="pillar-card card-spotlight reveal-item stagger-3">
+          <div class="pillar-top-meta">
+            <span class="pillar-index">PILLAR // 03</span>
+            <span class="pillar-badge">INFRASTRUCTURE</span>
+          </div>
+          <h3 class="pillar-title">3NF Relational Database &amp; SQL Schemas</h3>
+          <p class="pillar-desc">
+            Architecting normalized third-normal-form relational databases across linked transactional entities. Formulating complex CTEs, window functions (RANK, DENSE_RANK), and query optimization for sub-40ms latency.
+          </p>
+          <div class="pillar-metrics-box">
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>6+ Normalized Tables</span>
+            </div>
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>15+ Complex CTEs</span>
+            </div>
+          </div>
+          <div class="pillar-stack-tags">
+            <span class="pillar-tag">MySQL</span>
+            <span class="pillar-tag">PostgreSQL</span>
+            <span class="pillar-tag">Window Functions</span>
+            <span class="pillar-tag">Indexing</span>
+            <span class="pillar-tag">Schema Design</span>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Executive Power BI Business Intelligence -->
+        <div class="pillar-card card-spotlight reveal-item stagger-4">
+          <div class="pillar-top-meta">
+            <span class="pillar-index">PILLAR // 04</span>
+            <span class="pillar-badge">DECISION ENGINES</span>
+          </div>
+          <h3 class="pillar-title">Executive Power BI Business Intelligence</h3>
+          <p class="pillar-desc">
+            Constructing end-to-end interactive reporting ecosystems. Building star-schema data models, dynamic time-intelligence DAX measures, and drill-through categorical analytics across 10,000+ sales transactions.
+          </p>
+          <div class="pillar-metrics-box">
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>10k+ Transactions</span>
+            </div>
+            <div class="pillar-metric-val">
+              <span class="pillar-metric-dot"></span>
+              <span>8 Core Executive KPIs</span>
+            </div>
+          </div>
+          <div class="pillar-stack-tags">
+            <span class="pillar-tag">Power BI</span>
+            <span class="pillar-tag">DAX</span>
+            <span class="pillar-tag">Power Query</span>
+            <span class="pillar-tag">Data Modeling</span>
+            <span class="pillar-tag">Advanced Excel</span>
+          </div>
+        </div>
       </div>
     </section>
 

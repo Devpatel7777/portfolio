@@ -188,13 +188,15 @@ function initHeroCanvas() {
   });
 
   class Particle {
-    constructor() {
+    constructor(index) {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (Math.random() - 0.5) * 0.6;
-      this.radius = Math.random() * 1.6 + 0.8;
-      this.baseAlpha = Math.random() * 0.4 + 0.2;
+      this.vx = (Math.random() - 0.5) * 0.55;
+      this.vy = (Math.random() - 0.5) * 0.55;
+      this.radius = Math.random() * 1.8 + 0.8;
+      this.baseAlpha = Math.random() * 0.45 + 0.2;
+      // Alternate between Electric Cyan and Matrix Emerald
+      this.color = (index || 0) % 2 === 0 ? '0, 240, 255' : '0, 245, 160';
     }
 
     update() {
@@ -222,13 +224,16 @@ function initHeroCanvas() {
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(10, 132, 255, ${this.baseAlpha})`;
+      ctx.fillStyle = `rgba(${this.color}, ${this.baseAlpha})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = `rgba(${this.color}, 0.5)`;
       ctx.fill();
+      ctx.shadowBlur = 0;
     }
   }
 
   for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
+    particles.push(new Particle(i));
   }
 
   function render() {
@@ -248,7 +253,7 @@ function initHeroCanvas() {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(10, 132, 255, ${alpha})`;
+          ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -498,7 +503,7 @@ function initTerminal() {
   let historyIndex = -1;
 
   const commandRegistry = {
-    help: () => `DP-SYSTEMS CLI — Recognized commands:
+    help: () => `DEV PATEL // QUANTUM ANALYTICS CORE (v2.6) — Commands:
   about       View developer background and systems profile
   projects    List key Machine Learning & Data Analytics case studies
   skills      Display verified Python, ML/AI, SQL & BI stack
