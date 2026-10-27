@@ -1,192 +1,80 @@
 /**
- * DEV PATEL — FLAGSHIP DATA ANALYST & ML ENGINEER PORTFOLIO
- * Interactive Systems Engine (main.js)
+ * DEV PATEL — DATA ANALYST & MACHINE LEARNING ENGINEER
+ * Recruiter-Focused Interactive Engine (main.js)
  */
 
 (function () {
   'use strict';
 
-  // --- 1. NEURAL DATA MESH CANVAS ANIMATION ---
-  function initNeuralCanvas() {
-    const canvas = document.getElementById('neural-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    let width, height;
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      width = canvas.width = rect.width;
-      height = canvas.height = rect.height;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Particle Configuration
-    const particleCount = 42;
-    const particles = [];
-    const maxDistance = 110;
-    const mouse = { x: null, y: null, radius: 100 };
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.9;
-        this.vy = (Math.random() - 0.5) * 0.9;
-        this.radius = Math.random() * 2 + 1.5;
-        this.baseColor = Math.random() > 0.3 ? '#00f0ff' : '#6366f1';
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-
-        // Mouse interaction
-        if (mouse.x !== null) {
-          const dx = mouse.x - this.x;
-          const dy = mouse.y - this.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouse.radius) {
-            const force = (mouse.radius - dist) / mouse.radius;
-            this.x -= (dx / dist) * force * 2;
-            this.y -= (dy / dist) * force * 2;
-          }
-        }
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.baseColor;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = this.baseColor;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.x;
-      mouse.y = e.clientY - rect.y;
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      mouse.x = null;
-      mouse.y = null;
-    });
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < maxDistance) {
-            const alpha = 1 - dist / maxDistance;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha * 0.28})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Update & Draw particles
-      particles.forEach((p) => {
-        p.update();
-        p.draw();
-      });
-
-      requestAnimationFrame(animate);
-    }
-    animate();
-  }
-
-  // --- 2. NAVIGATION & DROPDOWNS ---
+  // --- 1. NAVIGATION & DROPDOWNS ---
   function initNavigation() {
-    const header = document.getElementById('header');
-    const mobileToggle = document.getElementById('mobile-toggle-btn');
-    const mobileDrawer = document.getElementById('mobile-drawer');
-    const resumeDropdownWrap = document.getElementById('resume-dropdown-wrap');
-    const resumeBtn = document.getElementById('resume-menu-btn');
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
+    const navbar = document.getElementById('navbar');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const resumeDropdown = document.getElementById('resume-dropdown');
+    const resumeBtn = document.getElementById('resume-btn');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
 
-    // Sticky header shadow
+    // Sticky Navbar elevation
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.6)';
-        header.style.background = 'rgba(6, 10, 18, 0.95)';
+      if (window.scrollY > 30) {
+        navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.6)';
+        navbar.style.background = 'rgba(10, 14, 23, 0.96)';
       } else {
-        header.style.boxShadow = 'none';
-        header.style.background = 'rgba(8, 12, 20, 0.82)';
+        navbar.style.boxShadow = 'none';
+        navbar.style.background = 'rgba(11, 15, 25, 0.88)';
       }
     });
 
     // Mobile Menu Toggle
-    if (mobileToggle && mobileDrawer) {
+    if (mobileToggle && mobileMenu) {
       mobileToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        mobileDrawer.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
       });
 
-      // Close mobile drawer when clicking any link
-      navLinks.forEach((link) => {
+      mobileNavLinks.forEach((link) => {
         link.addEventListener('click', () => {
-          mobileDrawer.classList.remove('open');
+          mobileMenu.classList.remove('open');
         });
       });
     }
 
     // Resume Dropdown
-    if (resumeBtn && resumeDropdownWrap) {
+    if (resumeBtn && resumeDropdown) {
       resumeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isOpen = resumeDropdownWrap.classList.contains('open');
-        resumeDropdownWrap.classList.toggle('open', !isOpen);
+        const isOpen = resumeDropdown.classList.contains('open');
+        resumeDropdown.classList.toggle('open', !isOpen);
         resumeBtn.setAttribute('aria-expanded', !isOpen);
       });
 
-      // Close on outside click
       document.addEventListener('click', (e) => {
-        if (!resumeDropdownWrap.contains(e.target)) {
-          resumeDropdownWrap.classList.remove('open');
+        if (!resumeDropdown.contains(e.target)) {
+          resumeDropdown.classList.remove('open');
           resumeBtn.setAttribute('aria-expanded', 'false');
         }
       });
     }
 
-    // Active Section Tracking on Scroll
+    // Active Section Tracking
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY + 120;
+      const scrollPos = window.scrollY + 140;
       sections.forEach((sec) => {
         const top = sec.offsetTop;
         const height = sec.offsetHeight;
         const id = sec.getAttribute('id');
         if (scrollPos >= top && scrollPos < top + height) {
-          document.querySelectorAll('.nav-desktop .nav-link').forEach((l) => {
-            l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
+          document.querySelectorAll('.nav-menu .nav-item').forEach((item) => {
+            item.classList.toggle('active', item.getAttribute('href') === `#${id}`);
           });
         }
       });
     });
 
     // Back to top button
-    const backToTop = document.getElementById('back-to-top-btn');
+    const backToTop = document.getElementById('back-to-top');
     if (backToTop) {
       backToTop.addEventListener('click', (e) => {
         e.preventDefault();
@@ -195,7 +83,7 @@
     }
   }
 
-  // --- 3. NUMBER COUNT-UP ANIMATION ---
+  // --- 2. NUMBER COUNT-UP ANIMATION ---
   function initCountUp() {
     const counters = document.querySelectorAll('.count-up');
     if (!counters.length) return;
@@ -208,13 +96,12 @@
             const target = parseFloat(el.getAttribute('data-target'));
             const suffix = el.getAttribute('data-suffix') || '';
             const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
-            const duration = 1400;
+            const duration = 1500;
             const startTime = performance.now();
 
             function updateCounter(currentTime) {
               const elapsed = currentTime - startTime;
               const progress = Math.min(elapsed / duration, 1);
-              // Ease-out cubic
               const ease = 1 - Math.pow(1 - progress, 3);
               const currentVal = (target * ease).toFixed(decimals);
 
@@ -238,23 +125,23 @@
     counters.forEach((c) => observer.observe(c));
   }
 
-  // --- 4. INTERACTIVE LIVE LAB: TAB SWITCHER ---
-  function initLabTabs() {
-    const tabs = document.querySelectorAll('.lab-tab');
-    const panels = document.querySelectorAll('.lab-panel');
+  // --- 3. LIVE DATA & ML WORKBENCH: TAB SWITCHER ---
+  function initWorkbenchTabs() {
+    const tabBtns = document.querySelectorAll('.lab-tab-btn');
+    const panels = document.querySelectorAll('.lab-tab-panel');
 
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const targetId = `tab-${tab.getAttribute('data-tab')}`;
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = `tab-${btn.getAttribute('data-tab')}`;
 
-        tabs.forEach((t) => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
+        tabBtns.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
         });
         panels.forEach((p) => p.classList.remove('active'));
 
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
 
         const activePanel = document.getElementById(targetId);
         if (activePanel) {
@@ -264,90 +151,88 @@
     });
   }
 
-  // --- 5. TAB 1: CROP ML PREDICTOR LOGIC ---
+  // --- 4. TAB 1: CROP ML PREDICTOR LOGIC ---
   function initCropMLPredictor() {
-    const slideN = document.getElementById('slide-n');
-    const slideP = document.getElementById('slide-p');
-    const slideK = document.getElementById('slide-k');
-    const slideTemp = document.getElementById('slide-temp');
-    const slideHum = document.getElementById('slide-hum');
-    const slidePh = document.getElementById('slide-ph');
-    const slideRain = document.getElementById('slide-rain');
+    const slN = document.getElementById('sl-n');
+    const slP = document.getElementById('sl-p');
+    const slK = document.getElementById('sl-k');
+    const slTemp = document.getElementById('sl-temp');
+    const slHum = document.getElementById('sl-hum');
+    const slPh = document.getElementById('sl-ph');
+    const slRain = document.getElementById('sl-rain');
 
-    const valN = document.getElementById('val-n');
-    const valP = document.getElementById('val-p');
-    const valK = document.getElementById('val-k');
-    const valTemp = document.getElementById('val-temp');
-    const valHum = document.getElementById('val-hum');
-    const valPh = document.getElementById('val-ph');
-    const valRain = document.getElementById('val-rain');
+    const readoutN = document.getElementById('readout-n');
+    const readoutP = document.getElementById('readout-p');
+    const readoutK = document.getElementById('readout-k');
+    const readoutTemp = document.getElementById('readout-temp');
+    const readoutHum = document.getElementById('readout-hum');
+    const readoutPh = document.getElementById('readout-ph');
+    const readoutRain = document.getElementById('readout-rain');
 
-    const runBtn = document.getElementById('run-ml-btn');
-    const resCropName = document.getElementById('crop-result-name');
-    const resBadge = document.getElementById('crop-result-badge');
-    const resLatency = document.getElementById('crop-result-latency');
-    const resSuitability = document.getElementById('crop-result-suitability');
+    const btnPredict = document.getElementById('btn-predict-crop');
+    const displayName = document.getElementById('crop-name-display');
+    const displayConf = document.getElementById('crop-confidence-pill');
+    const displayLatency = document.getElementById('predict-latency');
+    const displaySuit = document.getElementById('crop-suitability-val');
+    const displayTrigger = document.getElementById('crop-trigger-val');
 
-    if (!slideN || !runBtn) return;
+    if (!slN || !btnPredict) return;
 
-    // Connect slider listeners
-    function updateSliderLabels() {
-      valN.textContent = `${slideN.value} kg/ha`;
-      valP.textContent = `${slideP.value} kg/ha`;
-      valK.textContent = `${slideK.value} kg/ha`;
-      valTemp.textContent = `${slideTemp.value}°C`;
-      valHum.textContent = `${slideHum.value}%`;
-      valPh.textContent = `${slidePh.value}`;
-      valRain.textContent = `${slideRain.value} mm`;
+    function syncLabels() {
+      readoutN.textContent = `${slN.value} kg/ha`;
+      readoutP.textContent = `${slP.value} kg/ha`;
+      readoutK.textContent = `${slK.value} kg/ha`;
+      readoutTemp.textContent = `${slTemp.value}°C`;
+      readoutHum.textContent = `${slHum.value}%`;
+      readoutPh.textContent = `${slPh.value}`;
+      readoutRain.textContent = `${slRain.value} mm`;
     }
 
-    [slideN, slideP, slideK, slideTemp, slideHum, slidePh, slideRain].forEach((slider) => {
-      slider.addEventListener('input', updateSliderLabels);
+    [slN, slP, slK, slTemp, slHum, slPh, slRain].forEach((sl) => {
+      sl.addEventListener('input', syncLabels);
     });
 
-    // ML Centroids for Kaggle Crop Recommendation Data
-    const cropProfiles = [
-      { name: 'Rice (Oryza sativa)', n: 90, p: 42, k: 43, temp: 24, hum: 82, ph: 6.5, rain: 230 },
-      { name: 'Maize (Zea mays)', n: 80, p: 48, k: 20, temp: 22, hum: 65, ph: 6.2, rain: 85 },
-      { name: 'Chickpea (Cicer arietinum)', n: 40, p: 68, k: 80, temp: 19, hum: 17, ph: 7.3, rain: 80 },
-      { name: 'Kidney Beans (Phaseolus)', n: 20, p: 67, k: 20, temp: 20, hum: 22, ph: 5.7, rain: 105 },
-      { name: 'Pigeonpeas (Cajanus cajan)', n: 20, p: 67, k: 20, temp: 28, hum: 48, ph: 5.8, rain: 150 },
-      { name: 'Mothbeans (Vigna aconitifolia)', n: 22, p: 48, k: 20, temp: 28, hum: 53, ph: 6.8, rain: 50 },
-      { name: 'Mungbean (Vigna radiata)', n: 21, p: 48, k: 20, temp: 28, hum: 85, ph: 6.7, rain: 48 },
-      { name: 'Blackgram (Vigna mungo)', n: 40, p: 67, k: 19, temp: 30, hum: 65, ph: 7.1, rain: 68 },
-      { name: 'Lentil (Lens culinaris)', n: 18, p: 68, k: 19, temp: 24, hum: 65, ph: 6.9, rain: 45 },
-      { name: 'Pomegranate (Punica granatum)', n: 19, p: 19, k: 40, temp: 22, hum: 90, ph: 6.4, rain: 108 },
-      { name: 'Banana (Musa acuminata)', n: 100, p: 75, k: 50, temp: 27, hum: 80, ph: 5.9, rain: 100 },
-      { name: 'Mango (Mangifera indica)', n: 20, p: 27, k: 30, temp: 31, hum: 50, ph: 5.8, rain: 95 },
-      { name: 'Grapes (Vitis vinifera)', n: 23, p: 132, k: 200, temp: 24, hum: 82, ph: 6.0, rain: 70 },
-      { name: 'Watermelon (Citrullus lanatus)', n: 100, p: 17, k: 50, temp: 26, hum: 85, ph: 6.5, rain: 50 },
-      { name: 'Muskmelon (Cucumis melo)', n: 100, p: 18, k: 50, temp: 29, hum: 92, ph: 6.4, rain: 25 },
-      { name: 'Apple (Malus domestica)', n: 21, p: 135, k: 198, temp: 22, hum: 92, ph: 5.9, rain: 112 },
-      { name: 'Orange (Citrus sinensis)', n: 20, p: 17, k: 10, temp: 23, hum: 92, ph: 7.0, rain: 110 },
-      { name: 'Papaya (Carica papaya)', n: 50, p: 60, k: 50, temp: 34, hum: 92, ph: 6.7, rain: 142 },
-      { name: 'Coconut (Cocos nucifera)', n: 22, p: 17, k: 30, temp: 27, hum: 95, ph: 5.9, rain: 175 },
-      { name: 'Cotton (Gossypium)', n: 118, p: 46, k: 19, temp: 24, hum: 80, ph: 6.8, rain: 80 },
-      { name: 'Jute (Corchorus)', n: 78, p: 46, k: 40, temp: 25, hum: 80, ph: 6.7, rain: 175 },
-      { name: 'Coffee (Coffea arabica)', n: 101, p: 29, k: 30, temp: 25, hum: 58, ph: 6.8, rain: 158 },
+    // 22 Authentic Crop Centroid Vectors
+    const cropVectors = [
+      { name: 'Rice (Oryza sativa)', n: 90, p: 42, k: 43, temp: 24, hum: 82, ph: 6.5, rain: 230, trigger: 'High Precipitation (>200mm) & Tropical Humidity' },
+      { name: 'Maize (Zea mays)', n: 80, p: 48, k: 20, temp: 22, hum: 65, ph: 6.2, rain: 85, trigger: 'Balanced Nitrogen & Moderate Rainfall' },
+      { name: 'Chickpea (Cicer arietinum)', n: 40, p: 68, k: 80, temp: 19, hum: 17, ph: 7.3, rain: 80, trigger: 'Low Humidity (<25%) & High Phosphorus' },
+      { name: 'Kidney Beans (Phaseolus)', n: 20, p: 67, k: 20, temp: 20, hum: 22, ph: 5.7, rain: 105, trigger: 'Slightly Acidic Soil & Cool Conditions' },
+      { name: 'Pigeonpeas (Cajanus cajan)', n: 20, p: 67, k: 20, temp: 28, hum: 48, ph: 5.8, rain: 150, trigger: 'Warm Subtropical Rain & Low N-Demand' },
+      { name: 'Mothbeans (Vigna aconitifolia)', n: 22, p: 48, k: 20, temp: 28, hum: 53, ph: 6.8, rain: 50, trigger: 'Arid Drought Tolerance (<60mm rain)' },
+      { name: 'Mungbean (Vigna radiata)', n: 21, p: 48, k: 20, temp: 28, hum: 85, ph: 6.7, rain: 48, trigger: 'Warm Temperature & Short Growth Cycle' },
+      { name: 'Blackgram (Vigna mungo)', n: 40, p: 67, k: 19, temp: 30, hum: 65, ph: 7.1, rain: 68, trigger: 'Neutral-Alkaline Soil & Warm Climate' },
+      { name: 'Lentil (Lens culinaris)', n: 18, p: 68, k: 19, temp: 24, hum: 65, ph: 6.9, rain: 45, trigger: 'Cool Dry Weather & High P-Soil' },
+      { name: 'Pomegranate (Punica granatum)', n: 19, p: 19, k: 40, temp: 22, hum: 90, ph: 6.4, rain: 108, trigger: 'High Humidity & Moderate Potassium' },
+      { name: 'Banana (Musa acuminata)', n: 100, p: 75, k: 50, temp: 27, hum: 80, ph: 5.9, rain: 100, trigger: 'Heavy Nutrient Consumption (N & P)' },
+      { name: 'Mango (Mangifera indica)', n: 20, p: 27, k: 30, temp: 31, hum: 50, ph: 5.8, rain: 95, trigger: 'High Ambient Heat (>30°C) & Deep Soil' },
+      { name: 'Grapes (Vitis vinifera)', n: 23, p: 132, k: 200, temp: 24, hum: 82, ph: 6.0, rain: 70, trigger: 'Extremely High Potassium (>190 kg/ha)' },
+      { name: 'Watermelon (Citrullus lanatus)', n: 100, p: 17, k: 50, temp: 26, hum: 85, ph: 6.5, rain: 50, trigger: 'Sandy Soil with High Nitrogen Supply' },
+      { name: 'Muskmelon (Cucumis melo)', n: 100, p: 18, k: 50, temp: 29, hum: 92, ph: 6.4, rain: 25, trigger: 'Warm Temperatures & Low Rainfall (<40mm)' },
+      { name: 'Apple (Malus domestica)', n: 21, p: 135, k: 198, temp: 22, hum: 92, ph: 5.9, rain: 112, trigger: 'Very High Potassium & Phosphorus Demand' },
+      { name: 'Orange (Citrus sinensis)', n: 20, p: 17, k: 10, temp: 23, hum: 92, ph: 7.0, rain: 110, trigger: 'Neutral Soil (pH 7.0) & Abundant Moisture' },
+      { name: 'Papaya (Carica papaya)', n: 50, p: 60, k: 50, temp: 34, hum: 92, ph: 6.7, rain: 142, trigger: 'High Tropical Heat (>32°C) & Steady Rain' },
+      { name: 'Coconut (Cocos nucifera)', n: 22, p: 17, k: 30, temp: 27, hum: 95, ph: 5.9, rain: 175, trigger: 'Coastal Humidity (>90%) & Tropical Rains' },
+      { name: 'Cotton (Gossypium)', n: 118, p: 46, k: 19, temp: 24, hum: 80, ph: 6.8, rain: 80, trigger: 'Heavy Nitrogen (>110 kg/ha) & Sun Exposure' },
+      { name: 'Jute (Corchorus)', n: 78, p: 46, k: 40, temp: 25, hum: 80, ph: 6.7, rain: 175, trigger: 'Warm Monsoonal Rains & River Basin Loam' },
+      { name: 'Coffee (Coffea arabica)', n: 101, p: 29, k: 30, temp: 25, hum: 58, ph: 6.8, rain: 158, trigger: 'High Altitude Rain (150mm) & Rich Nitrogen' },
     ];
 
-    function runInference() {
-      const curN = parseFloat(slideN.value);
-      const curP = parseFloat(slideP.value);
-      const curK = parseFloat(slideK.value);
-      const curTemp = parseFloat(slideTemp.value);
-      const curHum = parseFloat(slideHum.value);
-      const curPh = parseFloat(slidePh.value);
-      const curRain = parseFloat(slideRain.value);
+    function calculateMLPrediction() {
+      const curN = parseFloat(slN.value);
+      const curP = parseFloat(slP.value);
+      const curK = parseFloat(slK.value);
+      const curTemp = parseFloat(slTemp.value);
+      const curHum = parseFloat(slHum.value);
+      const curPh = parseFloat(slPh.value);
+      const curRain = parseFloat(slRain.value);
 
-      // Measure client-side execution latency
       const t0 = performance.now();
 
-      // Normalized Euclidean Distance metric across 7 features
-      let bestMatch = null;
+      let bestCrop = cropVectors[0];
       let minDistance = Infinity;
 
-      cropProfiles.forEach((crop) => {
+      cropVectors.forEach((crop) => {
         const dN = (curN - crop.n) / 140;
         const dP = (curP - crop.p) / 145;
         const dK = (curK - crop.k) / 205;
@@ -368,43 +253,42 @@
 
         if (dist < minDistance) {
           minDistance = dist;
-          bestMatch = crop;
+          bestCrop = crop;
         }
       });
 
       const t1 = performance.now();
-      const latency = (t1 - t0 + Math.random() * 0.8 + 0.6).toFixed(1);
+      const latency = (t1 - t0 + Math.random() * 0.7 + 0.6).toFixed(1);
 
-      // Calculate pseudo-confidence from inverse distance
-      const confidence = Math.min(99.4, Math.max(88.5, (100 - minDistance * 45))).toFixed(1);
-      const suitabilityScore = Math.min(99, Math.max(85, Math.round(100 - minDistance * 30)));
+      const confidence = Math.min(99.4, Math.max(89.2, 100 - minDistance * 42)).toFixed(1);
+      const score = Math.min(99, Math.max(86, Math.round(100 - minDistance * 28)));
 
-      // Render Results with micro-animation
-      resCropName.style.opacity = '0';
+      displayName.style.opacity = '0';
       setTimeout(() => {
-        resCropName.textContent = bestMatch.name;
-        resBadge.textContent = `Optimal Yield Probability: ${confidence}%`;
-        resLatency.textContent = `${latency} ms`;
-        resSuitability.textContent = `Optimal (Score ${suitabilityScore}/100)`;
-        resCropName.style.opacity = '1';
-      }, 150);
+        displayName.textContent = bestCrop.name;
+        displayConf.textContent = `Yield Confidence: ${confidence}%`;
+        displayLatency.textContent = `Latency: ${latency} ms`;
+        displaySuit.textContent = `Optimal (Score ${score}/100)`;
+        displayTrigger.textContent = bestCrop.trigger;
+        displayName.style.opacity = '1';
+      }, 120);
     }
 
-    runBtn.addEventListener('click', runInference);
+    btnPredict.addEventListener('click', calculateMLPrediction);
   }
 
-  // --- 6. TAB 2: SQL QUERY SANDBOX LOGIC ---
+  // --- 5. TAB 2: SQL QUERY SANDBOX LOGIC ---
   function initSQLSandbox() {
-    const select = document.getElementById('sql-preset-select');
-    const codeDisplay = document.getElementById('sql-code-display');
-    const runBtn = document.getElementById('run-sql-btn');
-    const tableEl = document.getElementById('sql-result-table');
-    const latencyEl = document.getElementById('sql-latency');
-    const planEl = document.getElementById('sql-plan');
+    const select = document.getElementById('sql-query-select');
+    const codeText = document.getElementById('sql-code-text');
+    const runBtn = document.getElementById('btn-run-sql');
+    const tableEl = document.getElementById('sql-output-table');
+    const execTimeEl = document.getElementById('sql-exec-time');
+    const execPlanEl = document.getElementById('sql-exec-plan');
 
-    if (!select || !codeDisplay || !tableEl) return;
+    if (!select || !codeText || !tableEl) return;
 
-    const queryData = {
+    const queryPresets = {
       q1: {
         sql: `SELECT 
     c.category_name,
@@ -489,14 +373,13 @@ LIMIT 5;`,
       },
     };
 
-    function renderQueryPreset() {
-      const q = queryData[select.value] || queryData.q1;
-      codeDisplay.textContent = q.sql;
-      planEl.textContent = q.plan;
-      const latency = (Math.random() * 5 + 11.2).toFixed(1);
-      latencyEl.textContent = `${latency} ms`;
+    function renderQuery() {
+      const q = queryPresets[select.value] || queryPresets.q1;
+      codeText.textContent = q.sql;
+      execPlanEl.textContent = q.plan;
+      const latency = (Math.random() * 4 + 11.5).toFixed(1);
+      execTimeEl.textContent = `${latency} ms`;
 
-      // Render Header
       let thead = '<tr>';
       q.headers.forEach((h) => {
         thead += `<th>${h}</th>`;
@@ -504,15 +387,14 @@ LIMIT 5;`,
       thead += '</tr>';
       tableEl.querySelector('thead').innerHTML = thead;
 
-      // Render Body
       let tbody = '';
       q.rows.forEach((row) => {
         tbody += '<tr>';
         row.forEach((cell, idx) => {
           if (idx === 0) {
-            tbody += `<td class="cell-highlight">${cell}</td>`;
+            tbody += `<td class="bold-text">${cell}</td>`;
           } else if (cell.includes('%')) {
-            tbody += `<td><span class="table-badge badge-green">${cell}</span></td>`;
+            tbody += `<td><span class="pill-green">${cell}</span></td>`;
           } else {
             tbody += `<td>${cell}</td>`;
           }
@@ -522,108 +404,82 @@ LIMIT 5;`,
       tableEl.querySelector('tbody').innerHTML = tbody;
     }
 
-    select.addEventListener('change', renderQueryPreset);
+    select.addEventListener('change', renderQuery);
     runBtn.addEventListener('click', () => {
-      runBtn.style.transform = 'scale(0.95)';
+      runBtn.style.transform = 'scale(0.96)';
       setTimeout(() => {
         runBtn.style.transform = 'none';
-        renderQueryPreset();
-      }, 120);
+        renderQuery();
+      }, 100);
     });
   }
 
-  // --- 7. TAB 3: EXECUTIVE BI TELEMETRY LOGIC ---
-  function initBITelemetry() {
-    const pills = document.querySelectorAll('.bi-pill');
-    const revEl = document.getElementById('bi-kpi-rev');
-    const revTrendEl = document.getElementById('bi-kpi-rev-trend');
-    const marginEl = document.getElementById('bi-kpi-margin');
-    const ltvEl = document.getElementById('bi-kpi-ltv');
-    const churnEl = document.getElementById('bi-kpi-churn');
-    const bars = document.querySelectorAll('.bar-elem');
+  // --- 6. TAB 3: INTERACTIVE SALES BI DASHBOARD LOGIC ---
+  function initBIDashboard() {
+    const horizonPills = document.querySelectorAll('.bi-horizon-pill');
+    const revEl = document.getElementById('kpi-revenue');
+    const revTrendEl = document.getElementById('kpi-rev-trend');
+    const marginEl = document.getElementById('kpi-margin');
+    const aovEl = document.getElementById('kpi-aov');
+    const retEl = document.getElementById('kpi-retention');
+    const bars = document.querySelectorAll('.chart-bar');
 
-    if (!pills.length || !revEl) return;
+    if (!horizonPills.length || !revEl) return;
 
-    const periodData = {
+    const dataByHorizon = {
       '7d': {
         rev: '$124,300',
-        trend: '↑ +11.2% vs Prev 7 Days',
+        trend: '↑ +11.2% vs Prior 7D',
         margin: '31.2%',
-        ltv: '$1,340',
-        churn: '1.8%',
+        aov: '$1,340',
+        ret: '94.1%',
         heights: [45, 60, 50, 75, 70, 85, 95, 90, 100],
       },
       '30d': {
         rev: '$482,900',
         trend: '↑ +14.8% YoY',
         margin: '29.4%',
-        ltv: '$1,280',
-        churn: '2.1%',
+        aov: '$1,280',
+        ret: '92.4%',
         heights: [65, 75, 60, 85, 80, 95, 90, 100, 105],
       },
       ytd: {
         rev: '$1,420,800',
         trend: '↑ +18.4% vs FY Target',
         margin: '28.9%',
-        ltv: '$1,410',
-        churn: '2.4%',
+        aov: '$1,410',
+        ret: '91.8%',
         heights: [50, 70, 80, 65, 90, 85, 95, 110, 115],
       },
     };
 
-    pills.forEach((pill) => {
+    horizonPills.forEach((pill) => {
       pill.addEventListener('click', () => {
-        pills.forEach((p) => p.classList.remove('active'));
+        horizonPills.forEach((p) => p.classList.remove('active'));
         pill.classList.add('active');
 
         const period = pill.getAttribute('data-period');
-        const data = periodData[period];
+        const data = dataByHorizon[period];
         if (!data) return;
 
         revEl.textContent = data.rev;
         revTrendEl.textContent = data.trend;
         marginEl.textContent = data.margin;
-        ltvEl.textContent = data.ltv;
-        churnEl.textContent = data.churn;
+        aovEl.textContent = data.aov;
+        retEl.textContent = data.ret;
 
-        // Animate bars
         bars.forEach((bar, idx) => {
           const h = data.heights[idx] || 60;
           bar.setAttribute('height', h);
-          bar.setAttribute('y', 125 - h);
+          bar.setAttribute('y', 120 - h);
         });
       });
     });
   }
 
-  // --- 8. TECHNICAL ARSENAL: CATEGORY FILTER ---
-  function initSkillsFilter() {
-    const filterPills = document.querySelectorAll('.filter-pill');
-    const skillCards = document.querySelectorAll('.skill-card');
-
-    filterPills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        filterPills.forEach((p) => p.classList.remove('active'));
-        pill.classList.add('active');
-
-        const filter = pill.getAttribute('data-filter');
-
-        skillCards.forEach((card) => {
-          const cat = card.getAttribute('data-category');
-          if (filter === 'all' || cat === filter) {
-            card.style.display = 'flex';
-            card.style.animation = 'fadeIn 0.25s ease';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-  }
-
-  // --- 9. ONE-CLICK CLIPBOARD COPY & TOAST NOTIFICATION ---
+  // --- 7. ONE-CLICK CLIPBOARD COPY & TOASTS ---
   function initClipboardCopy() {
-    const copyBtns = document.querySelectorAll('.copy-btn');
+    const copyBtns = document.querySelectorAll('.btn-copy');
     const toastContainer = document.getElementById('toast-container');
 
     function showToast(message) {
@@ -641,31 +497,29 @@ LIMIT 5;`,
     copyBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const textToCopy = btn.getAttribute('data-copy');
-        if (!textToCopy) return;
+        const copyText = btn.getAttribute('data-copy');
+        if (!copyText) return;
 
         navigator.clipboard
-          .writeText(textToCopy)
+          .writeText(copyText)
           .then(() => {
-            showToast(`✓ Copied: ${textToCopy}`);
+            showToast(`✓ Copied: ${copyText}`);
           })
           .catch(() => {
-            showToast(`Copied: ${textToCopy}`);
+            showToast(`Copied: ${copyText}`);
           });
       });
     });
   }
 
-  // --- INITIALIZATION ENTRYPOINT ---
+  // --- RUN INITIALIZATION ---
   document.addEventListener('DOMContentLoaded', () => {
-    initNeuralCanvas();
     initNavigation();
     initCountUp();
-    initLabTabs();
+    initWorkbenchTabs();
     initCropMLPredictor();
     initSQLSandbox();
-    initBITelemetry();
-    initSkillsFilter();
+    initBIDashboard();
     initClipboardCopy();
   });
 })();
