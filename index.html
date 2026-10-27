@@ -63,7 +63,7 @@
       </div>
       <div class="hud-brand-text-wrap">
         <span class="hud-brand-title">DEV PATEL</span>
-        <span class="hud-brand-sub">QUANTUM DATA LABS // AHMEDABAD</span>
+        <span class="hud-brand-sub">DEV PATEL ANALYTICS STUDIO // AHMEDABAD</span>
       </div>
     </div>
     <div class="hud-location">
@@ -525,10 +525,19 @@
         <span class="tag-title decrypt-text" data-value="PROJECT CASE STUDIES">PROJECT CASE STUDIES</span>
       </div>
 
+            <!-- Category Filter Bar for Projects -->
+      <div class="project-filter-bar reveal-item">
+        <button class="project-filter-btn active" data-filter="all">ALL CASE STUDIES [05]</button>
+        <button class="project-filter-btn" data-filter="powerbi">POWER BI &amp; DAX</button>
+        <button class="project-filter-btn" data-filter="sql">RELATIONAL SQL</button>
+        <button class="project-filter-btn" data-filter="ml">MACHINE LEARNING</button>
+        <button class="project-filter-btn" data-filter="genai">GENAI &amp; AGENTS</button>
+      </div>
+
       <div class="projects-list">
 
         <!-- Project 1: Sales Analytics Dashboard (Featured BI Architecture) -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="blue">
+        <article class="project-case-card card-spotlight reveal-item" data-accent="blue" data-category="powerbi">
           <div class="project-glow-layer"></div>
           <div class="project-grid-inner">
             <div class="project-spec-col">
@@ -630,7 +639,7 @@
         </article>
 
         <!-- Project 2: E-Commerce Sales & Customer Analysis -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="amber">
+        <article class="project-case-card card-spotlight reveal-item" data-accent="amber" data-category="sql">
           <div class="project-glow-layer"></div>
           <div class="project-grid-inner">
             <div class="project-spec-col">
@@ -730,7 +739,7 @@
         </article>
 
         <!-- Project 3: Crop Recommendation System -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="green">
+        <article class="project-case-card card-spotlight reveal-item" data-accent="green" data-category="ml">
           <div class="project-glow-layer"></div>
           <div class="project-grid-inner">
             <div class="project-spec-col">
@@ -830,7 +839,7 @@
         </article>
 
         <!-- Project 4: GenAI Application Suite & Multi-PDF RAG -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="purple">
+        <article class="project-case-card card-spotlight reveal-item" data-accent="purple" data-category="genai">
           <div class="project-glow-layer"></div>
           <div class="project-grid-inner">
             <div class="project-spec-col">
@@ -932,7 +941,7 @@
         </article>
 
         <!-- Project 5: AI Travel Planner -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="cyan">
+        <article class="project-case-card card-spotlight reveal-item" data-accent="cyan" data-category="genai">
           <div class="project-glow-layer"></div>
           <div class="project-grid-inner">
             <div class="project-spec-col">
@@ -1034,13 +1043,344 @@
       </div>
     </section>
 
-    <!-- 06 // OPEN SOURCE & REPOSITORY GRAPH -->
-    <section id="open-source" class="section-container oss-section" data-section-index="06" data-section-name="OPEN SOURCE">
+    <!-- 06 // LIVE DATA LAB & OPEN SOURCE ECOSYSTEM -->
+    <section id="open-source" class="section-container oss-section" data-section-index="06" data-section-name="LAB &amp; ECOSYSTEM">
       <div class="section-header-tag reveal-item">
         <span class="tag-accent">06</span>
         <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="OPEN SOURCE ECOSYSTEM">OPEN SOURCE ECOSYSTEM</span>
+        <span class="tag-title decrypt-text" data-value="LIVE DATA LAB &amp; ECOSYSTEM">LIVE DATA LAB &amp; ECOSYSTEM</span>
       </div>
+
+      <!-- Flagship Interactive Live Data & ML Studio -->
+      <div class="lab-workbench-wrap card-spotlight reveal-item">
+        <div class="lab-window">
+          
+          <!-- Window Header / Tabs -->
+          <div class="lab-window-header">
+            <div class="window-controls">
+              <span class="win-dot red"></span>
+              <span class="win-dot yellow"></span>
+              <span class="win-dot green"></span>
+              <span class="win-title">DevPatel_Analytics_Workbench_v2.6 [Client-Side JS Engine]</span>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="lab-tabs" role="tablist">
+              <button class="lab-tab active" data-tab="crop-ml" role="tab" aria-selected="true">
+                <span class="tab-icon">🌾</span>
+                <span>Crop ML Predictor</span>
+              </button>
+              <button class="lab-tab" data-tab="sql-query" role="tab" aria-selected="false">
+                <span class="tab-icon">⚡</span>
+                <span>SQL Query Sandbox</span>
+              </button>
+              <button class="lab-tab" data-tab="bi-telemetry" role="tab" aria-selected="false">
+                <span class="tab-icon">📊</span>
+                <span>Executive BI Telemetry</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content Area -->
+          <div class="lab-window-body">
+            
+            <!-- TAB 1: CROP ML PREDICTOR -->
+            <div class="lab-panel active" id="tab-crop-ml" role="tabpanel">
+              <div class="panel-grid">
+                
+                <!-- Controls Column -->
+                <div class="panel-controls">
+                  <div class="panel-section-title">
+                    <span class="panel-indicator"></span>
+                    <span>1. Adjust Soil &amp; Climate Parameters</span>
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-n">Nitrogen (N) Content</label>
+                      <span class="slider-val" id="val-n">90 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-n" min="10" max="140" value="90" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-p">Phosphorus (P) Content</label>
+                      <span class="slider-val" id="val-p">42 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-p" min="5" max="140" value="42" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-k">Potassium (K) Content</label>
+                      <span class="slider-val" id="val-k">43 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-k" min="5" max="200" value="43" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-temp">Temp (°C)</label>
+                        <span class="slider-val" id="val-temp">24°C</span>
+                      </div>
+                      <input type="range" id="slide-temp" min="10" max="42" value="24" class="lab-slider" />
+                    </div>
+
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-hum">Humidity (%)</label>
+                        <span class="slider-val" id="val-hum">82%</span>
+                      </div>
+                      <input type="range" id="slide-hum" min="15" max="98" value="82" class="lab-slider" />
+                    </div>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-ph">Soil pH</label>
+                        <span class="slider-val" id="val-ph">6.5</span>
+                      </div>
+                      <input type="range" id="slide-ph" min="4" max="9" step="0.1" value="6.5" class="lab-slider" />
+                    </div>
+
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-rain">Rainfall (mm)</label>
+                        <span class="slider-val" id="val-rain">205 mm</span>
+                      </div>
+                      <input type="range" id="slide-rain" min="20" max="300" value="205" class="lab-slider" />
+                    </div>
+                  </div>
+
+                  <button class="btn-primary-glow btn-full mt-3" id="run-ml-btn">
+                    <span>⚡ Run Random Forest Inference</span>
+                  </button>
+                </div>
+
+                <!-- Live Result Display Column -->
+                <div class="panel-results">
+                  <div class="panel-section-title">
+                    <span class="panel-indicator green"></span>
+                    <span>2. Real-Time Model Inference Output</span>
+                  </div>
+
+                  <div class="result-hero-box">
+                    <div class="result-label">Recommended Crop</div>
+                    <div class="result-crop-name" id="crop-result-name">Rice (Oryza sativa)</div>
+                    <div class="result-crop-badge" id="crop-result-badge">Optimal Yield Probability: 98.4%</div>
+                  </div>
+
+                  <div class="result-metrics-grid">
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Inference Latency</span>
+                      <span class="cell-val" id="crop-result-latency">1.2 ms</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Classifier Engine</span>
+                      <span class="cell-val">Random Forest (22 Cls)</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Soil Suitability</span>
+                      <span class="cell-val text-emerald" id="crop-result-suitability">Optimal (Score 96/100)</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Confidence Interval</span>
+                      <span class="cell-val">95% CI [97.1 - 99.4]</span>
+                    </div>
+                  </div>
+
+                  <div class="result-info-snippet">
+                    <strong>Model Insight:</strong> High moisture (>80%) combined with substantial precipitation (>200mm) and balanced N-P-K profiles triggers dominant class activation for wetland grain cultivars.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 2: SQL QUERY SANDBOX -->
+            <div class="lab-panel" id="tab-sql-query" role="tabpanel">
+              <div class="sql-sandbox-wrap">
+                
+                <div class="sql-toolbar">
+                  <label for="sql-preset-select" class="sql-label">Choose Analytical Scenario:</label>
+                  <select id="sql-preset-select" class="sql-select">
+                    <option value="q1">Top 5 Revenue Categories &amp; Margin % (3-Table JOIN + Aggregates)</option>
+                    <option value="q2">Customer Purchase RFM Segmentation (Window Function DENSE_RANK)</option>
+                    <option value="q3">Monthly Cohort Growth &amp; MoM Revenue Delta (CTE + LAG)</option>
+                  </select>
+                  <button class="btn-primary-glow btn-sm ml-auto" id="run-sql-btn">
+                    <span>▶ Execute Query</span>
+                  </button>
+                </div>
+
+                <!-- Code Display -->
+                <div class="sql-code-editor">
+                  <pre><code id="sql-code-display">SELECT 
+    c.category_name,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    SUM(oi.quantity * oi.unit_price) AS gross_revenue,
+    ROUND(SUM(oi.quantity * (oi.unit_price - p.cost_price)) / SUM(oi.quantity * oi.unit_price) * 100, 2) AS margin_percentage
+FROM categories c
+INNER JOIN products p ON c.category_id = p.category_id
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+INNER JOIN orders o ON oi.order_id = o.order_id
+WHERE o.order_status = 'DELIVERED'
+GROUP BY c.category_id, c.category_name
+ORDER BY gross_revenue DESC
+LIMIT 5;</code></pre>
+                </div>
+
+                <!-- Execution Banner -->
+                <div class="sql-telemetry-banner">
+                  <span class="exec-badge success">✓ 5 rows returned</span>
+                  <span class="exec-stat">Execution Latency: <strong id="sql-latency">14.6 ms</strong></span>
+                  <span class="exec-stat">Optimization: <strong id="sql-plan">INDEX RANGE SCAN on idx_order_status</strong></span>
+                  <span class="exec-stat">Database: <strong>MySQL 8.0 (3NF Normalized)</strong></span>
+                </div>
+
+                <!-- Result Table -->
+                <div class="sql-table-container">
+                  <table class="sql-table" id="sql-result-table">
+                    <thead>
+                      <tr>
+                        <th>category_name</th>
+                        <th>total_orders</th>
+                        <th>gross_revenue</th>
+                        <th>margin_percentage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="cell-highlight">Consumer Electronics</td>
+                        <td>1,842</td>
+                        <td>$342,850.00</td>
+                        <td><span class="table-badge badge-green">32.4%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Enterprise Computing</td>
+                        <td>720</td>
+                        <td>$215,400.00</td>
+                        <td><span class="table-badge badge-green">28.8%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Home &amp; Living</td>
+                        <td>2,410</td>
+                        <td>$184,200.00</td>
+                        <td><span class="table-badge badge-green">38.2%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Smart Audio &amp; Wearables</td>
+                        <td>1,120</td>
+                        <td>$124,650.00</td>
+                        <td><span class="table-badge badge-green">41.0%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Industrial Components</td>
+                        <td>315</td>
+                        <td>$98,120.00</td>
+                        <td><span class="table-badge badge-green">24.5%</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 3: EXECUTIVE BI TELEMETRY -->
+            <div class="lab-panel" id="tab-bi-telemetry" role="tabpanel">
+              <div class="bi-telemetry-wrap">
+                
+                <div class="bi-filter-bar">
+                  <div class="bi-period-label">Executive Reporting Horizon:</div>
+                  <div class="bi-period-buttons">
+                    <button class="bi-pill active" data-period="7d">Last 7 Days</button>
+                    <button class="bi-pill" data-period="30d">Last 30 Days</button>
+                    <button class="bi-pill" data-period="ytd">Year to Date (YTD)</button>
+                  </div>
+                  <div class="bi-status-chip">
+                    <span class="status-dot"></span> Power BI Service Connected
+                  </div>
+                </div>
+
+                <!-- KPI Cards Row -->
+                <div class="bi-kpis-grid">
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Gross Revenue (DAX: [Total Sales])</span>
+                    <span class="kpi-value" id="bi-kpi-rev">$482,900</span>
+                    <span class="kpi-trend positive" id="bi-kpi-rev-trend">↑ +14.8% YoY</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Net Operating Margin %</span>
+                    <span class="kpi-value" id="bi-kpi-margin">29.4%</span>
+                    <span class="kpi-trend positive" id="bi-kpi-margin-trend">↑ +3.2% vs Target</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Customer Lifetime Value (LTV)</span>
+                    <span class="kpi-value" id="bi-kpi-ltv">$1,280</span>
+                    <span class="kpi-trend positive" id="bi-kpi-ltv-trend">↑ +8.5% QoQ</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Customer Churn Rate</span>
+                    <span class="kpi-value" id="bi-kpi-churn">2.1%</span>
+                    <span class="kpi-trend positive" id="bi-kpi-churn-trend">↓ -0.6% Churn Reduction</span>
+                  </div>
+                </div>
+
+                <!-- Visual Chart Simulation -->
+                <div class="bi-chart-card">
+                  <div class="chart-header">
+                    <div>
+                      <h4 class="chart-title">Revenue Trajectory vs. Target Benchmark (USD)</h4>
+                      <p class="chart-subtitle">Calculated using dynamic DAX Time-Intelligence Measures</p>
+                    </div>
+                    <div class="chart-legend">
+                      <span class="legend-item"><span class="legend-color cyan"></span> Actual Revenue</span>
+                      <span class="legend-item"><span class="legend-color dim"></span> Forecast Baseline</span>
+                    </div>
+                  </div>
+
+                  <!-- SVG Bar Chart -->
+                  <div class="chart-svg-wrap">
+                    <svg class="bi-bar-chart" viewBox="0 0 700 160" preserveAspectRatio="none">
+                      <line x1="40" y1="20" x2="680" y2="20" stroke="rgba(255,255,255,0.06)" />
+                      <line x1="40" y1="70" x2="680" y2="70" stroke="rgba(255,255,255,0.06)" />
+                      <line x1="40" y1="120" x2="680" y2="120" stroke="rgba(255,255,255,0.06)" />
+                      
+                      <g class="chart-bars-group" id="chart-bars">
+                        <rect x="70" y="55" width="28" height="65" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="84" y="142" class="chart-axis-text">P1</text>
+                        <rect x="135" y="45" width="28" height="75" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="149" y="142" class="chart-axis-text">P2</text>
+                        <rect x="200" y="60" width="28" height="60" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="214" y="142" class="chart-axis-text">P3</text>
+                        <rect x="265" y="35" width="28" height="85" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="279" y="142" class="chart-axis-text">P4</text>
+                        <rect x="330" y="40" width="28" height="80" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="344" y="142" class="chart-axis-text">P5</text>
+                        <rect x="395" y="25" width="28" height="95" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="409" y="142" class="chart-axis-text">P6</text>
+                        <rect x="460" y="30" width="28" height="90" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="474" y="142" class="chart-axis-text">P7</text>
+                        <rect x="525" y="20" width="28" height="100" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="539" y="142" class="chart-axis-text">P8</text>
+                        <rect x="590" y="15" width="28" height="105" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="604" y="142" class="chart-axis-text">P9</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
       <div class="oss-layout">
         <div class="oss-grid-top">
