@@ -885,6 +885,7 @@ function initClipboardButtons() {
 function initResumeModal() {
   const modal = document.getElementById('resume-modal');
   const openBtn = document.getElementById('open-resume-btn');
+  const topResumeBtn = document.getElementById('btn-open-resume');
   const mobileBtn = document.getElementById('mobile-resume-btn');
   const footerBtn = document.getElementById('footer-resume-btn');
   const heroResumeBtn = document.getElementById('hero-cta-resume');
@@ -906,6 +907,7 @@ function initResumeModal() {
   }
 
   if (openBtn) openBtn.addEventListener('click', openModal);
+  if (topResumeBtn) topResumeBtn.addEventListener('click', openModal);
   if (mobileBtn) mobileBtn.addEventListener('click', openModal);
   if (footerBtn) footerBtn.addEventListener('click', openModal);
   if (heroResumeBtn) heroResumeBtn.addEventListener('click', openModal);
