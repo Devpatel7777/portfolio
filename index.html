@@ -3,1708 +3,1456 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#07080a" />
+  <meta name="theme-color" content="#080c14" />
   <meta name="color-scheme" content="dark" />
   <title>Dev Patel — Data Analyst & Machine Learning Engineer</title>
-  <meta name="description" content="Dev Patel is a Data Analyst & Machine Learning Engineer specializing in Python, SQL, Power BI, Exploratory Data Analysis, Supervised Machine Learning, and GenAI / RAG applications." />
-  <meta name="keywords" content="Dev Patel, Data Analyst, Machine Learning Engineer, Python, SQL, MySQL, Pandas, NumPy, Scikit-learn, Power BI, Streamlit, LangChain, RAG, EDA, Generative AI" />
+  <meta name="description" content="Dev Patel is a Data Analyst & Machine Learning Engineer specializing in Python, SQL, Power BI, Exploratory Data Analysis, Predictive ML Models, and GenAI applications." />
+  <meta name="keywords" content="Dev Patel, Data Analyst, Machine Learning Engineer, Python, SQL, MySQL, Pandas, NumPy, Scikit-learn, Power BI, DAX, Streamlit, RAG, Generative AI" />
   <meta name="author" content="Dev Patel" />
 
-  <!-- Open Graph / Meta -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Dev Patel — Data Analyst & Machine Learning Engineer" />
-  <meta property="og:description" content="Predictive machine learning pipelines, relational SQL architecture, interactive Power BI dashboards, and GenAI applications." />
+  <meta property="og:description" content="Predictive ML models, 3NF relational SQL architecture, interactive Power BI dashboards, and GenAI applications." />
   <meta property="og:url" content="https://dev-7-patel-portfolio.vercel.app/" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
-  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Stylesheet -->
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Custom Cursor Glow -->
-  <div class="custom-cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="custom-cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Background Ambience & Grid -->
-  <div class="bg-fx-layer pointer-events-none" aria-hidden="true">
-    <div class="bg-fx-blob bg-fx-blob-a"></div>
-    <div class="bg-fx-blob bg-fx-blob-b"></div>
-    <div class="bg-fx-blob bg-fx-blob-c"></div>
-    <div class="bg-grid-mesh"></div>
-    <!-- SVG Grain / Film Turbulence Overlay -->
-    <div class="grain-overlay">
-      <svg class="w-full h-full">
-        <filter id="grain-filter">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#grain-filter)" />
-      </svg>
-    </div>
-  </div>
-
-  <!-- Global HUD: Top Scroll Progress Bar -->
-  <div class="scroll-progress-container" aria-hidden="true">
-    <div class="scroll-progress-bar" id="scroll-progress"></div>
-  </div>
-
-  <!-- HUD: Fixed Top Bar -->
-  <header class="hud-top-bar">
-    <div class="hud-brand">
-      <div class="hud-monogram-box">
-        <span class="mono-code">DP</span>
-      </div>
-      <div class="hud-brand-text-wrap">
-        <span class="hud-brand-title">DEV PATEL</span>
-        <span class="hud-brand-sub">QUANTUM DATA LABS // AHMEDABAD</span>
-      </div>
-    </div>
-    <div class="hud-location">
-      <div class="hud-telemetry-ticker">
-        <span class="hud-ticker-pulse"></span>
-        <span>SYS_CORE // 24ms // OPERATIONAL</span>
-      </div>
-    </div>
-    <div class="hud-audio-toggle">
-      <button id="audio-toggle-btn" class="hud-btn-ghost" title="Toggle audio feedback" aria-label="Toggle SFX">
-        <svg id="audio-icon-muted" class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-          <line x1="23" y1="9" x2="17" y2="15"/>
-          <line x1="17" y1="9" x2="23" y2="15"/>
-        </svg>
-        <svg id="audio-icon-unmuted" class="hud-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        </svg>
-        <span class="hud-sfx-label">SFX</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- HUD: Fixed Bottom Coordinate & Status Dock -->
-  <aside class="hud-bottom-bar" aria-label="System HUD">
-    <div class="hud-coords">
-      <span id="hud-section-number" class="hud-coords-num">01</span>
-      <span class="hud-coords-divider">/</span>
-      <span class="hud-coords-total">08</span>
-      <span id="hud-section-label" class="hud-coords-label">HERO</span>
-    </div>
-
-    <div class="hud-status-group">
-      <div class="hud-status-pill">
-        <span class="pulse-beacon">
-          <span class="pulse-ring"></span>
-          <span class="pulse-core"></span>
-        </span>
-        <span class="status-label">OPEN TO OPPORTUNITIES</span>
-      </div>
-
-      <button id="open-resume-btn" class="hud-btn-pill" aria-label="Open Resume Summary">
-        <span>RESUMES</span>
-        <svg class="btn-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 17L17 7M17 7H7M17 7V17"/>
-        </svg>
-      </button>
-    </div>
-  </aside>
-
-  <!-- Mobile Floating Action Bar -->
-  <nav class="mobile-action-bar" aria-label="Quick Actions">
-    <a href="#contact" class="mobile-btn-primary">ESTABLISH CONNECTION</a>
-    <button id="mobile-resume-btn" class="mobile-btn-secondary">RESUMES</button>
-  </nav>
-
-  <!-- Main Content Structure -->
-  <main class="page-content" id="main-content">
-
-    <!-- 01 // HERO SECTION -->
-    <section id="hero" class="section-container hero-section" data-section-index="01" data-section-name="HERO">
-      <!-- Interactive Constellation Canvas -->
-      <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
-
-      <div class="hero-content">
-        <div class="system-badge-tag animate-fade-in">
-          <span class="terminal-blink-dot"></span>
-          <span>DATA ANALYST &bull; MACHINE LEARNING &bull; SQL &bull; POWER BI &bull; GENAI</span>
-        </div>
-
-        <h1 class="hero-name-heading animate-fade-in delay-1 decrypt-text" id="hero-title" data-value="Dev Patel">
-          Dev Patel
-        </h1>
-
-        <p class="hero-role-lead animate-fade-in delay-2">
-          DATA ANALYST &bull; MACHINE LEARNING ENGINEER
-        </p>
-
-        <p class="hero-subtitle animate-fade-in delay-2">
-          Transforming complex multi-source data into predictive intelligence, interactive Power BI executive dashboards, normalized SQL architectures, and production GenAI pipelines.
-        </p>
-
-        <!-- Hero Metric Ribbon -->
-        <div class="hero-metric-strip animate-fade-in delay-3">
-          <div class="hero-strip-item">
-            <span class="strip-num counter-value" data-target="10000" data-suffix="+">10000+</span>
-            <span class="strip-label">Sales Modeled</span>
-          </div>
-          <div class="hero-strip-divider"></div>
-          <div class="hero-strip-item">
-            <span class="strip-num counter-value" data-target="22" data-suffix=" Classes">22 Classes</span>
-            <span class="strip-label">Crop ML Model</span>
-          </div>
-          <div class="hero-strip-divider"></div>
-          <div class="hero-strip-item">
-            <span class="strip-num">3NF</span>
-            <span class="strip-label">SQL Schemas</span>
-          </div>
-          <div class="hero-strip-divider"></div>
-          <div class="hero-strip-item">
-            <span class="strip-num counter-value" data-target="99" data-suffix="%">99%</span>
-            <span class="strip-label">Reliability</span>
-          </div>
-        </div>
-
-        <div class="hero-cta-cluster animate-fade-in delay-4">
-          <a href="#projects" class="btn-primary-glow" id="hero-cta-projects">
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span>EXPLORE CASE STUDIES</span>
-          </a>
-          <a href="#contact" class="btn-outline-cyber" id="hero-cta-contact">
-            <span>GET IN TOUCH</span>
-          </a>
-          <button type="button" class="btn-ghost-cyber" id="hero-cta-resume">
-            <span>RESUME (PDF)</span>
-          </button>
-          <a href="#terminal" class="btn-ghost-cyber" id="hero-cta-terminal">
-            <span>SYSTEM CLI (~$)</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Scroll Down Cue -->
-      <div class="hero-scroll-cue" aria-hidden="true">
-        <span class="scroll-cue-text">SCROLL</span>
-        <div class="scroll-cue-track">
-          <div class="scroll-cue-runner"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02 // CORE ANALYTICAL PILLARS (REPLACED CYCLER) -->
-    <section id="pillars" class="section-container pillars-section" data-section-index="02" data-section-name="PILLARS">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">02</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="ANALYTICAL PILLARS">ANALYTICAL PILLARS</span>
-      </div>
-
-      <div class="pillars-header-block reveal-item">
-        <h2 class="pillars-headline">CORE SPECIALIZATIONS &amp; DATA ARCHITECTURE</h2>
-        <p class="pillars-subtitle">
-          Verified statistical engineering and analytical proficiencies applied across production machine learning pipelines, normalized enterprise relational databases, and executive business intelligence dashboards.
-        </p>
-      </div>
-
-      <div class="pillars-grid">
-        <!-- Pillar 1: Exploratory Data Analysis & Statistics -->
-        <div class="pillar-card card-spotlight reveal-item stagger-1">
-          <div class="pillar-top-meta">
-            <span class="pillar-index">PILLAR // 01</span>
-            <span class="pillar-badge">STATISTICAL RIGOR</span>
-          </div>
-          <h3 class="pillar-title">Exploratory Data Analysis &amp; Inference</h3>
-          <p class="pillar-desc">
-            Standardizing unstructured, high-variance datasets. Conducting multivariate distribution modeling, outlier treatment (IQR &amp; Z-score), and Pearson/Spearman pollutant &amp; customer correlation matrices.
-          </p>
-          <div class="pillar-metrics-box">
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>500k+ Records Processed</span>
-            </div>
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>100% Data Integrity</span>
-            </div>
-          </div>
-          <div class="pillar-stack-tags">
-            <span class="pillar-tag">Python</span>
-            <span class="pillar-tag">Pandas</span>
-            <span class="pillar-tag">NumPy</span>
-            <span class="pillar-tag">EDA</span>
-            <span class="pillar-tag">Seaborn</span>
-            <span class="pillar-tag">Matplotlib</span>
-          </div>
-        </div>
-
-        <!-- Pillar 2: Predictive Machine Learning -->
-        <div class="pillar-card card-spotlight reveal-item stagger-2">
-          <div class="pillar-top-meta">
-            <span class="pillar-index">PILLAR // 02</span>
-            <span class="pillar-badge">PREDICTIVE AI</span>
-          </div>
-          <h3 class="pillar-title">Predictive Machine Learning Pipelines</h3>
-          <p class="pillar-desc">
-            Training and benchmarking supervised classification and regression pipelines using Scikit-Learn and XGBoost. Automated feature scaling, one-hot encoding, k-fold cross-validation, and Streamlit deployment.
-          </p>
-          <div class="pillar-metrics-box">
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>22 Crop Classes</span>
-            </div>
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>Sub-1s Inference</span>
-            </div>
-          </div>
-          <div class="pillar-stack-tags">
-            <span class="pillar-tag">Scikit-learn</span>
-            <span class="pillar-tag">XGBoost</span>
-            <span class="pillar-tag">Feature Engineering</span>
-            <span class="pillar-tag">Streamlit</span>
-            <span class="pillar-tag">Model Metrics</span>
-          </div>
-        </div>
-
-        <!-- Pillar 3: Relational SQL Architecture -->
-        <div class="pillar-card card-spotlight reveal-item stagger-3">
-          <div class="pillar-top-meta">
-            <span class="pillar-index">PILLAR // 03</span>
-            <span class="pillar-badge">INFRASTRUCTURE</span>
-          </div>
-          <h3 class="pillar-title">3NF Relational Database &amp; SQL Schemas</h3>
-          <p class="pillar-desc">
-            Architecting normalized third-normal-form relational databases across linked transactional entities. Formulating complex CTEs, window functions (RANK, DENSE_RANK), and query optimization for sub-40ms latency.
-          </p>
-          <div class="pillar-metrics-box">
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>6+ Normalized Tables</span>
-            </div>
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>15+ Complex CTEs</span>
-            </div>
-          </div>
-          <div class="pillar-stack-tags">
-            <span class="pillar-tag">MySQL</span>
-            <span class="pillar-tag">PostgreSQL</span>
-            <span class="pillar-tag">Window Functions</span>
-            <span class="pillar-tag">Indexing</span>
-            <span class="pillar-tag">Schema Design</span>
-          </div>
-        </div>
-
-        <!-- Pillar 4: Executive Power BI Business Intelligence -->
-        <div class="pillar-card card-spotlight reveal-item stagger-4">
-          <div class="pillar-top-meta">
-            <span class="pillar-index">PILLAR // 04</span>
-            <span class="pillar-badge">DECISION ENGINES</span>
-          </div>
-          <h3 class="pillar-title">Executive Power BI Business Intelligence</h3>
-          <p class="pillar-desc">
-            Constructing end-to-end interactive reporting ecosystems. Building star-schema data models, dynamic time-intelligence DAX measures, and drill-through categorical analytics across 10,000+ sales transactions.
-          </p>
-          <div class="pillar-metrics-box">
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>10k+ Transactions</span>
-            </div>
-            <div class="pillar-metric-val">
-              <span class="pillar-metric-dot"></span>
-              <span>8 Core Executive KPIs</span>
-            </div>
-          </div>
-          <div class="pillar-stack-tags">
-            <span class="pillar-tag">Power BI</span>
-            <span class="pillar-tag">DAX</span>
-            <span class="pillar-tag">Power Query</span>
-            <span class="pillar-tag">Data Modeling</span>
-            <span class="pillar-tag">Advanced Excel</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 // CAREER TIMELINE -->
-    <section id="timeline" class="section-container timeline-section" data-section-index="03" data-section-name="TIMELINE">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">03</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="CAREER TIMELINE">CAREER TIMELINE</span>
-      </div>
-
-      <div class="timeline-container">
-        <div class="timeline-track-wrap">
-          <div class="timeline-axis-line">
-            <div class="timeline-axis-progress" id="timeline-progress"></div>
-          </div>
-
-          <div class="timeline-cards-row" id="timeline-cards">
-            <!-- 1. Diploma in Computer Engineering -->
-            <div class="timeline-milestone top-branch card-spotlight reveal-item stagger-1" data-year="2019">
-              <div class="milestone-content">
-                <span class="milestone-year">2019 — 2022</span>
-                <h3 class="milestone-title">Diploma in Computer Engineering</h3>
-                <p class="milestone-org">Growmore Engineering College, Himatnagar, Gujarat</p>
-                <p class="milestone-desc">Core foundation in computer engineering, algorithmic thinking, database administration, and software development.</p>
-              </div>
-              <div class="milestone-node"></div>
-            </div>
-
-            <!-- 2. B.Tech Computer Science Engineering -->
-            <div class="timeline-milestone bottom-branch card-spotlight reveal-item stagger-2" data-year="2022">
-              <div class="milestone-node"></div>
-              <div class="milestone-content">
-                <span class="milestone-year">2022 — 2025</span>
-                <h3 class="milestone-title">B.Tech in Computer Science Engineering</h3>
-                <p class="milestone-org">Parul University, Vadodara, Gujarat</p>
-                <p class="milestone-desc">Focus on Machine Learning, Database Management Systems, Python, Statistical Modeling, and AI Architecture.</p>
-              </div>
-            </div>
-
-            <!-- 3. Data Science Internship -->
-            <div class="timeline-milestone top-branch card-spotlight reveal-item stagger-3" data-year="2026">
-              <div class="milestone-content">
-                <span class="milestone-year">MAY 2026 — JUN 2026</span>
-                <h3 class="milestone-title">Data Science Intern</h3>
-                <p class="milestone-org">Prodigy InfoTech (Remote) • Outstanding Remarks</p>
-                <p class="milestone-desc">Standardized and cleaned five real-world datasets totaling 500,000+ records. Performed EDA, statistical trend analysis, and visual reporting using Python, Pandas, Matplotlib, and Seaborn.</p>
-              </div>
-              <div class="milestone-node"></div>
-            </div>
-
-            <!-- 4. Job Simulations & Certifications -->
-            <div class="timeline-milestone bottom-branch card-spotlight reveal-item stagger-4" data-year="2026">
-              <div class="milestone-node"></div>
-              <div class="milestone-content">
-                <span class="milestone-year">2026</span>
-                <h3 class="milestone-title">Simulations &amp; Credentials</h3>
-                <p class="milestone-org">TATA • Deloitte • Nasscom Foundation</p>
-                <p class="milestone-desc">GenAI Data Analytics (TATA), Data Visualisation (TATA), Data Analytics (Deloitte), thingQbator Chatbot Development, and Power BI Analytics Workshop.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 // TECH STACK (SUBSYSTEMS BOOT) -->
-    <section id="tech-stack" class="section-container tech-section" data-section-index="04" data-section-name="TECH STACK">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">04</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="TECH STACK">TECH STACK</span>
-      </div>
-
-      <div class="tech-stack-wrap">
-        <p class="section-intro-text reveal-item stagger-1">
-          The verified engineering, statistical, and AI stack applied across real-world data pipelines, production machine learning models, and business intelligence dashboards.
-        </p>
-
-        <div class="subsystems-tree">
-          <div class="subsystems-vertical-spine"></div>
-
-          <!-- Subsystem 1: Programming & Core -->
-          <div class="subsystem-row card-spotlight reveal-item stagger-1" data-subsystem="languages">
-            <div class="subsystem-led">
-              <span class="led-dot online"></span>
-            </div>
-            <div class="subsystem-info">
-              <div class="subsystem-header">
-                <span class="subsystem-category">PROGRAMMING &amp; RELATIONAL DATABASES</span>
-                <span class="subsystem-state">ONLINE</span>
-              </div>
-              <div class="badges-flex">
-                <span class="tech-badge" data-tech="python">Python</span>
-                <span class="tech-badge" data-tech="sql">SQL</span>
-                <span class="tech-badge" data-tech="mysql">MySQL</span>
-                <span class="tech-badge" data-tech="javascript">JavaScript</span>
-                <span class="tech-badge" data-tech="html">HTML5</span>
-                <span class="tech-badge" data-tech="css">CSS3</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Subsystem 2: Data Science & Analytics -->
-          <div class="subsystem-row card-spotlight reveal-item stagger-2" data-subsystem="datascience">
-            <div class="subsystem-led">
-              <span class="led-dot online"></span>
-            </div>
-            <div class="subsystem-info">
-              <div class="subsystem-header">
-                <span class="subsystem-category">DATA SCIENCE &amp; ANALYTICS</span>
-                <span class="subsystem-state">ONLINE</span>
-              </div>
-              <div class="badges-flex">
-                <span class="tech-badge" data-tech="pandas">Pandas</span>
-                <span class="tech-badge" data-tech="numpy">NumPy</span>
-                <span class="tech-badge" data-tech="eda">Exploratory Data Analysis (EDA)</span>
-                <span class="tech-badge" data-tech="stats">Statistical Analysis &amp; Hypothesis Testing</span>
-                <span class="tech-badge" data-tech="features">Feature Engineering</span>
-                <span class="tech-badge" data-tech="cleaning">Data Cleaning &amp; Wrangling</span>
-                <span class="tech-badge" data-tech="excel">Advanced Excel (Pivot / VLOOKUP)</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Subsystem 3: Machine Learning & GenAI -->
-          <div class="subsystem-row card-spotlight reveal-item stagger-3" data-subsystem="ml">
-            <div class="subsystem-led">
-              <span class="led-dot online"></span>
-            </div>
-            <div class="subsystem-info">
-              <div class="subsystem-header">
-                <span class="subsystem-category">MACHINE LEARNING &amp; GENAI ARCHITECTURE</span>
-                <span class="subsystem-state">ONLINE</span>
-              </div>
-              <div class="badges-flex">
-                <span class="tech-badge" data-tech="scikit">Scikit-learn</span>
-                <span class="tech-badge" data-tech="supervised">Supervised ML</span>
-                <span class="tech-badge" data-tech="regression">Regression &amp; Classification</span>
-                <span class="tech-badge" data-tech="streamlit">Streamlit</span>
-                <span class="tech-badge" data-tech="langchain">LangChain</span>
-                <span class="tech-badge" data-tech="langgraph">LangGraph</span>
-                <span class="tech-badge" data-tech="rag">RAG (Retrieval Augmented Generation)</span>
-                <span class="tech-badge" data-tech="gemini">Gemini API Embeddings</span>
-                <span class="tech-badge" data-tech="groq">Groq LLM</span>
-                <span class="tech-badge" data-tech="prompt">Prompt Engineering</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Subsystem 4: Visualization, BI & Developer Tools -->
-          <div class="subsystem-row card-spotlight reveal-item stagger-4" data-subsystem="bi">
-            <div class="subsystem-led">
-              <span class="led-dot online"></span>
-            </div>
-            <div class="subsystem-info">
-              <div class="subsystem-header">
-                <span class="subsystem-category">VISUALIZATION, BI &amp; DEVELOPER TOOLCHAIN</span>
-                <span class="subsystem-state">ONLINE</span>
-              </div>
-              <div class="badges-flex">
-                <span class="tech-badge" data-tech="powerbi">Power BI</span>
-                <span class="tech-badge" data-tech="matplotlib">Matplotlib</span>
-                <span class="tech-badge" data-tech="seaborn">Seaborn</span>
-                <span class="tech-badge" data-tech="kpi">KPI Design &amp; DAX</span>
-                <span class="tech-badge" data-tech="jupyter">Jupyter Notebook</span>
-                <span class="tech-badge" data-tech="git">Git &amp; GitHub</span>
-                <span class="tech-badge" data-tech="vercel">Vercel</span>
-                <span class="tech-badge" data-tech="netlify">Netlify</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Terminal Status Output Bar -->
-        <div class="subsystem-terminal-status reveal-item stagger-5">
-          <div class="terminal-prompt-line">
-            <span class="term-user">dev@dp-analytics</span><span class="term-sep">:~$ </span>
-            <span class="term-cmd">stack --verified</span>
-          </div>
-          <div class="terminal-status-result">
-            <span class="check-icon">✓</span>
-            <span class="status-count">4 / 4 Subsystems Operational [Python • SQL • ML/AI • Power BI]</span>
-            <span class="status-pulse-block"></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 // PROJECT CASE STUDIES -->
-    <section id="projects" class="section-container projects-section" data-section-index="05" data-section-name="PROJECTS">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">05</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="PROJECT CASE STUDIES">PROJECT CASE STUDIES</span>
-      </div>
-
-      <div class="projects-list">
-
-        <!-- Project 1: Sales Analytics Dashboard (Featured BI Architecture) -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="blue">
-          <div class="project-glow-layer"></div>
-          <div class="project-grid-inner">
-            <div class="project-spec-col">
-              <div class="case-meta">
-                <span class="case-num">01 — FEATURED BUSINESS INTELLIGENCE</span>
-                <span class="case-badge">POWER BI &amp; DATA MODELING</span>
-              </div>
-
-              <h3 class="project-title">Sales Analytics Dashboard</h3>
-              <p class="project-tagline">
-                Interactive executive reporting across 10,000+ sales records, four product categories, and eight KPIs to track revenue growth and customer retention.
-              </p>
-
-              <div class="project-block">
-                <h4 class="block-label">PROBLEM STATEMENT</h4>
-                <p class="block-text">
-                  Corporate business teams lacked an integrated view of regional revenue trends, product category margins, and customer retention metrics across massive historical sales records, leading to delayed decision-making and manual reporting bottlenecks.
-                </p>
-              </div>
-
-              <div class="project-block">
-                <h4 class="block-label">ARCHITECTURAL SOLUTION</h4>
-                <p class="block-text">
-                  Engineered an end-to-end Power BI business intelligence dashboard. Built robust relational star-schema data models, authored customized DAX measures for Year-over-Year (YoY) revenue tracking, and designed interactive cross-filtering visuals covering regional sales distributions, top customer cohorts, and product margins.
-                </p>
-              </div>
-
-              <div class="project-links-row">
-                <a href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                  <svg class="link-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GITHUB REPO</span>
-                </a>
-                <a href="#contact" class="btn-project-link secondary">
-                  <span>DISCUSS ARCHITECTURE</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="project-telemetry-col">
-              <div class="challenge-group">
-                <h4 class="block-label">ENGINEERING CHALLENGES</h4>
-                <ul class="challenge-list">
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Designing optimized DAX measures to calculate dynamic profit margins and retention rates without slowing interactive dashboard slicers.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Transforming and standardizing messy sales transactions with multiple currencies and return statuses into a unified star schema.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Creating intuitive executive-level KPIs highlighting revenue growth, top-performing sales reps, and regional discrepancies.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="pipeline-block">
-                <h4 class="block-label">DATA PIPELINE FLOW</h4>
-                <div class="pipeline-flow-diagram">
-                  <span class="pipe-node">10K+ Sales Rows</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Power Query ETL</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Star Schema</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">DAX KPIs</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Executive Visuals</span>
-                </div>
-              </div>
-
-              <div class="tech-stack-row">
-                <h4 class="block-label">SUBSYSTEM STACK</h4>
-                <div class="badges-flex">
-                  <span class="tech-badge">Power BI</span>
-                  <span class="tech-badge">DAX Formulas</span>
-                  <span class="tech-badge">Data Modeling</span>
-                  <span class="tech-badge">KPI Design</span>
-                </div>
-              </div>
-
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="10000" data-suffix="+">10000+</span>
-                  <span class="metric-key">SALES ROWS</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="8" data-suffix=" Core">8 Core</span>
-                  <span class="metric-key">BUSINESS KPIS</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="4" data-suffix=" Categories">4 Categories</span>
-                  <span class="metric-key">PRODUCT SECTORS</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 2: E-Commerce Sales & Customer Analysis -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="amber">
-          <div class="project-glow-layer"></div>
-          <div class="project-grid-inner">
-            <div class="project-spec-col">
-              <div class="case-meta">
-                <span class="case-num warn">02 — RELATIONAL SQL ARCHITECTURE</span>
-                <span class="case-badge warn">MYSQL &amp; ADVANCED QUERIES</span>
-              </div>
-
-              <h3 class="project-title">E-Commerce Sales &amp; Customer Analysis</h3>
-              <p class="project-tagline">
-                Designed a 6-table relational schema and authored 15+ complex queries with joins, CTEs, window functions, and RFM-style customer segmentation.
-              </p>
-
-              <div class="project-block">
-                <h4 class="block-label">PROBLEM STATEMENT</h4>
-                <p class="block-text">
-                  E-commerce platforms generate high-frequency transaction logs across orders, products, customers, and payments. Unoptimized ad-hoc querying leads to severe table locks, duplicated customer aggregations, and inaccurate monthly revenue reports.
-                </p>
-              </div>
-
-              <div class="project-block">
-                <h4 class="block-label">ARCHITECTURAL SOLUTION</h4>
-                <p class="block-text">
-                  Architected a normalized 3NF relational database schema across six connected tables in MySQL. Authored 15+ advanced SQL analytical queries utilizing window functions (`RANK()`, `ROW_NUMBER()`, `DENSE_RANK()`), multi-table inner/outer joins, and conditional CASE statements to evaluate customer lifetime value (LTV) and monthly revenue trajectories.
-                </p>
-              </div>
-
-              <div class="project-links-row">
-                <a href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                  <svg class="link-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GITHUB REPO</span>
-                </a>
-                <a href="#contact" class="btn-project-link secondary">
-                  <span>DISCUSS ARCHITECTURE</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="project-telemetry-col">
-              <div class="challenge-group">
-                <h4 class="block-label">ENGINEERING CHALLENGES</h4>
-                <ul class="challenge-list">
-                  <li>
-                    <span class="bullet-accent warn"></span>
-                    <span>Designing normalized 3NF table schemas preventing data redundancy while maintaining high join efficiency.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent warn"></span>
-                    <span>Formulating window functions to calculate running monthly totals and ranking customer purchase frequencies.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent warn"></span>
-                    <span>Structuring complex subqueries and CASE expressions to classify customers into distinct high-value and churn-risk cohorts.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="pipeline-block">
-                <h4 class="block-label">DATA PIPELINE FLOW</h4>
-                <div class="pipeline-flow-diagram">
-                  <span class="pipe-node">Raw Data</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">6-Table MySQL 3NF</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Joins &amp; Windowing</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Customer Segmentation</span>
-                </div>
-              </div>
-
-              <div class="tech-stack-row">
-                <h4 class="block-label">SUBSYSTEM STACK</h4>
-                <div class="badges-flex">
-                  <span class="tech-badge">MySQL</span>
-                  <span class="tech-badge">Window Functions</span>
-                  <span class="tech-badge">Relational Modeling</span>
-                  <span class="tech-badge">SQL Joins &amp; CTEs</span>
-                </div>
-              </div>
-
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="6" data-suffix=" Tables">6 Tables</span>
-                  <span class="metric-key">RELATIONAL SCHEMA</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="15" data-suffix="+ Queries">15+ Queries</span>
-                  <span class="metric-key">ANALYTICAL SCRIPTS</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="100" data-suffix="%">100%</span>
-                  <span class="metric-key">DATA INTEGRITY</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 3: Crop Recommendation System -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="green">
-          <div class="project-glow-layer"></div>
-          <div class="project-grid-inner">
-            <div class="project-spec-col">
-              <div class="case-meta">
-                <span class="case-num good">03 — PREDICTIVE MACHINE LEARNING</span>
-                <span class="case-badge good">SCIKIT-LEARN &amp; STREAMLIT</span>
-              </div>
-
-              <h3 class="project-title">Crop Recommendation System</h3>
-              <p class="project-tagline">
-                Predictive multi-class machine learning pipeline determining optimal crop cultivation across 22 classes from 7 soil and climate parameters.
-              </p>
-
-              <div class="project-block">
-                <h4 class="block-label">PROBLEM STATEMENT</h4>
-                <p class="block-text">
-                  Agricultural farmers frequently suffer harvest failures and suboptimal crop yields due to planting decisions based on intuition rather than empirical chemical soil data and microclimate measurements.
-                </p>
-              </div>
-
-              <div class="project-block">
-                <h4 class="block-label">ARCHITECTURAL SOLUTION</h4>
-                <p class="block-text">
-                  Engineered an end-to-end predictive machine learning model using Scikit-learn. Trained, cross-validated, and benchmarked multiple algorithms (Logistic Regression, Gaussian Naive Bayes, and K-Nearest Neighbors) across seven features (Nitrogen, Phosphorus, Potassium, Temperature, Humidity, pH, and Rainfall). Packaged the model with pickle and deployed an interactive Streamlit web application for instant farmer field recommendations.
-                </p>
-              </div>
-
-              <div class="project-links-row">
-                <a href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                  <svg class="link-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GITHUB REPO</span>
-                </a>
-                <a href="#contact" class="btn-project-link secondary">
-                  <span>DISCUSS ARCHITECTURE</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="project-telemetry-col">
-              <div class="challenge-group">
-                <h4 class="block-label">ENGINEERING CHALLENGES</h4>
-                <ul class="challenge-list">
-                  <li>
-                    <span class="bullet-accent good"></span>
-                    <span>Normalizing and handling non-linear variance across disparate soil chemical measurements and meteorological data.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent good"></span>
-                    <span>Benchmarking multi-class classification boundaries across 22 distinct agricultural produce classes.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent good"></span>
-                    <span>Deploying a lightweight, responsive inference UI on Streamlit allowing non-technical agricultural workers to test soil configurations.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="pipeline-block">
-                <h4 class="block-label">ML PIPELINE FLOW</h4>
-                <div class="pipeline-flow-diagram">
-                  <span class="pipe-node">7 Soil/Weather Inputs</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Data Normalization</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Model Benchmark</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Streamlit Deployment</span>
-                </div>
-              </div>
-
-              <div class="tech-stack-row">
-                <h4 class="block-label">SUBSYSTEM STACK</h4>
-                <div class="badges-flex">
-                  <span class="tech-badge">Python</span>
-                  <span class="tech-badge">Scikit-learn</span>
-                  <span class="tech-badge">Streamlit</span>
-                  <span class="tech-badge">Classification</span>
-                </div>
-              </div>
-
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="22" data-suffix=" Classes">22 Classes</span>
-                  <span class="metric-key">CROPS PREDICTED</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="7" data-suffix=" Features">7 Features</span>
-                  <span class="metric-key">SOIL &amp; CLIMATE</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="99" data-suffix="%">99%</span>
-                  <span class="metric-key">PIPELINE RELIABILITY</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 4: GenAI Application Suite & Multi-PDF RAG -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="purple">
-          <div class="project-glow-layer"></div>
-          <div class="project-grid-inner">
-            <div class="project-spec-col">
-              <div class="case-meta">
-                <span class="case-num">04 — DOCUMENT AI &amp; LLMS</span>
-                <span class="case-badge">LANGCHAIN &amp; GEMINI API</span>
-              </div>
-
-              <h3 class="project-title">GenAI Application Suite &amp; Multi-PDF RAG</h3>
-              <p class="project-tagline">
-                Multi-document Retrieval-Augmented Generation (RAG) assistant leveraging Gemini vector embeddings, alongside Smart Study Buddy for explanations, MCQs, and interview prep.
-              </p>
-
-              <div class="project-block">
-                <h4 class="block-label">PROBLEM STATEMENT</h4>
-                <p class="block-text">
-                  Users struggle to extract targeted knowledge from dense multi-page PDF documents. Traditional LLMs either exceed token window limitations or produce ungrounded hallucinations when answering domain-specific inquiries.
-                </p>
-              </div>
-
-              <div class="project-block">
-                <h4 class="block-label">ARCHITECTURAL SOLUTION</h4>
-                <p class="block-text">
-                  Architected a multi-document RAG solution utilizing LangChain and LangGraph. Ingests unstructured PDF documents, applies semantic chunking, and computes high-dimensional vector embeddings via the Gemini API stored in memory. Paired with "Smart Study Buddy" to dynamically formulate topic summaries, conceptual flashcards, MCQs, and interview simulations with grounded citations.
-                </p>
-              </div>
-
-              <div class="project-links-row">
-                <a href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                  <svg class="link-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GITHUB REPO</span>
-                </a>
-                <a href="#contact" class="btn-project-link secondary">
-                  <span>DISCUSS ARCHITECTURE</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="project-telemetry-col">
-              <div class="challenge-group">
-                <h4 class="block-label">ENGINEERING CHALLENGES</h4>
-                <ul class="challenge-list">
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Tuning chunk sizes and overlap thresholds to preserve cross-paragraph semantic context during document parsing.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Integrating Gemini vector embeddings into lightweight in-memory vector stores for low-latency retrieval.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Enforcing strict prompt grounding to eliminate generative hallucination when synthesizing responses.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="pipeline-block">
-                <h4 class="block-label">RAG PIPELINE FLOW</h4>
-                <div class="pipeline-flow-diagram">
-                  <span class="pipe-node">Multi-PDF Upload</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Text Chunking</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Gemini Embeddings</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Vector Retrieval</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Grounded Response</span>
-                </div>
-              </div>
-
-              <div class="tech-stack-row">
-                <h4 class="block-label">SUBSYSTEM STACK</h4>
-                <div class="badges-flex">
-                  <span class="tech-badge">LangChain</span>
-                  <span class="tech-badge">Gemini API</span>
-                  <span class="tech-badge">Vector RAG</span>
-                  <span class="tech-badge">Streamlit</span>
-                </div>
-              </div>
-
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="100" data-suffix="%">100%</span>
-                  <span class="metric-key">GROUNDED RAG</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="2" data-suffix=" Apps">2 Apps</span>
-                  <span class="metric-key">GENAI SUITE</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="0" data-suffix=" Hallucination">0 Hallucination</span>
-                  <span class="metric-key">VERIFIED RETRIEVAL</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 5: AI Travel Planner -->
-        <article class="project-case-card card-spotlight reveal-item" data-accent="cyan">
-          <div class="project-glow-layer"></div>
-          <div class="project-grid-inner">
-            <div class="project-spec-col">
-              <div class="case-meta">
-                <span class="case-num">05 — AUTONOMOUS LLM AGENTS</span>
-                <span class="case-badge">TOOL-CALLING ARCHITECTURE</span>
-              </div>
-
-              <h3 class="project-title">AI Travel Planner Agent</h3>
-              <p class="project-tagline">
-                Autonomous travel-planning agent that synthesizes feasibility, budgets, day-by-day itineraries, hotels, and weather using Groq LLMs and live Serper Google Search tool execution.
-              </p>
-
-              <div class="project-block">
-                <h4 class="block-label">PROBLEM STATEMENT</h4>
-                <p class="block-text">
-                  Manual vacation planning requires juggling disjointed websites for flight schedules, budget estimation, real-time weather forecasts, and hotel availability, requiring hours of manual synthesis.
-                </p>
-              </div>
-
-              <div class="project-block">
-                <h4 class="block-label">ARCHITECTURAL SOLUTION</h4>
-                <p class="block-text">
-                  Engineered an autonomous multi-tool agent powered by LangChain and Groq LLMs. Integrated real-time web exploration via Serper API Google Search tool-calling to extract current weather, transit costs, accommodation, and restaurant recommendations. Implemented structured output schemas ensuring rigorous budget adherence and detailed day-by-day itineraries.
-                </p>
-              </div>
-
-              <div class="project-links-row">
-                <a href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                  <svg class="link-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GITHUB REPO</span>
-                </a>
-                <a href="#contact" class="btn-project-link secondary">
-                  <span>DISCUSS ARCHITECTURE</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="project-telemetry-col">
-              <div class="challenge-group">
-                <h4 class="block-label">ENGINEERING CHALLENGES</h4>
-                <ul class="challenge-list">
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Orchestrating agent tool-calling loops without infinite recursion or query degradation on ambiguous user destination inputs.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Parsing raw search snippets from Serper API into structured, validated budget line items.</span>
-                  </li>
-                  <li>
-                    <span class="bullet-accent"></span>
-                    <span>Leveraging Groq's high-throughput LPU inference for ultra-fast multi-step agent reasoning.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="pipeline-block">
-                <h4 class="block-label">AGENT REASONING FLOW</h4>
-                <div class="pipeline-flow-diagram">
-                  <span class="pipe-node">User Constraints</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Groq LPU Reasoning</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Serper Search Tools</span>
-                  <span class="pipe-arrow">→</span>
-                  <span class="pipe-node">Budget &amp; Itinerary</span>
-                </div>
-              </div>
-
-              <div class="tech-stack-row">
-                <h4 class="block-label">SUBSYSTEM STACK</h4>
-                <div class="badges-flex">
-                  <span class="tech-badge">LangChain</span>
-                  <span class="tech-badge">Groq LLM</span>
-                  <span class="tech-badge">Serper API</span>
-                  <span class="tech-badge">Tool Calling</span>
-                </div>
-              </div>
-
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="100" data-suffix="%">100%</span>
-                  <span class="metric-key">LIVE WEB SEARCH</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="5" data-suffix=" Tools">5 Tools</span>
-                  <span class="metric-key">AGENT CAPABILITIES</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value counter-value" data-target="1" data-prefix="< " data-suffix="s">&lt; 1s</span>
-                  <span class="metric-key">GROQ INFERENCE</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- 06 // OPEN SOURCE & REPOSITORY GRAPH -->
-    <section id="open-source" class="section-container oss-section" data-section-index="06" data-section-name="OPEN SOURCE">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">06</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="OPEN SOURCE ECOSYSTEM">OPEN SOURCE ECOSYSTEM</span>
-      </div>
-
-      <div class="oss-layout">
-        <div class="oss-grid-top">
-          <!-- Interactive Git Commit Graph DAG -->
-          <div class="git-dag-card card-spotlight reveal-item">
-            <div class="card-top-bar">
-              <span class="card-top-title">ACTIVE BRANCH: feature/genai-rag-pipeline → main</span>
-              <span class="git-head-pill">HEAD [74458d4]</span>
-            </div>
-
-            <div class="git-dag-svg-wrap">
-              <svg viewBox="0 0 584 140" class="git-dag-svg drawn" id="git-dag-svg" fill="none" preserveAspectRatio="xMidYMid meet">
-                <path d="M40,95 L544,95" stroke="rgba(255,255,255,0.18)" stroke-width="2" class="git-main-path" />
-                <path d="M112,95 C140,95 156,35 184,35 L328,35 C356,35 372,95 400,95" stroke="#0a84ff" stroke-width="2.5" class="git-branch-path" id="git-feature-path" />
-
-                <circle cx="40" cy="95" r="5" class="git-node base" data-commit="init: portfolio telemetry core" />
-                <circle cx="112" cy="95" r="5" class="git-node base" data-commit="feat: 500k EDA dataset normalization" />
-                <circle cx="184" cy="35" r="6" class="git-node branch" data-commit="feat: multi-pdf RAG vector retriever" />
-                <circle cx="256" cy="35" r="6" class="git-node branch" data-commit="test: 22-class crop ML benchmark" />
-                <circle cx="328" cy="35" r="6" class="git-node branch" data-commit="fix: Power BI star schema DAX relations" />
-                <circle cx="400" cy="95" r="7" class="git-node merge" data-commit="merge: genai-rag-pipeline into main" />
-                <circle cx="472" cy="95" r="5" class="git-node base" data-commit="feat: Serper API live tool execution" />
-                <circle cx="544" cy="95" r="5" class="git-node base" data-commit="perf: Vercel edge deployment optimization" />
-
-                <circle cx="112" cy="95" r="5" class="git-live-packet" id="git-live-packet" fill="#00e5ff" />
-              </svg>
-            </div>
-
-            <!-- Commit History Stream -->
-            <div class="commit-log-stream">
-              <div class="commit-row"><span class="c-dot base"></span><span class="c-msg">init: portfolio telemetry core &amp; CSS architecture</span></div>
-              <div class="commit-row"><span class="c-dot base"></span><span class="c-msg">feat: Prodigy InfoTech 500k dataset EDA &amp; outlier filtering</span></div>
-              <div class="commit-row active"><span class="c-dot branch"></span><span class="c-msg">feat: LangChain Multi-PDF RAG with Gemini embeddings</span></div>
-              <div class="commit-row"><span class="c-dot branch"></span><span class="c-msg">test: Scikit-learn 22-class crop classification validation</span></div>
-              <div class="commit-row"><span class="c-dot branch"></span><span class="c-msg">fix: Power BI star schema relationships &amp; dynamic DAX measures</span></div>
-              <div class="commit-row"><span class="c-dot merge"></span><span class="c-msg">merge: pull request #7: genai-rag-pipeline into main</span></div>
-              <div class="commit-row"><span class="c-dot base"></span><span class="c-msg">perf: Vercel CDN deployment &amp; native web audio synthesizer</span></div>
-            </div>
-          </div>
-
-          <!-- Featured Public Repositories -->
-          <div class="repos-column">
-            <!-- Repo 1 -->
-            <a href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener noreferrer" class="repo-card card-spotlight reveal-item stagger-1">
-              <div class="repo-card-head">
-                <span class="repo-name">power-bi-final</span>
-                <span class="repo-lang powerbi">Power BI</span>
-              </div>
-              <p class="repo-desc">
-                Interactive sales analytics reporting over 10,000+ sales records across four categories and eight core business KPIs.
-              </p>
-              <div class="repo-meta">
-                <span>Power BI</span>
-                <span>DAX</span>
-                <span>Data Modeling</span>
-              </div>
-            </a>
-
-            <!-- Repo 2 -->
-            <a href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener noreferrer" class="repo-card card-spotlight reveal-item stagger-2">
-              <div class="repo-card-head">
-                <span class="repo-name">ecommerce-sql-analysis</span>
-                <span class="repo-lang sql">MySQL</span>
-              </div>
-              <p class="repo-desc">
-                Relational schema design and 15+ complex queries with window functions and segmentation for monthly revenue trend analysis.
-              </p>
-              <div class="repo-meta">
-                <span>MySQL</span>
-                <span>Window Functions</span>
-                <span>Normalization</span>
-              </div>
-            </a>
-
-            <!-- Repo 3 -->
-            <a href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener noreferrer" class="repo-card card-spotlight reveal-item stagger-3">
-              <div class="repo-card-head">
-                <span class="repo-name">ML-Crop-Recommendation</span>
-                <span class="repo-lang python">Python</span>
-              </div>
-              <p class="repo-desc">
-                Multi-class machine learning pipeline predicting 22 crop types from soil and weather conditions, deployed on Streamlit.
-              </p>
-              <div class="repo-meta">
-                <span>Python</span>
-                <span>Scikit-learn</span>
-                <span>Streamlit</span>
-              </div>
-            </a>
-
-            <!-- Repo 4 -->
-            <a href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener noreferrer" class="repo-card card-spotlight reveal-item stagger-4">
-              <div class="repo-card-head">
-                <span class="repo-name">Gen_AI</span>
-                <span class="repo-lang ai">GenAI</span>
-              </div>
-              <p class="repo-desc">
-                Multi-PDF RAG chatbot with Gemini embeddings and smart study assistant for interactive question answering and exam prep.
-              </p>
-              <div class="repo-meta">
-                <span>LangChain</span>
-                <span>Gemini API</span>
-                <span>RAG</span>
-              </div>
-            </a>
-
-            <!-- Repo 5 -->
-            <a href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener noreferrer" class="repo-card card-spotlight reveal-item stagger-5">
-              <div class="repo-card-head">
-                <span class="repo-name">AI-Travel-Planner</span>
-                <span class="repo-lang ai">Agentic AI</span>
-              </div>
-              <p class="repo-desc">
-                Autonomous itinerary planning agent powered by Groq LLM and Serper real-time web search for budget, flights, and weather telemetry.
-              </p>
-              <div class="repo-meta">
-                <span>Groq API</span>
-                <span>LangChain</span>
-                <span>Serper API</span>
-              </div>
-            </a>
-
-            <a href="https://github.com/Devpatel7777?tab=repositories" target="_blank" rel="noopener noreferrer" class="view-all-repos-btn">
-              <span>EXPLORE ALL PUBLIC REPOSITORIES ON GITHUB</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- 52-Week GitHub Heatmap Simulator -->
-        <div class="contribution-matrix-card card-spotlight reveal-item">
-          <div class="matrix-header">
-            <span class="matrix-title">TELEMETRY ACTIVITY // GITHUB: Devpatel7777</span>
-            <span class="matrix-legend">
-              <span class="leg-txt">Less</span>
-              <span class="leg-box lvl-0"></span>
-              <span class="leg-box lvl-1"></span>
-              <span class="leg-box lvl-2"></span>
-              <span class="leg-box lvl-3"></span>
-              <span class="leg-box lvl-4"></span>
-              <span class="leg-txt">More</span>
-            </span>
-          </div>
-
-          <div class="matrix-scroll-wrap">
-            <div id="matrix-container" class="matrix-container">
-              <!-- Dynamically generated 52-week grid -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 07 // INTERACTIVE OPERATING SYSTEM TERMINAL -->
-    <section id="terminal" class="section-container terminal-section" data-section-index="07" data-section-name="TERMINAL">
-      <div class="section-header-tag reveal-item">
-        <span class="tag-accent">07</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="OPERATING SYSTEM">OPERATING SYSTEM</span>
-      </div>
-
-      <div class="terminal-wrapper">
-        <div class="terminal-window card-spotlight reveal-item">
-          <!-- Terminal Title Bar -->
-          <div class="term-window-bar">
-            <div class="term-window-dots">
-              <span class="dot close"></span>
-              <span class="dot minimize"></span>
-              <span class="dot maximize"></span>
-            </div>
-            <div class="term-window-title">
-              <span class="term-icon">⚡</span>
-              <span>guest@dp-systems: ~ (zsh / bash)</span>
-            </div>
-            <div class="term-window-actions">
-              <button id="term-clear-btn" class="term-mini-btn" title="Clear console">clear</button>
-            </div>
-          </div>
-
-          <!-- Terminal Screen / Log Canvas -->
-          <div class="terminal-body" id="terminal-body">
-            <div class="term-welcome-msg">
-              <pre class="ascii-art">
-  _____  _______      __  _____       _______ ______ _      
- |  __ \|  ____\ \   / / |  __ \   /\|__   __|  ____| |     
- | |  | | |__   \ \_/ /  | |__) | /  \  | |  | |__  | |     
- | |  | |  __|   \   /   |  ___/ / /\ \ | |  |  __| | |     
- | |__| | |____   | |    | |    / ____ \| |  | |____| |____ 
- |_____/|______|  |_|    |_|   /_/    \_\_|  |______|______|
-              </pre>
-              <p class="term-intro">
-                DP-Systems OS v3.2.0 [Kernel: Linux 6.8.0-x86_64-generic]<br>
-                Welcome to Dev Patel's interactive terminal session.<br>
-                Type <span class="term-highlight">'help'</span> to view recognized commands or click the shortcut buttons below.
-              </p>
-            </div>
-
-            <!-- Command Log History is appended here -->
-            <div id="terminal-output" class="terminal-output"></div>
-
-            <!-- Active Prompt Input -->
-            <form id="terminal-form" class="terminal-input-row" autocomplete="off">
-              <span class="term-prompt-user">guest@dp-systems</span>
-              <span class="term-prompt-symbol">:~$</span>
-              <input
-                type="text"
-                id="terminal-input"
-                class="terminal-input"
-                spellcheck="false"
-                autocomplete="off"
-                autocapitalize="none"
-                aria-label="Terminal command line input"
-                placeholder="type command..."
-              />
-            </form>
-          </div>
-        </div>
-
-        <!-- Quick Command Helper Pills -->
-        <div class="term-quick-cmds">
-          <span class="quick-label">Try commands:</span>
-          <button class="quick-cmd-btn" data-cmd="help">help</button>
-          <button class="quick-cmd-btn" data-cmd="about">about</button>
-          <button class="quick-cmd-btn" data-cmd="projects">projects</button>
-          <button class="quick-cmd-btn" data-cmd="skills">skills</button>
-          <button class="quick-cmd-btn" data-cmd="timeline">timeline</button>
-          <button class="quick-cmd-btn" data-cmd="resume">resume</button>
-          <button class="quick-cmd-btn" data-cmd="contact">contact</button>
-          <button class="quick-cmd-btn" data-cmd="matrix">matrix</button>
-          <button class="quick-cmd-btn" data-cmd="clear">clear</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 08 // SECURE CHANNEL CONTACT -->
-    <section id="contact" class="section-container contact-section" data-section-index="08" data-section-name="CONTACT">
-      <div class="section-header-tag justify-center reveal-item">
-        <span class="tag-accent">08</span>
-        <span class="tag-divider"></span>
-        <span class="tag-title decrypt-text" data-value="SECURE CONNECTION CHANNEL">SECURE CONNECTION CHANNEL</span>
-      </div>
-
-      <div class="contact-terminal-card card-spotlight reveal-item">
-        <!-- Window Bar -->
-        <div class="contact-window-bar">
-          <div class="term-window-dots">
-            <span class="dot close"></span>
-            <span class="dot minimize"></span>
-            <span class="dot maximize"></span>
-          </div>
-          <span class="channel-status-title">secure-channel // TLS 1.3 encrypted</span>
-        </div>
-
-        <div class="contact-card-inner">
-          <div class="contact-heading-group">
-            <h2 class="contact-title">Establish Connection</h2>
-            <p class="contact-sub">
-              Open a verified channel to discuss Data Analytics, Machine Learning, or AI engineering roles worth building.
-            </p>
-          </div>
-
-          <!-- Initial State: Big Action Button -->
-          <div class="connection-trigger-wrap" id="connection-trigger-wrap">
-            <button id="establish-connection-btn" class="btn-handshake-trigger" aria-label="Establish direct socket connection">
-              <span class="btn-beacon"></span>
-              <span class="btn-text">ESTABLISH CONNECTION</span>
-            </button>
-          </div>
-
-          <!-- Handshake In-Progress & Connected Visualizer -->
-          <div class="handshake-simulation-wrap hidden" id="handshake-simulation-wrap">
-            <!-- Wire & Packet Animation -->
-            <div class="wire-diagram">
-              <span class="wire-node client">YOU</span>
-              <div class="wire-line">
-                <div class="packet-runner" id="packet-runner"></div>
-              </div>
-              <span class="wire-node server">DP-SERVER</span>
-            </div>
-
-            <!-- Terminal Verification Logs -->
-            <div class="handshake-logs" id="handshake-logs">
-              <!-- Logs populated dynamically with checkmarks -->
-            </div>
-
-            <!-- Direct Channel Reveal (Socials & Transmission Form) -->
-            <div class="revealed-channels-wrap hidden" id="revealed-channels-wrap">
-              <div class="channels-grid">
-                <!-- Email -->
-                <a href="mailto:devpatel846211@gmail.com" class="channel-link-card" id="email-channel-card">
-                  <div class="channel-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                  </div>
-                  <div class="channel-text-info">
-                    <span class="channel-type">PRIMARY EMAIL</span>
-                    <span class="channel-val">devpatel846211@gmail.com</span>
-                  </div>
-                  <button class="copy-val-btn" data-copy="devpatel846211@gmail.com" title="Copy email address" aria-label="Copy email">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                </a>
-
-                <!-- Phone / Direct Contact -->
-                <a href="tel:+919328977322" class="channel-link-card">
-                  <div class="channel-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                  </div>
-                  <div class="channel-text-info">
-                    <span class="channel-type">PHONE / WHATSAPP</span>
-                    <span class="channel-val">+91 93289 77322</span>
-                  </div>
-                  <button class="copy-val-btn" data-copy="+91 93289 77322" title="Copy phone number" aria-label="Copy phone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                </a>
-
-                <!-- GitHub -->
-                <a href="https://github.com/Devpatel7777" target="_blank" rel="noopener noreferrer" class="channel-link-card">
-                  <div class="channel-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  </div>
-                  <div class="channel-text-info">
-                    <span class="channel-type">GITHUB</span>
-                    <span class="channel-val">github.com/Devpatel7777</span>
-                  </div>
-                  <span class="channel-arrow">↗</span>
-                </a>
-
-                <!-- LinkedIn -->
-                <a href="https://linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener noreferrer" class="channel-link-card">
-                  <div class="channel-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                  </div>
-                  <div class="channel-text-info">
-                    <span class="channel-type">LINKEDIN</span>
-                    <span class="channel-val">linkedin.com/in/dev-patel-0a1291216</span>
-                  </div>
-                  <span class="channel-arrow">↗</span>
-                </a>
-              </div>
-
-              <!-- Direct Packet Transmission Form -->
-              <div class="transmission-box">
-                <div class="tx-header">
-                  <span class="tx-title">DIRECT PACKET TRANSMISSION</span>
-                  <span class="tx-tag">STATUS: READY</span>
-                </div>
-
-                <form id="transmission-form" class="transmission-form">
-                  <div class="form-row-dual">
-                    <div class="form-group">
-                      <label for="tx-sender-name">IDENTIFIER / NAME</label>
-                      <input type="text" id="tx-sender-name" required placeholder="e.g. Alex Rivera" />
-                    </div>
-                    <div class="form-group">
-                      <label for="tx-sender-email">RETURN ADDRESS (EMAIL)</label>
-                      <input type="email" id="tx-sender-email" required placeholder="alex@company.com" />
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tx-subject">PACKET TOPIC</label>
-                    <input type="text" id="tx-subject" required placeholder="e.g. Data Analyst Role / Machine Learning Project" />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="tx-message">PAYLOAD MESSAGE</label>
-                    <textarea id="tx-message" rows="4" required placeholder="Detail your project requirements, analytics role, or collaboration inquiry..."></textarea>
-                  </div>
-
-                  <div class="form-submit-row">
-                    <button type="submit" id="tx-send-btn" class="btn-transmit">
-                      <span>TRANSMIT PACKET</span>
-                      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                    </button>
-                    <span id="tx-feedback-msg" class="tx-feedback-text"></span>
-                  </div>
-                </form>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="site-footer reveal-item">
-      <div class="footer-inner">
-        <div class="footer-top-row">
-          <div class="footer-brand-bio">
-            <h3 class="footer-name">Dev Patel</h3>
-            <p class="footer-role">Data Analyst &amp; Machine Learning Engineer | Business Intelligence | GenAI</p>
-            <p class="footer-loc">Ahmedabad, Gujarat, India</p>
-          </div>
-
-          <div class="footer-social-pills">
-            <a href="mailto:devpatel846211@gmail.com" class="footer-pill">Email</a>
-            <a href="https://github.com/Devpatel7777" target="_blank" rel="noopener noreferrer" class="footer-pill">GitHub</a>
-            <a href="https://linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener noreferrer" class="footer-pill">LinkedIn</a>
-            <a href="tel:+919328977322" class="footer-pill">+91 93289 77322</a>
-          </div>
-        </div>
-
-        <nav class="footer-nav" aria-label="Footer Sitemap">
-          <a href="#hero">HOME</a>
-          <a href="#who-i-am">ABOUT</a>
-          <a href="#timeline">TIMELINE</a>
-          <a href="#tech-stack">TECH STACK</a>
-          <a href="#projects">PROJECTS</a>
-          <a href="#open-source">OPEN SOURCE</a>
-          <a href="#terminal">TERMINAL</a>
-          <a href="#contact">CONTACT</a>
-        </nav>
-
-        <div class="footer-bottom-row">
-          <span class="footer-copy">© 2026 Dev Patel. All rights reserved.</span>
-          <div class="footer-links-cluster">
-            <button id="footer-resume-btn" class="footer-ghost-btn">RESUME</button>
-            <a href="#hero" class="footer-top-link">BACK TO TOP ↑</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-  </main>
-
-  <!-- RESUME MODAL VIEWER -->
-  <div id="resume-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title-wrap">
-          <span class="modal-badge">DOCUMENT // DEV_PATEL_RESUME_VERIFIED.PDF</span>
-          <h2 id="resume-modal-title" class="modal-title">Dev Patel — Data &amp; AI Engineering Resume</h2>
-        </div>
-        <button id="close-resume-modal" class="modal-close-btn" aria-label="Close modal">✕</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="resume-sheet">
-          <div class="cv-header">
-            <h1 class="cv-name">DEV PATEL</h1>
-            <div class="cv-title">Data Analyst | Machine Learning Engineer | SQL &amp; Power BI</div>
-            <div class="cv-contacts">
-              <span>Ahmedabad, Gujarat</span> •
-              <span>+91-9328977322</span> •
-              <a href="mailto:devpatel846211@gmail.com">devpatel846211@gmail.com</a> •
-              <a href="https://linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener noreferrer">LinkedIn</a> •
-              <a href="https://github.com/Devpatel7777" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">SUMMARY</h3>
-            <p class="cv-text">
-              Data Analyst &amp; Machine Learning Engineer with hands-on experience in Python, SQL, Power BI, Excel, exploratory data analysis (EDA), statistical analysis, feature engineering, and supervised machine learning. Completed a remote Data Science internship analyzing 500,000+ records across multiple datasets. Built KPI dashboards, relational schemas, ML pipelines, and business-focused reports, with additional experience in GenAI-powered analytics and RAG systems.
-            </p>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">TECHNICAL SKILLS</h3>
-            <div class="cv-skills-grid">
-              <div><strong>Programming &amp; Databases:</strong> Python, SQL, MySQL, JavaScript</div>
-              <div><strong>Data Science &amp; Analytics:</strong> Pandas, NumPy, EDA, Statistical Hypothesis Testing, Feature Engineering, Excel</div>
-              <div><strong>Machine Learning &amp; AI:</strong> Scikit-learn, Regression, Classification, Streamlit, LangChain, RAG, Gemini API, Groq LLM</div>
-              <div><strong>Visualization &amp; BI:</strong> Power BI, KPI Design, DAX, Matplotlib, Seaborn, Jupyter, Git, GitHub</div>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">PROFESSIONAL EXPERIENCE</h3>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>Data Science Intern</strong>
-                  <span class="cv-company"> — Prodigy InfoTech (Remote)</span>
-                </div>
-                <span class="cv-item-date">May 2026 — Jun 2026</span>
-              </div>
-              <ul class="cv-bullets">
-                <li>Cleaned, standardized, and analyzed five real-world datasets totaling 500,000+ records using Python, Pandas, and NumPy.</li>
-                <li>Conducted exploratory data analysis (EDA) and statistical analysis to identify trends, correlations, and anomalies.</li>
-                <li>Created publication-quality visual reports with Matplotlib and Seaborn, communicating analytical findings and actionable business recommendations.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">FEATURED PROJECTS</h3>
-
-            <!-- Project 1 -->
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>Sales Analytics Dashboard</strong>
-                  <span class="cv-tech-stack"> — Power BI | DAX | Data Modeling</span>
-                </div>
-                <a href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener noreferrer" class="cv-git-link">GitHub ↗</a>
-              </div>
-              <ul class="cv-bullets">
-                <li>Built interactive Power BI dashboard analyzing 10,000+ sales records across four product categories to identify key revenue drivers and growth patterns.</li>
-                <li>Designed star-schema relational model and authored DAX measures for 8 core KPIs to evaluate regional performance and customer retention.</li>
-              </ul>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>E-Commerce Sales &amp; Customer Analysis</strong>
-                  <span class="cv-tech-stack"> — SQL | MySQL | Relational Databases</span>
-                </div>
-                <a href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener noreferrer" class="cv-git-link">GitHub ↗</a>
-              </div>
-              <ul class="cv-bullets">
-                <li>Designed 6-table normalized relational schema and wrote 15+ complex queries using joins, CTEs, and window functions.</li>
-                <li>Analyzed customer purchase behavior, repeat order rates, and monthly revenue trends to derive actionable retail insights.</li>
-              </ul>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>Crop Recommendation System</strong>
-                  <span class="cv-tech-stack"> — Python | Scikit-learn | Streamlit</span>
-                </div>
-                <a href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener noreferrer" class="cv-git-link">GitHub ↗</a>
-              </div>
-              <ul class="cv-bullets">
-                <li>Trained multi-class classification models across 22 crop types from seven soil and climate features, comparing Logistic Regression, Naive Bayes, and KNN.</li>
-                <li>Deployed an intuitive Streamlit web app for instant crop recommendations with real-time field data input.</li>
-              </ul>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>GenAI Application Suite &amp; Multi-PDF RAG</strong>
-                  <span class="cv-tech-stack"> — LangChain | Gemini API | RAG | Streamlit</span>
-                </div>
-                <a href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener noreferrer" class="cv-git-link">GitHub ↗</a>
-              </div>
-              <ul class="cv-bullets">
-                <li>Engineered multi-document RAG assistant utilizing Gemini embeddings and vector retrieval for accurate document question answering without hallucination.</li>
-                <li>Built Smart Study Buddy providing contextual explanations, practice MCQs, and interview prep questions.</li>
-              </ul>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <div>
-                  <strong>AI Travel Planner Agent</strong>
-                  <span class="cv-tech-stack"> — LangChain | Groq LLM | Serper Search API</span>
-                </div>
-                <a href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener noreferrer" class="cv-git-link">GitHub ↗</a>
-              </div>
-              <ul class="cv-bullets">
-                <li>Architected an autonomous tool-calling agent using Groq LLMs and Serper API for real-time web search.</li>
-                <li>Generates personalized itineraries, budget breakdowns, weather alerts, and lodging recommendations.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">EDUCATION</h3>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>B.Tech in Computer Science Engineering</strong>
-                <span class="cv-item-date">2022 — 2025</span>
-              </div>
-              <div class="cv-inst">Parul University, Vadodara, Gujarat</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Diploma in Computer Engineering</strong>
-                <span class="cv-item-date">2019 — 2022</span>
-              </div>
-              <div class="cv-inst">Growmore Engineering College, Himatnagar, Gujarat</div>
-            </div>
-          </div>
-
-          <div class="cv-section">
-            <h3 class="cv-section-title">AWARDS &amp; CERTIFICATIONS</h3>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>GenAI Powered Data Analytics Job Simulation</strong>
-                <span class="cv-item-date">Sep 2026</span>
-              </div>
-              <div class="cv-inst">TATA (via Forage)</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Data Visualisation: Empowering Business with Effective Insights</strong>
-                <span class="cv-item-date">Aug 2026</span>
-              </div>
-              <div class="cv-inst">TATA (via Forage)</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Data Analytics Job Simulation</strong>
-                <span class="cv-item-date">Jun 2026</span>
-              </div>
-              <div class="cv-inst">Deloitte (via Forage)</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Certificate of Completion — Data Science Internship (Outstanding Remarks)</strong>
-                <span class="cv-item-date">Jun 2026</span>
-              </div>
-              <div class="cv-inst">Prodigy InfoTech</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Chatbot or Smart Assistant Development</strong>
-                <span class="cv-item-date">Completed</span>
-              </div>
-              <div class="cv-inst">thingQbator Program (Nasscom Foundation)</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Data Analytics Using Power BI Workshop</strong>
-                <span class="cv-item-date">Jun 2026</span>
-              </div>
-              <div class="cv-inst">Tech Tip 24</div>
-            </div>
-            <div class="cv-item">
-              <div class="cv-item-header">
-                <strong>Python Analyzers — TechWar 2026</strong>
-                <span class="cv-item-date">Jan 2026</span>
-              </div>
-              <div class="cv-inst">Red &amp; White Skill Education</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <a href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" download="Dev_Patel_Data_Analyst_Resume.pdf" class="btn-primary-glow" id="download-da-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>DATA ANALYST PDF</span>
-        </a>
-        <a href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" download="Dev_Patel_Data_Scientist_Resume.pdf" class="btn-outline-cyber" id="download-ds-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>DATA SCIENTIST PDF</span>
-        </a>
-        <a href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" download="Dev_Patel_AI_ML_Resume.pdf" class="btn-outline-cyber" id="download-ai-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>AI / ML PDF</span>
-        </a>
-        <button id="download-cv-btn" class="footer-ghost-btn" title="Print or save as PDF">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-          <span>PRINT</span>
-        </button>
-      </div>
-    </div>
+  <!-- Ambient Background Glows & Grid Mesh -->
+  <div class="bg-decorations" aria-hidden="true">
+    <div class="glow-orb orb-primary"></div>
+    <div class="glow-orb orb-secondary"></div>
+    <div class="glow-orb orb-accent"></div>
+    <div class="grid-overlay"></div>
   </div>
 
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-  <!-- Scripts -->
+  <!-- Top Glassmorphism Navigation Bar -->
+  <header class="site-header" id="header">
+    <div class="nav-container">
+      <a href="#overview" class="brand-logo" aria-label="Dev Patel Portfolio Home">
+        <span class="logo-box">DP</span>
+        <div class="logo-text">
+          <span class="logo-name">Dev Patel</span>
+          <span class="logo-status"><span class="status-dot"></span> Available for Hire</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-desktop" aria-label="Main Navigation">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#specializations" class="nav-link">Specializations</a>
+        <a href="#live-lab" class="nav-link nav-highlight">
+          <span class="pulse-spark">⚡</span> Live Lab
+        </a>
+        <a href="#projects" class="nav-link">Case Studies</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#timeline" class="nav-link">Timeline</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Desktop Header Actions -->
+      <div class="header-actions">
+        <!-- Resume Dropdown -->
+        <div class="dropdown-wrap" id="resume-dropdown-wrap">
+          <button class="btn btn-outline btn-sm dropdown-trigger" id="resume-menu-btn" aria-expanded="false" aria-haspopup="true">
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Resumes</span>
+            <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="dropdown-menu" id="resume-dropdown-menu">
+            <div class="dropdown-header">Verified Credentials (PDF)</div>
+            <a href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" rel="noopener noreferrer" class="dropdown-item">
+              <span class="item-title">Data Analyst Resume</span>
+              <span class="item-desc">SQL, Power BI, DAX & EDA</span>
+            </a>
+            <a href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" rel="noopener noreferrer" class="dropdown-item">
+              <span class="item-title">Data Scientist Resume</span>
+              <span class="item-desc">Statistics, Pandas & Modeling</span>
+            </a>
+            <a href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" rel="noopener noreferrer" class="dropdown-item">
+              <span class="item-title">AI & ML Engineer Resume</span>
+              <span class="item-desc">Scikit-learn, XGBoost & GenAI</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#contact" class="btn btn-primary btn-sm">Let's Connect</a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle navigation menu">
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <nav class="mobile-nav-links">
+        <a href="#overview" class="mobile-link">Overview</a>
+        <a href="#specializations" class="mobile-link">Specializations</a>
+        <a href="#live-lab" class="mobile-link">⚡ Live Data Lab</a>
+        <a href="#projects" class="mobile-link">Case Studies</a>
+        <a href="#skills" class="mobile-link">Technical Stack</a>
+        <a href="#timeline" class="mobile-link">Timeline & Education</a>
+        <a href="#contact" class="mobile-link">Contact & Inquiries</a>
+      </nav>
+      <div class="mobile-drawer-resumes">
+        <p class="drawer-resumes-title">Download Verified Resumes</p>
+        <div class="drawer-resumes-grid">
+          <a href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" class="drawer-resume-link">Data Analyst CV</a>
+          <a href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" class="drawer-resume-link">Data Scientist CV</a>
+          <a href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" class="drawer-resume-link">AI/ML Engineer CV</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="section hero-section" id="overview">
+      <div class="container hero-container">
+        
+        <!-- Left Hero Column -->
+        <div class="hero-text-col">
+          <div class="badge-pill">
+            <span class="pulse-point"></span>
+            <span>Data Analyst & Machine Learning Engineer</span>
+          </div>
+
+          <h1 class="hero-title">
+            Turning Complex Data into <span class="gradient-text">Predictive Intelligence</span> & Strategic Growth.
+          </h1>
+
+          <p class="hero-lead">
+            I engineer end-to-end analytical pipelines, train high-accuracy predictive ML models, architect normalized 3NF MySQL schemas, and build interactive executive Power BI dashboards that empower decisive leadership.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary btn-lg">
+              <span>Explore Case Studies</span>
+              <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#live-lab" class="btn btn-glow btn-lg">
+              <span class="spark-icon">⚡</span>
+              <span>Launch Live Lab</span>
+            </a>
+            <a href="#contact" class="btn btn-outline btn-lg">
+              <span>Get in Touch</span>
+            </a>
+          </div>
+
+          <!-- Hero Verified Metrics Ribbon -->
+          <div class="hero-metrics-bar">
+            <div class="metric-card">
+              <span class="metric-num count-up" data-target="10000" data-suffix="+">10,000+</span>
+              <span class="metric-desc">Sales Records Analyzed</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-card">
+              <span class="metric-num count-up" data-target="99.2" data-suffix="%" data-decimals="1">99.2%</span>
+              <span class="metric-desc">ML Model Accuracy</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-card">
+              <span class="metric-num">3NF</span>
+              <span class="metric-desc">Normalized SQL Schemas</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-card">
+              <span class="metric-num count-up" data-target="40" data-suffix="+">40+</span>
+              <span class="metric-desc">Custom DAX Measures</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual Column: Interactive Neural Canvas & Telemetry -->
+        <div class="hero-visual-col">
+          <div class="canvas-card">
+            <!-- Dynamic Canvas Background -->
+            <canvas id="neural-canvas" class="neural-canvas" width="600" height="520"></canvas>
+            
+            <!-- Glass Overlay Telemetry HUD -->
+            <div class="telemetry-badge telemetry-top-left">
+              <div class="telemetry-indicator live"></div>
+              <div class="telemetry-info">
+                <span class="telemetry-sub">DATA STREAM</span>
+                <span class="telemetry-val">Active // 1,420 evt/s</span>
+              </div>
+            </div>
+
+            <div class="telemetry-badge telemetry-top-right">
+              <div class="telemetry-indicator blue"></div>
+              <div class="telemetry-info">
+                <span class="telemetry-sub">PREDICTIVE ML</span>
+                <span class="telemetry-val">Random Forest (99.2%)</span>
+              </div>
+            </div>
+
+            <div class="telemetry-badge telemetry-bottom">
+              <div class="telemetry-indicator emerald"></div>
+              <div class="telemetry-info">
+                <span class="telemetry-sub">DATABASE ENGINE</span>
+                <span class="telemetry-val">MySQL 3NF Architecture &bull; Latency &lt; 18ms</span>
+              </div>
+            </div>
+
+            <!-- Central Holographic Node Pill -->
+            <div class="hologram-center-pill">
+              <span class="holo-pulse"></span>
+              <span class="holo-text">NEURAL DATA MESH</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: CORE SPECIALIZATIONS (BENTO GRID) -->
+    <section class="section" id="specializations">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag">ENGINEERING PILLARS</span>
+          <h2 class="section-title">Core Engineering & Analytical Competencies</h2>
+          <p class="section-subtitle">
+            A comprehensive data methodology spanning statistical exploration, production machine learning, scalable database architectures, and executive BI.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          
+          <!-- Card 1: EDA -->
+          <div class="bento-card bento-card-highlight">
+            <div class="card-glow"></div>
+            <div class="card-icon-box cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            </div>
+            <h3 class="bento-title">Exploratory Data Analysis & Statistics</h3>
+            <p class="bento-desc">
+              Extracting high-signal insights from noisy datasets using Pandas, NumPy, and statistical hypothesis testing. Advanced outlier detection, distribution shaping, and Pearson/Spearman correlation matrices.
+            </p>
+            <div class="bento-tags">
+              <span class="tag">Pandas</span>
+              <span class="tag">NumPy</span>
+              <span class="tag">Statistical Modeling</span>
+              <span class="tag">Data Imputation</span>
+              <span class="tag">Seaborn</span>
+            </div>
+            <div class="bento-metric-footer">
+              <span class="metric-label">Integrity</span>
+              <span class="metric-stat">10,000+ Rows Cleaned &bull; Zero Leakage</span>
+            </div>
+          </div>
+
+          <!-- Card 2: ML -->
+          <div class="bento-card">
+            <div class="card-glow"></div>
+            <div class="card-icon-box purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <h3 class="bento-title">Predictive Machine Learning & AI</h3>
+            <p class="bento-desc">
+              Designing supervised machine learning pipelines using Scikit-Learn, Random Forest, and XGBoost. Rigorous cross-validation, feature normalization, hyperparameter tuning, and ROC-AUC benchmarking.
+            </p>
+            <div class="bento-tags">
+              <span class="tag">Scikit-learn</span>
+              <span class="tag">Random Forest</span>
+              <span class="tag">XGBoost</span>
+              <span class="tag">Classification</span>
+              <span class="tag">Model Tuning</span>
+            </div>
+            <div class="bento-metric-footer">
+              <span class="metric-label">Benchmark</span>
+              <span class="metric-stat">99.2% Accuracy &bull; 22 Class Multi-Output</span>
+            </div>
+          </div>
+
+          <!-- Card 3: SQL -->
+          <div class="bento-card">
+            <div class="card-glow"></div>
+            <div class="card-icon-box emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <h3 class="bento-title">Relational SQL & Database Architecture</h3>
+            <p class="bento-desc">
+              Architecting normalized Third Normal Form (3NF) database schemas in MySQL. Formulating complex multi-table joins, subqueries, Common Table Expressions (CTEs), and window functions with sub-40ms execution.
+            </p>
+            <div class="bento-tags">
+              <span class="tag">MySQL</span>
+              <span class="tag">3NF Schemas</span>
+              <span class="tag">Window Functions</span>
+              <span class="tag">CTEs</span>
+              <span class="tag">B-Tree Indexes</span>
+            </div>
+            <div class="bento-metric-footer">
+              <span class="metric-label">Performance</span>
+              <span class="metric-stat">&lt; 30ms Query Latency &bull; 100% Integrity</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Power BI -->
+          <div class="bento-card bento-card-highlight">
+            <div class="card-glow"></div>
+            <div class="card-icon-box amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            </div>
+            <h3 class="bento-title">Executive Power BI & Business Intelligence</h3>
+            <p class="bento-desc">
+              Developing interactive executive analytics dashboards in Power BI. Formulating 40+ custom DAX measures (YTD, YoY Growth, Margin %, Dynamic Segmentation), star-schema data modeling, and drillthrough reports.
+            </p>
+            <div class="bento-tags">
+              <span class="tag">Power BI</span>
+              <span class="tag">DAX Modeling</span>
+              <span class="tag">Star Schema</span>
+              <span class="tag">KPI Tracking</span>
+              <span class="tag">Executive Reports</span>
+            </div>
+            <div class="bento-metric-footer">
+              <span class="metric-label">Capacity</span>
+              <span class="metric-stat">40+ DAX Measures &bull; Instant Drilldowns</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE LIVE INTERACTIVE LAB (DEV'S FLAGSHIP FEATURE) -->
+    <section class="section lab-section" id="live-lab">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <div class="badge-pill inline-flex">
+            <span class="pulse-point"></span>
+            <span>REAL-TIME IN-BROWSER SIMULATION</span>
+          </div>
+          <h2 class="section-title">Interactive Data & ML Studio</h2>
+          <p class="section-subtitle">
+            Experience my live models and database architectures firsthand. Run client-side ML predictions, execute optimized SQL queries, or simulate executive BI metrics in real time.
+          </p>
+        </div>
+
+        <!-- Lab Window Frame -->
+        <div class="lab-window">
+          
+          <!-- Window Header / Tabs -->
+          <div class="lab-window-header">
+            <div class="window-controls">
+              <span class="win-dot red"></span>
+              <span class="win-dot yellow"></span>
+              <span class="win-dot green"></span>
+              <span class="win-title">DevPatel_DataStudio_v2.4 [Active]</span>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="lab-tabs" role="tablist">
+              <button class="lab-tab active" data-tab="crop-ml" role="tab" aria-selected="true">
+                <span class="tab-icon">🌾</span>
+                <span>Crop ML Predictor</span>
+              </button>
+              <button class="lab-tab" data-tab="sql-query" role="tab" aria-selected="false">
+                <span class="tab-icon">⚡</span>
+                <span>SQL Query Sandbox</span>
+              </button>
+              <button class="lab-tab" data-tab="bi-telemetry" role="tab" aria-selected="false">
+                <span class="tab-icon">📊</span>
+                <span>Executive BI Telemetry</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content Area -->
+          <div class="lab-window-body">
+            
+            <!-- TAB 1: CROP ML PREDICTOR -->
+            <div class="lab-panel active" id="tab-crop-ml" role="tabpanel">
+              <div class="panel-grid">
+                
+                <!-- Controls Column -->
+                <div class="panel-controls">
+                  <div class="panel-section-title">
+                    <span class="panel-indicator"></span>
+                    <span>1. Adjust Soil & Climate Parameters</span>
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-n">Nitrogen (N) Content</label>
+                      <span class="slider-val" id="val-n">90 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-n" min="10" max="140" value="90" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-p">Phosphorus (P) Content</label>
+                      <span class="slider-val" id="val-p">42 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-p" min="5" max="140" value="42" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-group">
+                    <div class="slider-header">
+                      <label for="slide-k">Potassium (K) Content</label>
+                      <span class="slider-val" id="val-k">43 kg/ha</span>
+                    </div>
+                    <input type="range" id="slide-k" min="5" max="200" value="43" class="lab-slider" />
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-temp">Temp (°C)</label>
+                        <span class="slider-val" id="val-temp">24°C</span>
+                      </div>
+                      <input type="range" id="slide-temp" min="10" max="42" value="24" class="lab-slider" />
+                    </div>
+
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-hum">Humidity (%)</label>
+                        <span class="slider-val" id="val-hum">82%</span>
+                      </div>
+                      <input type="range" id="slide-hum" min="15" max="98" value="82" class="lab-slider" />
+                    </div>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-ph">Soil pH</label>
+                        <span class="slider-val" id="val-ph">6.5</span>
+                      </div>
+                      <input type="range" id="slide-ph" min="4" max="9" step="0.1" value="6.5" class="lab-slider" />
+                    </div>
+
+                    <div class="slider-group half">
+                      <div class="slider-header">
+                        <label for="slide-rain">Rainfall (mm)</label>
+                        <span class="slider-val" id="val-rain">205 mm</span>
+                      </div>
+                      <input type="range" id="slide-rain" min="20" max="300" value="205" class="lab-slider" />
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary btn-full mt-3" id="run-ml-btn">
+                    <span>⚡ Run Random Forest Inference</span>
+                  </button>
+                </div>
+
+                <!-- Live Result Display Column -->
+                <div class="panel-results">
+                  <div class="panel-section-title">
+                    <span class="panel-indicator green"></span>
+                    <span>2. Real-Time Model Inference Output</span>
+                  </div>
+
+                  <div class="result-hero-box">
+                    <div class="result-label">Recommended Crop</div>
+                    <div class="result-crop-name" id="crop-result-name">Rice (Oryza sativa)</div>
+                    <div class="result-crop-badge" id="crop-result-badge">Optimal Yield Probability: 98.4%</div>
+                  </div>
+
+                  <div class="result-metrics-grid">
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Inference Latency</span>
+                      <span class="cell-val" id="crop-result-latency">1.2 ms</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Classifier Engine</span>
+                      <span class="cell-val">Random Forest (22 Cls)</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Soil Suitability</span>
+                      <span class="cell-val text-emerald" id="crop-result-suitability">Optimal (Score 96/100)</span>
+                    </div>
+                    <div class="result-metric-cell">
+                      <span class="cell-label">Confidence Interval</span>
+                      <span class="cell-val">95% CI [97.1 - 99.4]</span>
+                    </div>
+                  </div>
+
+                  <div class="result-info-snippet">
+                    <strong>Model Insight:</strong> High moisture (>80%) combined with substantial precipitation (>200mm) and balanced N-P-K profiles triggers dominant class activation for wetland grain cultivars.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 2: SQL QUERY SANDBOX -->
+            <div class="lab-panel" id="tab-sql-query" role="tabpanel">
+              <div class="sql-sandbox-wrap">
+                
+                <div class="sql-toolbar">
+                  <label for="sql-preset-select" class="sql-label">Choose Analytical Scenario:</label>
+                  <select id="sql-preset-select" class="sql-select">
+                    <option value="q1">Top 5 Revenue Categories & Margin % (3-Table JOIN + Aggregates)</option>
+                    <option value="q2">Customer Purchase RFM Segmentation (Window Function DENSE_RANK)</option>
+                    <option value="q3">Monthly Cohort Growth & MoM Revenue Delta (CTE + LAG)</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm ml-auto" id="run-sql-btn">
+                    <span>▶ Execute Query</span>
+                  </button>
+                </div>
+
+                <!-- Code Display -->
+                <div class="sql-code-editor">
+                  <pre><code id="sql-code-display">SELECT 
+    c.category_name,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    SUM(oi.quantity * oi.unit_price) AS gross_revenue,
+    ROUND(SUM(oi.quantity * (oi.unit_price - p.cost_price)) / SUM(oi.quantity * oi.unit_price) * 100, 2) AS margin_percentage
+FROM categories c
+INNER JOIN products p ON c.category_id = p.category_id
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+INNER JOIN orders o ON oi.order_id = o.order_id
+WHERE o.order_status = 'DELIVERED'
+GROUP BY c.category_id, c.category_name
+ORDER BY gross_revenue DESC
+LIMIT 5;</code></pre>
+                </div>
+
+                <!-- Execution Banner -->
+                <div class="sql-telemetry-banner">
+                  <span class="exec-badge success">✓ 5 rows returned</span>
+                  <span class="exec-stat">Execution Latency: <strong id="sql-latency">14.6 ms</strong></span>
+                  <span class="exec-stat">Optimization: <strong id="sql-plan">INDEX RANGE SCAN on idx_order_status</strong></span>
+                  <span class="exec-stat">Database: <strong>MySQL 8.0 (3NF Normalized)</strong></span>
+                </div>
+
+                <!-- Result Table -->
+                <div class="sql-table-container">
+                  <table class="sql-table" id="sql-result-table">
+                    <thead>
+                      <tr>
+                        <th>category_name</th>
+                        <th>total_orders</th>
+                        <th>gross_revenue</th>
+                        <th>margin_percentage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="cell-highlight">Consumer Electronics</td>
+                        <td>1,842</td>
+                        <td>$342,850.00</td>
+                        <td><span class="table-badge badge-green">32.4%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Enterprise Computing</td>
+                        <td>720</td>
+                        <td>$215,400.00</td>
+                        <td><span class="table-badge badge-green">28.8%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Home & Living</td>
+                        <td>2,410</td>
+                        <td>$184,200.00</td>
+                        <td><span class="table-badge badge-green">38.2%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Smart Audio & Wearables</td>
+                        <td>1,120</td>
+                        <td>$124,650.00</td>
+                        <td><span class="table-badge badge-green">41.0%</span></td>
+                      </tr>
+                      <tr>
+                        <td class="cell-highlight">Industrial Components</td>
+                        <td>315</td>
+                        <td>$98,120.00</td>
+                        <td><span class="table-badge badge-green">24.5%</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 3: EXECUTIVE BI TELEMETRY -->
+            <div class="lab-panel" id="tab-bi-telemetry" role="tabpanel">
+              <div class="bi-telemetry-wrap">
+                
+                <div class="bi-filter-bar">
+                  <div class="bi-period-label">Executive Reporting Horizon:</div>
+                  <div class="bi-period-buttons">
+                    <button class="bi-pill active" data-period="7d">Last 7 Days</button>
+                    <button class="bi-pill" data-period="30d">Last 30 Days</button>
+                    <button class="bi-pill" data-period="ytd">Year to Date (YTD)</button>
+                  </div>
+                  <div class="bi-status-chip">
+                    <span class="status-dot"></span> Power BI Service Connected
+                  </div>
+                </div>
+
+                <!-- KPI Cards Row -->
+                <div class="bi-kpis-grid">
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Gross Revenue (DAX: [Total Sales])</span>
+                    <span class="kpi-value" id="bi-kpi-rev">$482,900</span>
+                    <span class="kpi-trend positive" id="bi-kpi-rev-trend">↑ +14.8% YoY</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Net Operating Margin %</span>
+                    <span class="kpi-value" id="bi-kpi-margin">29.4%</span>
+                    <span class="kpi-trend positive" id="bi-kpi-margin-trend">↑ +3.2% vs Target</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Customer Lifetime Value (LTV)</span>
+                    <span class="kpi-value" id="bi-kpi-ltv">$1,280</span>
+                    <span class="kpi-trend positive" id="bi-kpi-ltv-trend">↑ +8.5% QoQ</span>
+                  </div>
+                  <div class="bi-kpi-card">
+                    <span class="kpi-label">Customer Churn Rate</span>
+                    <span class="kpi-value" id="bi-kpi-churn">2.1%</span>
+                    <span class="kpi-trend positive" id="bi-kpi-churn-trend">↓ -0.6% Churn Reduction</span>
+                  </div>
+                </div>
+
+                <!-- Visual Chart Simulation -->
+                <div class="bi-chart-card">
+                  <div class="chart-header">
+                    <div>
+                      <h4 class="chart-title">Revenue Trajectory vs. Target Benchmark (USD)</h4>
+                      <p class="chart-subtitle">Calculated using dynamic DAX Time-Intelligence Measures</p>
+                    </div>
+                    <div class="chart-legend">
+                      <span class="legend-item"><span class="legend-color cyan"></span> Actual Revenue</span>
+                      <span class="legend-item"><span class="legend-color dim"></span> Forecast Baseline</span>
+                    </div>
+                  </div>
+
+                  <!-- SVG Bar Chart -->
+                  <div class="chart-svg-wrap">
+                    <svg class="bi-bar-chart" viewBox="0 0 700 160" preserveAspectRatio="none">
+                      <!-- Grid lines -->
+                      <line x1="40" y1="20" x2="680" y2="20" stroke="rgba(255,255,255,0.06)" />
+                      <line x1="40" y1="70" x2="680" y2="70" stroke="rgba(255,255,255,0.06)" />
+                      <line x1="40" y1="120" x2="680" y2="120" stroke="rgba(255,255,255,0.06)" />
+                      
+                      <!-- Bars (Jan - Dec / Periods) -->
+                      <g class="chart-bars-group" id="chart-bars">
+                        <!-- P1 -->
+                        <rect x="70" y="55" width="28" height="65" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="84" y="142" class="chart-axis-text">P1</text>
+                        <!-- P2 -->
+                        <rect x="135" y="45" width="28" height="75" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="149" y="142" class="chart-axis-text">P2</text>
+                        <!-- P3 -->
+                        <rect x="200" y="60" width="28" height="60" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="214" y="142" class="chart-axis-text">P3</text>
+                        <!-- P4 -->
+                        <rect x="265" y="35" width="28" height="85" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="279" y="142" class="chart-axis-text">P4</text>
+                        <!-- P5 -->
+                        <rect x="330" y="40" width="28" height="80" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="344" y="142" class="chart-axis-text">P5</text>
+                        <!-- P6 -->
+                        <rect x="395" y="25" width="28" height="95" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="409" y="142" class="chart-axis-text">P6</text>
+                        <!-- P7 -->
+                        <rect x="460" y="30" width="28" height="90" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="474" y="142" class="chart-axis-text">P7</text>
+                        <!-- P8 -->
+                        <rect x="525" y="20" width="28" height="100" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="539" y="142" class="chart-axis-text">P8</text>
+                        <!-- P9 -->
+                        <rect x="590" y="15" width="28" height="105" rx="3" fill="#00f0ff" class="bar-elem" />
+                        <text x="604" y="142" class="chart-axis-text">P9</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: FEATURED CASE STUDIES -->
+    <section class="section" id="projects">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag">VERIFIED WORK</span>
+          <h2 class="section-title">Production Case Studies & Systems</h2>
+          <p class="section-subtitle">
+            End-to-end analytical solutions, enterprise SQL architectures, predictive machine learning pipelines, and GenAI applications.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          
+          <!-- PROJECT 1: POWER BI SALES -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">BUSINESS INTELLIGENCE & DAX</span>
+              <span class="project-badge">Flagship BI</span>
+            </div>
+
+            <h3 class="project-title">Executive Sales Performance & Profitability Dashboard</h3>
+            <p class="project-desc">
+              Engineered an interactive multi-page business intelligence dashboard modeling 10,000+ sales transactions. Formulated 40+ dynamic DAX measures for YoY growth, profit margins, regional customer segmentation, and product performance drilldowns.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">10,000+</span>
+                <span class="p-metric-lbl">Sales Records</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">40+</span>
+                <span class="p-metric-lbl">DAX Measures</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">&lt; 1s</span>
+                <span class="p-metric-lbl">Filter Drilldown</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">Power BI</span>
+              <span class="tech-pill">DAX Modeling</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">Advanced Excel</span>
+              <span class="tech-pill">Data Modeling</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#live-lab" class="btn btn-primary btn-sm">
+                <span>View BI Simulator</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT 2: E-COMMERCE SQL ARCHITECTURE -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">SQL & RELATIONAL ARCHITECTURE</span>
+              <span class="project-badge">Database Design</span>
+            </div>
+
+            <h3 class="project-title">E-Commerce Relational Architecture & Optimization</h3>
+            <p class="project-desc">
+              Designed a fully normalized Third Normal Form (3NF) relational database schema in MySQL linking transactional orders, inventory, customers, and billing tables. Engineered complex multi-table joins, window functions (ROW_NUMBER, DENSE_RANK), and B-Tree indexing.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">3NF</span>
+                <span class="p-metric-lbl">Normalized Schema</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">&lt; 30ms</span>
+                <span class="p-metric-lbl">Query Execution</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">100%</span>
+                <span class="p-metric-lbl">Referential Integrity</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">3NF Normalization</span>
+              <span class="tech-pill">Window Functions</span>
+              <span class="tech-pill">CTEs</span>
+              <span class="tech-pill">Indexing</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#live-lab" class="btn btn-primary btn-sm">
+                <span>Run SQL Queries</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT 3: CROP RECOMMENDATION ML -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">MACHINE LEARNING & AI</span>
+              <span class="project-badge">99.2% Accuracy</span>
+            </div>
+
+            <h3 class="project-title">Smart Agricultural Crop Recommendation System</h3>
+            <p class="project-desc">
+              Trained a multi-class Random Forest classifier on 2,200+ soil and meteorological observation points. Analyzes 7 environmental features (N, P, K, temperature, humidity, pH, rainfall) to recommend optimal crop cultivars across 22 categories.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">22 Classes</span>
+                <span class="p-metric-lbl">Target Crops</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">99.2%</span>
+                <span class="p-metric-lbl">Model Accuracy</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">&lt; 2ms</span>
+                <span class="p-metric-lbl">Inference Speed</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Scikit-learn</span>
+              <span class="tech-pill">Random Forest</span>
+              <span class="tech-pill">Pandas</span>
+              <span class="tech-pill">NumPy</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#live-lab" class="btn btn-primary btn-sm">
+                <span>Test Live Inference</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT 4: GENAI MULTI-PDF RAG -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">GENERATIVE AI & NLP</span>
+              <span class="project-badge">RAG Assistant</span>
+            </div>
+
+            <h3 class="project-title">GenAI Multi-PDF Knowledge Assistant</h3>
+            <p class="project-desc">
+              Engineered a contextual Retrieval-Augmented Generation (RAG) assistant leveraging Google Gemini API and vector embeddings. Ingests heterogeneous multi-page PDF documents, creates semantic vector chunks, and synthesizes accurate, hallucination-free answers.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">Multi-Doc</span>
+                <span class="p-metric-lbl">PDF Ingestion</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">Semantic</span>
+                <span class="p-metric-lbl">Vector Embeddings</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">&lt; 3s</span>
+                <span class="p-metric-lbl">Response Generation</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Google Gemini API</span>
+              <span class="tech-pill">LangChain</span>
+              <span class="tech-pill">Vector Search</span>
+              <span class="tech-pill">Streamlit</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#contact" class="btn btn-primary btn-sm">
+                <span>Discuss Architecture</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT 5: AI TRAVEL PLANNER -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">LLM AGENTS & TOOL CALLING</span>
+              <span class="project-badge">Autonomous Agent</span>
+            </div>
+
+            <h3 class="project-title">Autonomous AI Travel Planner & Route Optimizer</h3>
+            <p class="project-desc">
+              Developed an autonomous travel planning system powered by Groq LLM (Llama 3) and Serper real-time web search. Synthesizes day-by-day travel itineraries, budgetary constraints, weather forecasts, and venue recommendations into structured outputs.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">Real-Time</span>
+                <span class="p-metric-lbl">Web Grounding</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">Groq LLM</span>
+                <span class="p-metric-lbl">Sub-second Engine</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">JSON</span>
+                <span class="p-metric-lbl">Structured Output</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Groq API</span>
+              <span class="tech-pill">Llama 3</span>
+              <span class="tech-pill">Serper API</span>
+              <span class="tech-pill">Streamlit</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#contact" class="btn btn-primary btn-sm">
+                <span>Discuss Agent</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- PROJECT 6: PRODIGY INFOTECH DATA SCIENCE -->
+          <article class="project-card">
+            <div class="card-glow"></div>
+            <div class="project-header">
+              <span class="project-category">EXPLORATORY DATA SCIENCE</span>
+              <span class="project-badge">Industry Internship</span>
+            </div>
+
+            <h3 class="project-title">Prodigy InfoTech Data Science Analytics</h3>
+            <p class="project-desc">
+              Authored 4 production analytical case studies during Data Science internship: demographic distribution profiling, road traffic accident pattern modeling, and retail customer purchase behaviors using Pandas, Seaborn, and statistical tests.
+            </p>
+
+            <div class="project-metrics-strip">
+              <div class="p-metric">
+                <span class="p-metric-val">4 Tasks</span>
+                <span class="p-metric-lbl">Case Studies</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">100%</span>
+                <span class="p-metric-lbl">Clean Imputation</span>
+              </div>
+              <div class="p-metric">
+                <span class="p-metric-val">20+</span>
+                <span class="p-metric-lbl">Publication Visuals</span>
+              </div>
+            </div>
+
+            <div class="project-tech-stack">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Pandas</span>
+              <span class="tech-pill">NumPy</span>
+              <span class="tech-pill">Matplotlib</span>
+              <span class="tech-pill">Seaborn</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/Devpatel7777/Prodigy-InfoTech" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repository</span>
+              </a>
+              <a href="#contact" class="btn btn-primary btn-sm">
+                <span>View Insights</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: TECHNICAL STACK & TOOLING -->
+    <section class="section" id="skills">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag">ARSENAL</span>
+          <h2 class="section-title">Verified Technical Skills & Ecosystem</h2>
+          <p class="section-subtitle">
+            Tools, frameworks, languages, and platforms applied across production pipelines, statistical experiments, and interactive business reporting.
+          </p>
+
+          <!-- Category Filter Tabs -->
+          <div class="filter-pills-wrap">
+            <button class="filter-pill active" data-filter="all">All Disciplines</button>
+            <button class="filter-pill" data-filter="analytics">Data Analytics & BI</button>
+            <button class="filter-pill" data-filter="ml">Machine Learning & AI</button>
+            <button class="filter-pill" data-filter="database">Databases & SQL</button>
+            <button class="filter-pill" data-filter="languages">Languages & Tools</button>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          
+          <!-- Skill: Python -->
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-wrap">🐍</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Python</h4>
+              <p class="skill-role">Data analysis, ML training, scripting & APIs</p>
+            </div>
+            <span class="skill-badge">Core Language</span>
+          </div>
+
+          <!-- Skill: SQL / MySQL -->
+          <div class="skill-card" data-category="database">
+            <div class="skill-icon-wrap">🐬</div>
+            <div class="skill-info">
+              <h4 class="skill-name">SQL & MySQL</h4>
+              <p class="skill-role">3NF architecture, window functions, CTEs & indexing</p>
+            </div>
+            <span class="skill-badge">Relational Core</span>
+          </div>
+
+          <!-- Skill: Power BI -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-icon-wrap">📊</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Power BI & DAX</h4>
+              <p class="skill-role">Interactive executive dashboards, star schema modeling</p>
+            </div>
+            <span class="skill-badge">Enterprise BI</span>
+          </div>
+
+          <!-- Skill: Pandas -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-icon-wrap">🐼</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Pandas</h4>
+              <p class="skill-role">Data cleaning, aggregation, reshaping & time-series</p>
+            </div>
+            <span class="skill-badge">Analytics Core</span>
+          </div>
+
+          <!-- Skill: NumPy -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-info">
+              <div class="skill-icon-wrap">🔢</div>
+              <h4 class="skill-name">NumPy</h4>
+              <p class="skill-role">Vectorized operations, linear algebra, numerical array transforms</p>
+            </div>
+            <span class="skill-badge">Mathematics</span>
+          </div>
+
+          <!-- Skill: Scikit-learn -->
+          <div class="skill-card" data-category="ml">
+            <div class="skill-icon-wrap">⚙️</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Scikit-learn</h4>
+              <p class="skill-role">Regression, classification, random forests & metrics</p>
+            </div>
+            <span class="skill-badge">Machine Learning</span>
+          </div>
+
+          <!-- Skill: XGBoost -->
+          <div class="skill-card" data-category="ml">
+            <div class="skill-icon-wrap">🚀</div>
+            <div class="skill-info">
+              <h4 class="skill-name">XGBoost</h4>
+              <p class="skill-role">Gradient boosting, tabular data modeling, cross-validation</p>
+            </div>
+            <span class="skill-badge">Gradient Boost</span>
+          </div>
+
+          <!-- Skill: Exploratory Data Analysis -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-icon-wrap">🔍</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Exploratory Data Analysis</h4>
+              <p class="skill-role">Outlier treatment, hypothesis testing, correlation heatmaps</p>
+            </div>
+            <span class="skill-badge">Methodology</span>
+          </div>
+
+          <!-- Skill: Google Gemini API & RAG -->
+          <div class="skill-card" data-category="ml">
+            <div class="skill-icon-wrap">✨</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Gemini API & RAG</h4>
+              <p class="skill-role">Retrieval-augmented generation, embeddings, semantic QA</p>
+            </div>
+            <span class="skill-badge">Generative AI</span>
+          </div>
+
+          <!-- Skill: Matplotlib & Seaborn -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-icon-wrap">📈</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Matplotlib & Seaborn</h4>
+              <p class="skill-role">Statistical charts, distribution plots, correlation matrix</p>
+            </div>
+            <span class="skill-badge">Visualization</span>
+          </div>
+
+          <!-- Skill: Advanced Excel -->
+          <div class="skill-card" data-category="analytics">
+            <div class="skill-info">
+              <div class="skill-icon-wrap">📗</div>
+              <h4 class="skill-name">Advanced Excel</h4>
+              <p class="skill-role">Pivot tables, VLOOKUP/XLOOKUP, conditional formulas</p>
+            </div>
+            <span class="skill-badge">Business Analysis</span>
+          </div>
+
+          <!-- Skill: Git & GitHub -->
+          <div class="skill-card" data-category="languages">
+            <div class="skill-icon-wrap">🐙</div>
+            <div class="skill-info">
+              <h4 class="skill-name">Git & GitHub</h4>
+              <p class="skill-role">Version control, collaborative development, CI/CD</p>
+            </div>
+            <span class="skill-badge">DevOps</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: CAREER & ACADEMIC TIMELINE -->
+    <section class="section" id="timeline">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag">BACKGROUND</span>
+          <h2 class="section-title">Academic & Professional Journey</h2>
+          <p class="section-subtitle">
+            A continuous trajectory of formal computer science education, intensive data science certifications, and production project delivery.
+          </p>
+        </div>
+
+        <div class="timeline-container">
+          
+          <!-- Item 1: B.Tech -->
+          <div class="timeline-row">
+            <div class="timeline-marker">
+              <span class="marker-core active"></span>
+              <span class="marker-pulse"></span>
+            </div>
+            <div class="timeline-content-card">
+              <div class="timeline-date-badge">2024 — 2028 (IN PROGRESS)</div>
+              <h3 class="timeline-role">B.Tech in Computer Science & Engineering</h3>
+              <div class="timeline-company">Gandhinagar Institute Of Technology (GIT)</div>
+              <p class="timeline-desc">
+                Focusing on core Computer Science foundations: Data Structures & Algorithms, Object-Oriented Programming with Python, Relational Database Management Systems (SQL), Operating Systems, and Applied Machine Learning.
+              </p>
+              <div class="timeline-pill-row">
+                <span class="t-pill">Computer Science</span>
+                <span class="t-pill">Algorithms</span>
+                <span class="t-pill">Relational Databases</span>
+                <span class="t-pill">Machine Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Red & White -->
+          <div class="timeline-row">
+            <div class="timeline-marker">
+              <span class="marker-core"></span>
+            </div>
+            <div class="timeline-content-card">
+              <div class="timeline-date-badge">2025 — 2026</div>
+              <h3 class="timeline-role">Data Science & AI/ML Training Fellowship</h3>
+              <div class="timeline-company">Red & White Skill Education</div>
+              <p class="timeline-desc">
+                Engineered 20+ hands-on production pipelines across Python, MySQL database normalization, Scikit-learn predictive algorithms, Power BI executive dashboards, and GenAI applications.
+              </p>
+              <div class="timeline-pill-row">
+                <span class="t-pill">20+ Projects</span>
+                <span class="t-pill">Scikit-learn</span>
+                <span class="t-pill">Power BI</span>
+                <span class="t-pill">Advanced SQL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: Acmegrade -->
+          <div class="timeline-row">
+            <div class="timeline-marker">
+              <span class="marker-core"></span>
+            </div>
+            <div class="timeline-content-card">
+              <div class="timeline-date-badge">2025</div>
+              <h3 class="timeline-role">Data Science Certification</h3>
+              <div class="timeline-company">Acmegrade & IIT Delhi Rendezvous</div>
+              <p class="timeline-desc">
+                Completed intensive specialization in statistical foundations, exploratory data analysis, feature engineering, and supervised machine learning architectures.
+              </p>
+              <div class="timeline-pill-row">
+                <span class="t-pill">Data Modeling</span>
+                <span class="t-pill">Statistical Analysis</span>
+                <span class="t-pill">EDA Pipelines</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Higher Secondary -->
+          <div class="timeline-row">
+            <div class="timeline-marker">
+              <span class="marker-core"></span>
+            </div>
+            <div class="timeline-content-card">
+              <div class="timeline-date-badge">2024</div>
+              <h3 class="timeline-role">Higher Secondary Certificate — Science Stream</h3>
+              <div class="timeline-company">Narayan Vidhyalay</div>
+              <p class="timeline-desc">
+                Graduated with a strong analytical and quantitative foundation in Higher Mathematics, Statistics, Physics, and Chemistry.
+              </p>
+              <div class="timeline-pill-row">
+                <span class="t-pill">Higher Mathematics</span>
+                <span class="t-pill">Statistics</span>
+                <span class="t-pill">Analytical Thinking</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 5: Current -->
+          <div class="timeline-row">
+            <div class="timeline-marker">
+              <span class="marker-core emerald"></span>
+            </div>
+            <div class="timeline-content-card highlight-card">
+              <div class="timeline-date-badge highlight">CURRENT</div>
+              <h3 class="timeline-role">Open to Data Analyst & ML Opportunities</h3>
+              <div class="timeline-company">Gandhinagar / Ahmedabad / Remote / Hybrid</div>
+              <p class="timeline-desc">
+                Actively seeking full-time and internship roles as a Data Analyst, Business Intelligence Specialist, or Machine Learning Engineer. Ready to deliver immediate value with verified technical skills.
+              </p>
+              <div class="timeline-pill-row">
+                <span class="t-pill highlight">Immediate Availability</span>
+                <span class="t-pill highlight">Full-Time / Internship</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: VERIFIED RESUMES HUB -->
+    <section class="section resumes-section" id="resumes">
+      <div class="container">
+        
+        <div class="resumes-banner">
+          <div class="resumes-text">
+            <span class="section-tag">VERIFIED CREDENTIALS</span>
+            <h2 class="resumes-title">Download Tailored Curriculum Vitae</h2>
+            <p class="resumes-subtitle">
+              Choose from specialized PDF resumes tailored for specific analytical, statistical, and engineering domains.
+            </p>
+          </div>
+
+          <div class="resumes-grid">
+            
+            <!-- Resume 1 -->
+            <div class="resume-card">
+              <div class="resume-icon">📊</div>
+              <h4 class="resume-name">Data Analyst Resume</h4>
+              <p class="resume-focus">Focused on SQL, Power BI, DAX modeling, Exploratory Data Analysis, and KPI dashboards.</p>
+              <div class="resume-actions">
+                <a href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm btn-full">
+                  <span>View PDF</span>
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Resume 2 -->
+            <div class="resume-card">
+              <div class="resume-icon">🔬</div>
+              <h4 class="resume-name">Data Scientist Resume</h4>
+              <p class="resume-focus">Focused on Statistics, Python, Pandas, feature engineering, and regression/classification modeling.</p>
+              <div class="resume-actions">
+                <a href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm btn-full">
+                  <span>View PDF</span>
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Resume 3 -->
+            <div class="resume-card">
+              <div class="resume-icon">🤖</div>
+              <h4 class="resume-name">AI & ML Engineer Resume</h4>
+              <p class="resume-focus">Focused on Scikit-learn, Random Forest, XGBoost, GenAI, RAG, and LLM agent integration.</p>
+              <div class="resume-actions">
+                <a href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm btn-full">
+                  <span>View PDF</span>
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: CONTACT & COLLABORATION -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <span class="section-tag">COMMUNICATION</span>
+          <h2 class="section-title">Let's Build Something Exceptional</h2>
+          <p class="section-subtitle">
+            Whether you are looking to hire a dedicated Data Analyst or Machine Learning Engineer, discuss a project architecture, or explore a collaboration.
+          </p>
+        </div>
+
+        <div class="contact-split-grid">
+          
+          <!-- Left Column: Direct Info Cards -->
+          <div class="contact-info-col">
+            
+            <!-- Direct Email Card -->
+            <div class="contact-card">
+              <div class="contact-card-icon">✉️</div>
+              <div class="contact-card-details">
+                <span class="c-label">Direct Email</span>
+                <a href="mailto:devpatel846211@gmail.com" class="c-val">devpatel846211@gmail.com</a>
+              </div>
+              <button class="copy-btn" data-copy="devpatel846211@gmail.com" title="Copy Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+
+            <!-- Direct Phone Card -->
+            <div class="contact-card">
+              <div class="contact-card-icon">📱</div>
+              <div class="contact-card-details">
+                <span class="c-label">Direct Phone / WhatsApp</span>
+                <a href="tel:+919328977322" class="c-val">+91 93289 77322</a>
+              </div>
+              <button class="copy-btn" data-copy="+919328977322" title="Copy Phone">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+
+            <!-- Location Card -->
+            <div class="contact-card">
+              <div class="contact-card-icon">📍</div>
+              <div class="contact-card-details">
+                <span class="c-label">Location</span>
+                <span class="c-val">Gandhinagar / Ahmedabad, Gujarat, India</span>
+              </div>
+            </div>
+
+            <!-- Social Links Row -->
+            <div class="social-links-grid">
+              <a href="https://github.com/Devpatel7777" target="_blank" rel="noopener noreferrer" class="social-chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Profile</span>
+              </a>
+
+              <a href="https://www.linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener noreferrer" class="social-chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span>LinkedIn Profile</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Interactive Quick Message Portal -->
+          <div class="contact-form-col">
+            <div class="form-glass-card">
+              <h3 class="form-title">Send a Direct Message</h3>
+              <p class="form-subtitle">Feel free to reach out directly with job opportunities, project requests, or data questions.</p>
+
+              <form id="contact-form" class="direct-form" onsubmit="event.preventDefault(); window.location.href='mailto:devpatel846211@gmail.com?subject=' + encodeURIComponent(document.getElementById('form-subject').value) + '&body=' + encodeURIComponent('From: ' + document.getElementById('form-name').value + ' (' + document.getElementById('form-email').value + ')\n\n' + document.getElementById('form-message').value);">
+                <div class="form-group-row">
+                  <div class="form-group">
+                    <label for="form-name">Your Name</label>
+                    <input type="text" id="form-name" placeholder="e.g. Alex Sharma" required class="form-input" />
+                  </div>
+                  <div class="form-group">
+                    <label for="form-email">Your Email</label>
+                    <input type="email" id="form-email" placeholder="alex@company.com" required class="form-input" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="form-subject">Subject</label>
+                  <input type="text" id="form-subject" placeholder="Opportunity: Data Analyst / ML Engineer" required class="form-input" />
+                </div>
+
+                <div class="form-group">
+                  <label for="form-message">Message</label>
+                  <textarea id="form-message" rows="4" placeholder="Hello Dev, I reviewed your portfolio and would like to discuss..." required class="form-input"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full btn-lg">
+                  <span>Send Message via Email</span>
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modern Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <span class="footer-logo">DP &bull; Dev Patel</span>
+        <p class="footer-copy">Data Analyst & Machine Learning Engineer &bull; Gandhinagar, Gujarat, India</p>
+      </div>
+
+      <div class="footer-right">
+        <a href="#overview" class="footer-link">Overview</a>
+        <a href="#specializations" class="footer-link">Specializations</a>
+        <a href="#live-lab" class="footer-link">Live Lab</a>
+        <a href="#projects" class="footer-link">Case Studies</a>
+        <a href="#skills" class="footer-link">Skills</a>
+        <a href="#contact" class="footer-link">Contact</a>
+        <a href="#" class="back-to-top" id="back-to-top-btn" title="Back to top">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
   <script src="main.js"></script>
 </body>
 </html>

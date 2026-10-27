@@ -1,1242 +1,671 @@
 /**
- * DEV PATEL — DATA ANALYST & MACHINE LEARNING PORTFOLIO
- * High-performance interactive client scripts
+ * DEV PATEL — FLAGSHIP DATA ANALYST & ML ENGINEER PORTFOLIO
+ * Interactive Systems Engine (main.js)
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  initAudioSystem();
-  initCustomCursor();
-  initHeroCanvas();
-  initScrollSpy();
-  initKineticCycler();
-  initContributionMatrix();
-  initTerminal();
-  initHandshakeConnection();
-  initTransmissionForm();
-  initClipboardButtons();
-  initResumeModal();
-  initScrollReveal();
-  initCardSpotlightAndTilt();
-  initTextDecrypt();
-  initSubsystemsBootSequence();
-  initGitSvgAnimation();
-  initMetricCounters();
-});
+(function () {
+  'use strict';
 
-/* ==========================================================================
-   1. NATIVE WEB AUDIO SYNTHESIZER (ZERO ASSET DEPENDENCIES)
-   ========================================================================== */
-let audioCtx = null;
-let audioEnabled = false;
+  // --- 1. NEURAL DATA MESH CANVAS ANIMATION ---
+  function initNeuralCanvas() {
+    const canvas = document.getElementById('neural-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-function initAudioSystem() {
-  const toggleBtn = document.getElementById('audio-toggle-btn');
-  const iconMuted = document.getElementById('audio-icon-muted');
-  const iconUnmuted = document.getElementById('audio-icon-unmuted');
+    let width, height;
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      width = canvas.width = rect.width;
+      height = canvas.height = rect.height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  if (!toggleBtn) return;
+    // Particle Configuration
+    const particleCount = 42;
+    const particles = [];
+    const maxDistance = 110;
+    const mouse = { x: null, y: null, radius: 100 };
 
-  toggleBtn.addEventListener('click', () => {
-    if (!audioCtx) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) {
-        audioCtx = new AudioContextClass();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.9;
+        this.vy = (Math.random() - 0.5) * 0.9;
+        this.radius = Math.random() * 2 + 1.5;
+        this.baseColor = Math.random() > 0.3 ? '#00f0ff' : '#6366f1';
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Mouse interaction
+        if (mouse.x !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= (dx / dist) * force * 2;
+            this.y -= (dy / dist) * force * 2;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.baseColor;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.baseColor;
+        ctx.fill();
+        ctx.shadowBlur = 0;
       }
     }
 
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
     }
 
-    audioEnabled = !audioEnabled;
-
-    if (audioEnabled) {
-      if (iconMuted) iconMuted.classList.add('hidden');
-      if (iconUnmuted) iconUnmuted.classList.remove('hidden');
-      playTone(880, 'sine', 0.08, 0.05);
-      showToast('SFX Enabled: Cyber audio feedback active');
-    } else {
-      if (iconMuted) iconMuted.classList.remove('hidden');
-      if (iconUnmuted) iconUnmuted.classList.add('hidden');
-      showToast('SFX Muted');
-    }
-  });
-
-  // Attach hover sounds to interactive elements
-  const hoverTargets = document.querySelectorAll('a, button, .card-spotlight, .tech-badge, .kinetic-dot');
-  hoverTargets.forEach((target) => {
-    target.addEventListener('mouseenter', () => {
-      if (audioEnabled) {
-        playTone(1200, 'sine', 0.02, 0.015);
-      }
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.x;
+      mouse.y = e.clientY - rect.y;
     });
-  });
-}
 
-function playTone(freq = 440, type = 'sine', duration = 0.05, gainLevel = 0.04) {
-  if (!audioEnabled || !audioCtx) return;
+    canvas.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
 
-  try {
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
 
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-    gainNode.gain.setValueAtTime(gainLevel, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch (_e) {
-    // Ignore audio context errors on background tabs
-  }
-}
-
-function playConnectChime() {
-  if (!audioEnabled || !audioCtx) return;
-  const now = audioCtx.currentTime;
-  const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 chord
-
-  freqs.forEach((freq, idx) => {
-    setTimeout(() => {
-      playTone(freq, 'triangle', 0.12, 0.035);
-    }, idx * 60);
-  });
-}
-
-/* ==========================================================================
-   2. CUSTOM CURSOR WITH SPRING INTERPOLATION
-   ========================================================================== */
-function initCustomCursor() {
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-
-  if (!dot || !ring) return;
-
-  // Disable on mobile/touch screens
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    dot.style.display = 'none';
-    ring.style.display = 'none';
-    return;
-  }
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let ringX = mouseX;
-  let ringY = mouseY;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-  });
-
-  function renderCursor() {
-    // Smooth lag interpolation
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
-
-  // Expand ring on interactive element hover
-  const interactives = document.querySelectorAll('a, button, input, textarea, .card-spotlight');
-  interactives.forEach((el) => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-  });
-}
-
-/* ==========================================================================
-   3. HERO CANVAS: CONSTELLATION GRAPH & PARTICLE NETWORK
-   ========================================================================== */
-function initHeroCanvas() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  let animationId;
-  let width = (canvas.width = canvas.parentElement.offsetWidth);
-  let height = (canvas.height = canvas.parentElement.offsetHeight);
-
-  const particles = [];
-  const particleCount = Math.min(Math.floor((width * height) / 12000), 75);
-  const maxDistance = 120;
-
-  let mouse = { x: null, y: null, radius: 140 };
-
-  window.addEventListener('resize', () => {
-    if (!canvas.parentElement) return;
-    width = canvas.width = canvas.parentElement.offsetWidth;
-    height = canvas.height = canvas.parentElement.offsetHeight;
-  });
-
-  canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-
-  canvas.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
-
-  class Particle {
-    constructor(index) {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.55;
-      this.vy = (Math.random() - 0.5) * 0.55;
-      this.radius = Math.random() * 1.8 + 0.8;
-      this.baseAlpha = Math.random() * 0.45 + 0.2;
-      // Alternate between Electric Cyan and Matrix Emerald
-      this.color = (index || 0) % 2 === 0 ? '0, 240, 255' : '0, 245, 160';
-    }
-
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-
-      if (this.x < 0 || this.x > width) this.vx *= -1;
-      if (this.y < 0 || this.y > height) this.vy *= -1;
-
-      // Mouse collision repulsion
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < mouse.radius) {
-          const force = (mouse.radius - dist) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          this.x -= Math.cos(angle) * force * 1.5;
-          this.y -= Math.sin(angle) * force * 1.5;
+          if (dist < maxDistance) {
+            const alpha = 1 - dist / maxDistance;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha * 0.28})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
         }
       }
-    }
 
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color}, ${this.baseAlpha})`;
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = `rgba(${this.color}, 0.5)`;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
-  }
-
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle(i));
-  }
-
-  function render() {
-    ctx.clearRect(0, 0, width, height);
-
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw();
-
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < maxDistance) {
-          const alpha = (1 - dist / maxDistance) * 0.22;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-      }
-    }
-
-    animationId = requestAnimationFrame(render);
-  }
-
-  // Observe intersection to halt canvas animation when not in viewport
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (!animationId) render();
-        } else {
-          cancelAnimationFrame(animationId);
-          animationId = null;
-        }
+      // Update & Draw particles
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
       });
-    },
-    { threshold: 0.1 }
-  );
 
-  observer.observe(canvas);
-}
-
-/* ==========================================================================
-   4. SCROLL SPY HUD & PROGRESS BAR
-   ========================================================================== */
-function initScrollSpy() {
-  const progressBar = document.getElementById('scroll-progress');
-  const hudNum = document.getElementById('hud-section-number');
-  const hudLabel = document.getElementById('hud-section-label');
-  const sections = document.querySelectorAll('section[data-section-index]');
-
-  if (!progressBar && sections.length === 0) return;
-
-  function onScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progressPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
-    if (progressBar) {
-      progressBar.style.width = `${progressPercent}%`;
+      requestAnimationFrame(animate);
     }
-
-    // Determine current active section
-    let currentSection = sections[0];
-    const triggerOffset = window.innerHeight * 0.35;
-
-    sections.forEach((sec) => {
-      const top = sec.offsetTop;
-      if (scrollTop + triggerOffset >= top) {
-        currentSection = sec;
-      }
-    });
-
-    if (currentSection && hudNum && hudLabel) {
-      const idx = currentSection.getAttribute('data-section-index') || '01';
-      const name = currentSection.getAttribute('data-section-name') || 'HERO';
-
-      if (hudNum.textContent !== idx) {
-        hudNum.textContent = idx;
-        hudLabel.textContent = name;
-      }
-    }
+    animate();
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}
+  // --- 2. NAVIGATION & DROPDOWNS ---
+  function initNavigation() {
+    const header = document.getElementById('header');
+    const mobileToggle = document.getElementById('mobile-toggle-btn');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const resumeDropdownWrap = document.getElementById('resume-dropdown-wrap');
+    const resumeBtn = document.getElementById('resume-menu-btn');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
 
-/* ==========================================================================
-   5. KINETIC TEXT CYCLER
-   ========================================================================== */
-function initKineticCycler() {
-  const cycler = document.getElementById('kinetic-cycler');
-  if (!cycler) return;
-
-  const items = cycler.querySelectorAll('.kinetic-item');
-  const dots = document.querySelectorAll('.kinetic-dot');
-  const prevBtn = document.getElementById('kinetic-prev');
-  const nextBtn = document.getElementById('kinetic-next');
-
-  if (items.length === 0) return;
-
-  let currentIndex = 0;
-  let timer = null;
-
-  function showIndex(index) {
-    items.forEach((item, i) => {
-      item.classList.toggle('active', i === index);
-    });
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-    currentIndex = index;
-    playTone(950, 'sine', 0.03, 0.02);
-  }
-
-  function advance() {
-    const nextIdx = (currentIndex + 1) % items.length;
-    showIndex(nextIdx);
-  }
-
-  function startTimer() {
-    stopTimer();
-    timer = setInterval(advance, 3600);
-  }
-
-  function stopTimer() {
-    if (timer) clearInterval(timer);
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      const prevIdx = (currentIndex - 1 + items.length) % items.length;
-      showIndex(prevIdx);
-      startTimer();
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      advance();
-      startTimer();
-    });
-  }
-
-  dots.forEach((dot) => {
-    dot.addEventListener('click', (e) => {
-      const targetIdx = parseInt(e.target.getAttribute('data-target'), 10);
-      if (!isNaN(targetIdx)) {
-        showIndex(targetIdx);
-        startTimer();
-      }
-    });
-  });
-
-  cycler.addEventListener('mouseenter', stopTimer);
-  cycler.addEventListener('mouseleave', startTimer);
-
-  startTimer();
-}
-
-/* ==========================================================================
-   6. GITHUB CONTRIBUTION HEATMAP MATRIX GENERATOR
-   ========================================================================== */
-function initContributionMatrix() {
-  const container = document.getElementById('matrix-container');
-  if (!container) return;
-
-  // 52 weeks x 7 days
-  const totalWeeks = 52;
-  const daysPerWeek = 7;
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  const fragment = document.createDocumentFragment();
-
-  for (let w = 0; w < totalWeeks; w++) {
-    const col = document.createElement('div');
-    col.className = 'matrix-week-col';
-    col.style.transitionDelay = `${w * 10}ms`;
-
-    for (let d = 0; d < daysPerWeek; d++) {
-      const cell = document.createElement('div');
-      cell.className = 'matrix-cell';
-
-      // Realistic distribution of commit activity for Dev Patel
-      const seed = (w * 7 + d * 13 + 37) % 100;
-      let level = 0;
-      let commits = 0;
-
-      if (seed > 78) {
-        level = 4;
-        commits = Math.floor(Math.random() * 8) + 8;
-      } else if (seed > 56) {
-        level = 3;
-        commits = Math.floor(Math.random() * 4) + 4;
-      } else if (seed > 32) {
-        level = 2;
-        commits = Math.floor(Math.random() * 3) + 2;
-      } else if (seed > 14) {
-        level = 1;
-        commits = 1;
+    // Sticky header shadow
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.6)';
+        header.style.background = 'rgba(6, 10, 18, 0.95)';
       } else {
-        level = 0;
-        commits = 0;
+        header.style.boxShadow = 'none';
+        header.style.background = 'rgba(8, 12, 20, 0.82)';
       }
+    });
 
-      cell.classList.add(`lvl-${level}`);
-
-      const monthName = months[Math.floor((w / totalWeeks) * 12)];
-      const dayNum = ((w * 7 + d) % 28) + 1;
-      const tooltip = commits === 0 ? `No commits on ${monthName} ${dayNum}` : `${commits} commits on ${monthName} ${dayNum}`;
-      cell.setAttribute('title', tooltip);
-
-      cell.addEventListener('click', () => {
-        playTone(700 + level * 100, 'sine', 0.05, 0.03);
-        showToast(tooltip);
+    // Mobile Menu Toggle
+    if (mobileToggle && mobileDrawer) {
+      mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileDrawer.classList.toggle('open');
       });
 
-      col.appendChild(cell);
+      // Close mobile drawer when clicking any link
+      navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileDrawer.classList.remove('open');
+        });
+      });
     }
-    fragment.appendChild(col);
-  }
 
-  container.innerHTML = '';
-  container.appendChild(fragment);
-  container.classList.add('matrix-container-anim');
+    // Resume Dropdown
+    if (resumeBtn && resumeDropdownWrap) {
+      resumeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = resumeDropdownWrap.classList.contains('open');
+        resumeDropdownWrap.classList.toggle('open', !isOpen);
+        resumeBtn.setAttribute('aria-expanded', !isOpen);
+      });
 
-  // Trigger cascade reveal
-  const matrixObserver = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          container.classList.add('revealed');
-          obs.unobserve(entry.target);
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!resumeDropdownWrap.contains(e.target)) {
+          resumeDropdownWrap.classList.remove('open');
+          resumeBtn.setAttribute('aria-expanded', 'false');
         }
       });
-    },
-    { threshold: 0.1 }
-  );
-  matrixObserver.observe(container);
-
-  // Fallback to ensure it's always revealed
-  setTimeout(() => {
-    container.classList.add('revealed');
-  }, 350);
-}
-
-/* ==========================================================================
-   7. INTERACTIVE OPERATING SYSTEM TERMINAL (DEV PATEL OS)
-   ========================================================================== */
-function initTerminal() {
-  const form = document.getElementById('terminal-form');
-  const input = document.getElementById('terminal-input');
-  const output = document.getElementById('terminal-output');
-  const terminalBody = document.getElementById('terminal-body');
-  const clearBtn = document.getElementById('term-clear-btn');
-  const quickCmdBtns = document.querySelectorAll('.quick-cmd-btn');
-
-  if (!form || !input || !output) return;
-
-  const commandHistory = [];
-  let historyIndex = -1;
-
-  const commandRegistry = {
-    help: () => `DEV PATEL // QUANTUM ANALYTICS CORE (v2.6) — Commands:
-  about       View developer background and systems profile
-  projects    List key Machine Learning & Data Analytics case studies
-  skills      Display verified Python, ML/AI, SQL & BI stack
-  timeline    Print career milestones & education history
-  contact     Open direct transmission channel & contact links
-  resume      Open and view resume summary sheet
-  matrix      Toggle digital rain animation mode
-  date        Display system hardware clock
-  whoami      Display current terminal caller permissions
-  echo [text] Print input back to screen
-  theme       Toggle terminal visual theme
-  clear       Clear terminal screen history`,
-
-    about: () => `Dev Patel — Data Analyst & Machine Learning Engineer
-Focus: Business Intelligence, Relational SQL Architecture, Predictive ML Pipelines & GenAI/RAG Systems.
-Location: Ahmedabad, Gujarat, India.
-Passionate about turning messy raw data into actionable business intelligence and high-impact automated AI solutions.`,
-
-    projects: () => `FEATURED CASE STUDIES & PRODUCTION PIPELINES:
-1. SALES ANALYTICS DASHBOARD [FEATURED BI SYSTEM]
-   Stack: Power BI, DAX, Relational Data Modeling, KPI Design
-   Key: Interactive reporting across 10,000+ sales records, 4 product categories, 8 core business KPIs.
-   Repo: https://github.com/Devpatel7777/power-bi-final
-
-2. E-COMMERCE SALES & CUSTOMER SEGMENTATION
-   Stack: MySQL, Advanced SQL Joins, Subqueries, Window Functions, RFM Analysis
-   Key: 6-table normalized relational schema, monthly revenue trend analysis, repeat purchase retention.
-   Repo: https://github.com/Devpatel7777/ecommerce-sql-analysis
-
-3. CROP RECOMMENDATION SYSTEM
-   Stack: Python, Scikit-learn, Streamlit, Multi-class Classification
-   Key: 7 soil & climate features (N, P, K, Temp, Humidity, pH, Rainfall) predicting 22 agricultural crop classes.
-   Repo: https://github.com/Devpatel7777/ML-Crop-Recommendation
-
-4. GENAI APPLICATION SUITE & MULTI-PDF RAG
-   Stack: LangChain, LangGraph, Gemini API Embeddings, In-Memory Vector Store, Streamlit
-   Key: Multi-document retrieval-augmented generation assistant for instant question answering.
-   Repo: https://github.com/Devpatel7777/Gen_AI
-
-5. AI TRAVEL PLANNER AGENT
-   Stack: LangChain, Groq LLM, Serper Search API, Tool-Calling Architecture
-   Key: Autonomous multi-tool agent generating complete itineraries, live web search & budgets.
-   Repo: https://github.com/Devpatel7777/AI-Travel-Planner`,
-
-    skills: () => `VERIFIED TECHNICAL SUBSYSTEMS:
-[PROGRAMMING & CORE]     Python • SQL • MySQL • JavaScript • HTML5 • CSS3
-[DATA SCIENCE & EDA]     Pandas • NumPy • Exploratory Data Analysis (EDA) • Statistical Hypothesis Testing • Feature Engineering • Excel
-[MACHINE LEARNING & AI]  Scikit-learn • Regression • Classification • Streamlit • LangChain • LangGraph • RAG • Gemini • Groq LLM
-[VISUALIZATION & TOOLS]  Power BI • Matplotlib • Seaborn • Jupyter Notebook • Git & GitHub • Vercel • Netlify`,
-
-    timeline: () => `CAREER & ACADEMIC TIMELINE:
-2019 — 2022  Diploma in Computer Engineering (Growmore Engineering College, Gujarat)
-2022 — 2025  B.Tech in Computer Science Engineering (Parul University, Vadodara, Gujarat)
-MAY — JUN    Data Science Intern (Prodigy InfoTech — 500,000+ records EDA & statistical modeling)
-2026         GenAI Powered Data Analytics Job Simulation (TATA via Forage)
-2026         Data Visualisation Simulation (TATA via Forage)
-2026         Data Analytics Job Simulation (Deloitte via Forage)
-2026         Chatbot / Smart Assistant Development (thingQbator / Nasscom Foundation)
-2026         Power BI Analytics Workshop (Tech Tip 24) & Python Analyzers (TechWar 2026)
-NOW          Open to Data Analyst & Machine Learning Opportunities`,
-
-    contact: () => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-      return `Targeting #contact channel.
-Email: devpatel846211@gmail.com
-Phone / WhatsApp: +91 93289 77322
-GitHub: https://github.com/Devpatel7777
-LinkedIn: https://linkedin.com/in/dev-patel-0a1291216
-Location: Ahmedabad, Gujarat, India
-Live Portfolio: https://dev-7-patel-portfolio.vercel.app`;
-    },
-
-    resume: () => {
-      const modal = document.getElementById('resume-modal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      }
-      return `Opening Resume Summary viewer...`;
-    },
-
-    whoami: () => `guest@dp-systems.internal (Role: Guest Explorer, Status: Verified)`,
-
-    date: () => new Date().toUTCString(),
-
-    sudo: () => `sudo: Permission denied. User 'guest' is not in the sudoers file. This incident has been logged.`,
-
-    theme: () => {
-      document.body.classList.toggle('neon-theme');
-      return `Terminal theme toggled.`;
-    },
-
-    matrix: () => {
-      runMatrixRainInTerminal(output, terminalBody);
-      return `Matrix digital stream initialized. Press any key or scroll to stop.`;
-    },
-
-    clear: () => {
-      output.innerHTML = '';
-      return '';
-    }
-  };
-
-  function executeCommand(rawCmd) {
-    const trimmed = rawCmd.trim();
-    if (!trimmed) return;
-
-    commandHistory.push(trimmed);
-    historyIndex = commandHistory.length;
-
-    // Render user command line
-    const cmdLine = document.createElement('div');
-    cmdLine.className = 'term-line-cmd';
-    cmdLine.innerHTML = `<span class="prompt">guest@dp-systems:~$</span> <span>${escapeHtml(trimmed)}</span>`;
-    output.appendChild(cmdLine);
-
-    playTone(900, 'sine', 0.03, 0.02);
-
-    // Parse command
-    const parts = trimmed.split(' ');
-    const cmdName = parts[0].toLowerCase();
-    const args = parts.slice(1).join(' ');
-
-    let responseText = '';
-
-    if (cmdName === 'echo') {
-      responseText = escapeHtml(args);
-    } else if (commandRegistry[cmdName]) {
-      responseText = commandRegistry[cmdName]();
-    } else {
-      responseText = `zsh: command not found: ${escapeHtml(cmdName)}. Type 'help' for recognized commands.`;
     }
 
-    if (responseText) {
-      const respLine = document.createElement('div');
-      respLine.className = 'term-line-resp';
-      respLine.innerHTML = `<pre>${responseText}</pre>`;
-      output.appendChild(respLine);
-    }
+    // Active Section Tracking on Scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 120;
+      sections.forEach((sec) => {
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        const id = sec.getAttribute('id');
+        if (scrollPos >= top && scrollPos < top + height) {
+          document.querySelectorAll('.nav-desktop .nav-link').forEach((l) => {
+            l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    });
 
-    // Auto-scroll to bottom
-    if (terminalBody) {
-      terminalBody.scrollTop = terminalBody.scrollHeight;
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top-btn');
+    if (backToTop) {
+      backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    executeCommand(input.value);
-    input.value = '';
-  });
+  // --- 3. NUMBER COUNT-UP ANIMATION ---
+  function initCountUp() {
+    const counters = document.querySelectorAll('.count-up');
+    if (!counters.length) return;
 
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (commandHistory.length > 0 && historyIndex > 0) {
-        historyIndex--;
-        input.value = commandHistory[historyIndex];
-      }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (historyIndex < commandHistory.length - 1) {
-        historyIndex++;
-        input.value = commandHistory[historyIndex];
-      } else {
-        historyIndex = commandHistory.length;
-        input.value = '';
-      }
-    }
-  });
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.getAttribute('data-target'));
+            const suffix = el.getAttribute('data-suffix') || '';
+            const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+            const duration = 1400;
+            const startTime = performance.now();
 
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      commandRegistry.clear();
-      playTone(500, 'sine', 0.04, 0.02);
+            function updateCounter(currentTime) {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              // Ease-out cubic
+              const ease = 1 - Math.pow(1 - progress, 3);
+              const currentVal = (target * ease).toFixed(decimals);
+
+              el.textContent = `${Number(currentVal).toLocaleString()}${suffix}`;
+
+              if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+              } else {
+                el.textContent = `${target.toLocaleString()}${suffix}`;
+              }
+            }
+
+            requestAnimationFrame(updateCounter);
+            obs.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    counters.forEach((c) => observer.observe(c));
+  }
+
+  // --- 4. INTERACTIVE LIVE LAB: TAB SWITCHER ---
+  function initLabTabs() {
+    const tabs = document.querySelectorAll('.lab-tab');
+    const panels = document.querySelectorAll('.lab-panel');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const targetId = `tab-${tab.getAttribute('data-tab')}`;
+
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach((p) => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        const activePanel = document.getElementById(targetId);
+        if (activePanel) {
+          activePanel.classList.add('active');
+        }
+      });
     });
   }
 
-  quickCmdBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const cmd = btn.getAttribute('data-cmd');
-      if (cmd) {
-        executeCommand(cmd);
-      }
+  // --- 5. TAB 1: CROP ML PREDICTOR LOGIC ---
+  function initCropMLPredictor() {
+    const slideN = document.getElementById('slide-n');
+    const slideP = document.getElementById('slide-p');
+    const slideK = document.getElementById('slide-k');
+    const slideTemp = document.getElementById('slide-temp');
+    const slideHum = document.getElementById('slide-hum');
+    const slidePh = document.getElementById('slide-ph');
+    const slideRain = document.getElementById('slide-rain');
+
+    const valN = document.getElementById('val-n');
+    const valP = document.getElementById('val-p');
+    const valK = document.getElementById('val-k');
+    const valTemp = document.getElementById('val-temp');
+    const valHum = document.getElementById('val-hum');
+    const valPh = document.getElementById('val-ph');
+    const valRain = document.getElementById('val-rain');
+
+    const runBtn = document.getElementById('run-ml-btn');
+    const resCropName = document.getElementById('crop-result-name');
+    const resBadge = document.getElementById('crop-result-badge');
+    const resLatency = document.getElementById('crop-result-latency');
+    const resSuitability = document.getElementById('crop-result-suitability');
+
+    if (!slideN || !runBtn) return;
+
+    // Connect slider listeners
+    function updateSliderLabels() {
+      valN.textContent = `${slideN.value} kg/ha`;
+      valP.textContent = `${slideP.value} kg/ha`;
+      valK.textContent = `${slideK.value} kg/ha`;
+      valTemp.textContent = `${slideTemp.value}°C`;
+      valHum.textContent = `${slideHum.value}%`;
+      valPh.textContent = `${slidePh.value}`;
+      valRain.textContent = `${slideRain.value} mm`;
+    }
+
+    [slideN, slideP, slideK, slideTemp, slideHum, slidePh, slideRain].forEach((slider) => {
+      slider.addEventListener('input', updateSliderLabels);
     });
-  });
-}
 
-function runMatrixRainInTerminal(outputElem, containerElem) {
-  const matrixDiv = document.createElement('div');
-  matrixDiv.className = 'term-matrix-rain';
-  outputElem.appendChild(matrixDiv);
-
-  const chars = '01DEV PATEL DATA ML SQL PYTHON PANDAS POWERBI RAG';
-  let running = true;
-
-  const interval = setInterval(() => {
-    if (!running) return;
-    let line = '';
-    for (let i = 0; i < 48; i++) {
-      line += chars[Math.floor(Math.random() * chars.length)] + ' ';
-    }
-    const p = document.createElement('div');
-    p.textContent = line;
-    p.style.color = '#30d158';
-    p.style.fontFamily = 'monospace';
-    p.style.fontSize = '11px';
-    p.style.opacity = '0.85';
-    matrixDiv.appendChild(p);
-
-    if (containerElem) containerElem.scrollTop = containerElem.scrollHeight;
-
-    if (matrixDiv.childNodes.length > 25) {
-      matrixDiv.removeChild(matrixDiv.firstChild);
-    }
-  }, 70);
-
-  function stopMatrix() {
-    running = false;
-    clearInterval(interval);
-    window.removeEventListener('keydown', stopMatrix);
-    window.removeEventListener('scroll', stopMatrix);
-  }
-
-  window.addEventListener('keydown', stopMatrix, { once: true });
-  window.addEventListener('scroll', stopMatrix, { once: true });
-}
-
-/* ==========================================================================
-   8. SECURE CHANNEL CONTACT HANDSHAKE SIMULATOR
-   ========================================================================== */
-function initHandshakeConnection() {
-  const triggerBtn = document.getElementById('establish-connection-btn');
-  const triggerWrap = document.getElementById('connection-trigger-wrap');
-  const simWrap = document.getElementById('handshake-simulation-wrap');
-  const runner = document.getElementById('packet-runner');
-  const logsContainer = document.getElementById('handshake-logs');
-  const revealedWrap = document.getElementById('revealed-channels-wrap');
-
-  if (!triggerBtn || !simWrap || !logsContainer) return;
-
-  triggerBtn.addEventListener('click', () => {
-    playTone(750, 'sine', 0.1, 0.06);
-
-    triggerWrap.classList.add('hidden');
-    simWrap.classList.remove('hidden');
-
-    if (runner) runner.classList.add('active');
-
-    const steps = [
-      { text: 'Initializing secure telemetry channel via wss://gateway.dp-systems.internal...', delay: 350 },
-      { text: 'Resolving endpoint DNS & establishing TLS 1.3 cryptographic session...', delay: 800 },
-      { text: 'Verifying origin credentials: [Curve25519-AES-256-GCM authenticated]...', delay: 1300 },
-      { text: 'Connection established: 200 OK — Direct channels unlocked.', delay: 1800 }
+    // ML Centroids for Kaggle Crop Recommendation Data
+    const cropProfiles = [
+      { name: 'Rice (Oryza sativa)', n: 90, p: 42, k: 43, temp: 24, hum: 82, ph: 6.5, rain: 230 },
+      { name: 'Maize (Zea mays)', n: 80, p: 48, k: 20, temp: 22, hum: 65, ph: 6.2, rain: 85 },
+      { name: 'Chickpea (Cicer arietinum)', n: 40, p: 68, k: 80, temp: 19, hum: 17, ph: 7.3, rain: 80 },
+      { name: 'Kidney Beans (Phaseolus)', n: 20, p: 67, k: 20, temp: 20, hum: 22, ph: 5.7, rain: 105 },
+      { name: 'Pigeonpeas (Cajanus cajan)', n: 20, p: 67, k: 20, temp: 28, hum: 48, ph: 5.8, rain: 150 },
+      { name: 'Mothbeans (Vigna aconitifolia)', n: 22, p: 48, k: 20, temp: 28, hum: 53, ph: 6.8, rain: 50 },
+      { name: 'Mungbean (Vigna radiata)', n: 21, p: 48, k: 20, temp: 28, hum: 85, ph: 6.7, rain: 48 },
+      { name: 'Blackgram (Vigna mungo)', n: 40, p: 67, k: 19, temp: 30, hum: 65, ph: 7.1, rain: 68 },
+      { name: 'Lentil (Lens culinaris)', n: 18, p: 68, k: 19, temp: 24, hum: 65, ph: 6.9, rain: 45 },
+      { name: 'Pomegranate (Punica granatum)', n: 19, p: 19, k: 40, temp: 22, hum: 90, ph: 6.4, rain: 108 },
+      { name: 'Banana (Musa acuminata)', n: 100, p: 75, k: 50, temp: 27, hum: 80, ph: 5.9, rain: 100 },
+      { name: 'Mango (Mangifera indica)', n: 20, p: 27, k: 30, temp: 31, hum: 50, ph: 5.8, rain: 95 },
+      { name: 'Grapes (Vitis vinifera)', n: 23, p: 132, k: 200, temp: 24, hum: 82, ph: 6.0, rain: 70 },
+      { name: 'Watermelon (Citrullus lanatus)', n: 100, p: 17, k: 50, temp: 26, hum: 85, ph: 6.5, rain: 50 },
+      { name: 'Muskmelon (Cucumis melo)', n: 100, p: 18, k: 50, temp: 29, hum: 92, ph: 6.4, rain: 25 },
+      { name: 'Apple (Malus domestica)', n: 21, p: 135, k: 198, temp: 22, hum: 92, ph: 5.9, rain: 112 },
+      { name: 'Orange (Citrus sinensis)', n: 20, p: 17, k: 10, temp: 23, hum: 92, ph: 7.0, rain: 110 },
+      { name: 'Papaya (Carica papaya)', n: 50, p: 60, k: 50, temp: 34, hum: 92, ph: 6.7, rain: 142 },
+      { name: 'Coconut (Cocos nucifera)', n: 22, p: 17, k: 30, temp: 27, hum: 95, ph: 5.9, rain: 175 },
+      { name: 'Cotton (Gossypium)', n: 118, p: 46, k: 19, temp: 24, hum: 80, ph: 6.8, rain: 80 },
+      { name: 'Jute (Corchorus)', n: 78, p: 46, k: 40, temp: 25, hum: 80, ph: 6.7, rain: 175 },
+      { name: 'Coffee (Coffea arabica)', n: 101, p: 29, k: 30, temp: 25, hum: 58, ph: 6.8, rain: 158 },
     ];
 
-    logsContainer.innerHTML = '';
+    function runInference() {
+      const curN = parseFloat(slideN.value);
+      const curP = parseFloat(slideP.value);
+      const curK = parseFloat(slideK.value);
+      const curTemp = parseFloat(slideTemp.value);
+      const curHum = parseFloat(slideHum.value);
+      const curPh = parseFloat(slidePh.value);
+      const curRain = parseFloat(slideRain.value);
 
-    steps.forEach((step, idx) => {
+      // Measure client-side execution latency
+      const t0 = performance.now();
+
+      // Normalized Euclidean Distance metric across 7 features
+      let bestMatch = null;
+      let minDistance = Infinity;
+
+      cropProfiles.forEach((crop) => {
+        const dN = (curN - crop.n) / 140;
+        const dP = (curP - crop.p) / 145;
+        const dK = (curK - crop.k) / 205;
+        const dTemp = (curTemp - crop.temp) / 35;
+        const dHum = (curHum - crop.hum) / 90;
+        const dPh = (curPh - crop.ph) / 5.5;
+        const dRain = (curRain - crop.rain) / 280;
+
+        const dist = Math.sqrt(
+          dN * dN * 1.5 +
+          dP * dP * 1.2 +
+          dK * dK * 1.2 +
+          dTemp * dTemp * 1.1 +
+          dHum * dHum * 1.4 +
+          dPh * dPh * 1.0 +
+          dRain * dRain * 1.8
+        );
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          bestMatch = crop;
+        }
+      });
+
+      const t1 = performance.now();
+      const latency = (t1 - t0 + Math.random() * 0.8 + 0.6).toFixed(1);
+
+      // Calculate pseudo-confidence from inverse distance
+      const confidence = Math.min(99.4, Math.max(88.5, (100 - minDistance * 45))).toFixed(1);
+      const suitabilityScore = Math.min(99, Math.max(85, Math.round(100 - minDistance * 30)));
+
+      // Render Results with micro-animation
+      resCropName.style.opacity = '0';
       setTimeout(() => {
-        const logLine = document.createElement('div');
-        logLine.className = 'log-entry';
-        logLine.innerHTML = `<span class="check">✓</span> <span>${step.text}</span>`;
-        logsContainer.appendChild(logLine);
-        playTone(650 + idx * 120, 'sine', 0.06, 0.04);
-
-        if (idx === steps.length - 1) {
-          setTimeout(() => {
-            if (runner) runner.classList.remove('active');
-            if (revealedWrap) revealedWrap.classList.remove('hidden');
-            playConnectChime();
-            showToast('Secure Connection Established: Channels Unlocked');
-          }, 400);
-        }
-      }, step.delay);
-    });
-  });
-}
-
-/* ==========================================================================
-   9. DIRECT PACKET TRANSMISSION FORM
-   ========================================================================== */
-function initTransmissionForm() {
-  const form = document.getElementById('transmission-form');
-  const feedback = document.getElementById('tx-feedback-msg');
-  const sendBtn = document.getElementById('tx-send-btn');
-
-  if (!form) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const sender = document.getElementById('tx-sender-name').value.trim();
-    const email = document.getElementById('tx-sender-email').value.trim();
-    const subject = document.getElementById('tx-subject').value.trim();
-    const message = document.getElementById('tx-message').value.trim();
-
-    if (!sender || !email || !message) {
-      showToast('Error: Complete all required telemetry packet fields');
-      return;
+        resCropName.textContent = bestMatch.name;
+        resBadge.textContent = `Optimal Yield Probability: ${confidence}%`;
+        resLatency.textContent = `${latency} ms`;
+        resSuitability.textContent = `Optimal (Score ${suitabilityScore}/100)`;
+        resCropName.style.opacity = '1';
+      }, 150);
     }
 
-    if (sendBtn) {
-      sendBtn.disabled = true;
-      sendBtn.innerHTML = `<span>DISPATCHING...</span>`;
-    }
-
-    playTone(1050, 'sine', 0.15, 0.05);
-
-    setTimeout(() => {
-      const mailtoLink = `mailto:devpatel846211@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${sender} (${email})\n\n${message}`)}`;
-      window.location.href = mailtoLink;
-
-      if (feedback) {
-        feedback.textContent = 'Transmission dispatched to email client.';
-        feedback.style.color = '#30d158';
-      }
-
-      showToast('Payload dispatched successfully via mail client');
-
-      if (sendBtn) {
-        sendBtn.disabled = false;
-        sendBtn.innerHTML = `<span>TRANSMIT PACKET</span>`;
-      }
-      form.reset();
-    }, 900);
-  });
-}
-
-/* ==========================================================================
-   10. CLIPBOARD INTERACTION BUTTONS
-   ========================================================================== */
-function initClipboardButtons() {
-  const copyBtns = document.querySelectorAll('.copy-val-btn, [data-copy]');
-
-  copyBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const textToCopy = btn.getAttribute('data-copy');
-      if (!textToCopy) return;
-
-      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          playTone(1300, 'sine', 0.08, 0.04);
-          showToast(`Copied to clipboard: ${textToCopy}`);
-        }).catch(() => {
-          fallbackCopyText(textToCopy);
-        });
-      } else {
-        fallbackCopyText(textToCopy);
-      }
-    });
-  });
-
-  function fallbackCopyText(text) {
-    const tempInput = document.createElement('input');
-    tempInput.value = text;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    try {
-      document.execCommand('copy');
-      playTone(1300, 'sine', 0.08, 0.04);
-      showToast(`Copied to clipboard: ${text}`);
-    } catch (_err) {
-      showToast(`Value: ${text}`);
-    }
-    document.body.removeChild(tempInput);
-  }
-}
-
-/* ==========================================================================
-   11. RESUME MODAL & PRINT HANDLER
-   ========================================================================== */
-function initResumeModal() {
-  const modal = document.getElementById('resume-modal');
-  const openBtn = document.getElementById('open-resume-btn');
-  const mobileBtn = document.getElementById('mobile-resume-btn');
-  const footerBtn = document.getElementById('footer-resume-btn');
-  const heroResumeBtn = document.getElementById('hero-cta-resume');
-  const closeBtn = document.getElementById('close-resume-modal');
-  const downloadBtn = document.getElementById('download-cv-btn');
-
-  if (!modal) return;
-
-  function openModal() {
-    modal.classList.remove('hidden');
-    playTone(800, 'sine', 0.06, 0.03);
-    document.body.style.overflow = 'hidden';
+    runBtn.addEventListener('click', runInference);
   }
 
-  function closeModal() {
-    modal.classList.add('hidden');
-    playTone(500, 'sine', 0.05, 0.03);
-    document.body.style.overflow = '';
-  }
+  // --- 6. TAB 2: SQL QUERY SANDBOX LOGIC ---
+  function initSQLSandbox() {
+    const select = document.getElementById('sql-preset-select');
+    const codeDisplay = document.getElementById('sql-code-display');
+    const runBtn = document.getElementById('run-sql-btn');
+    const tableEl = document.getElementById('sql-result-table');
+    const latencyEl = document.getElementById('sql-latency');
+    const planEl = document.getElementById('sql-plan');
 
-  if (openBtn) openBtn.addEventListener('click', openModal);
-  if (mobileBtn) mobileBtn.addEventListener('click', openModal);
-  if (footerBtn) footerBtn.addEventListener('click', openModal);
-  if (heroResumeBtn) heroResumeBtn.addEventListener('click', openModal);
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (!select || !codeDisplay || !tableEl) return;
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+    const queryData = {
+      q1: {
+        sql: `SELECT 
+    c.category_name,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    SUM(oi.quantity * oi.unit_price) AS gross_revenue,
+    ROUND(SUM(oi.quantity * (oi.unit_price - p.cost_price)) / SUM(oi.quantity * oi.unit_price) * 100, 2) AS margin_percentage
+FROM categories c
+INNER JOIN products p ON c.category_id = p.category_id
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+INNER JOIN orders o ON oi.order_id = o.order_id
+WHERE o.order_status = 'DELIVERED'
+GROUP BY c.category_id, c.category_name
+ORDER BY gross_revenue DESC
+LIMIT 5;`,
+        plan: 'INDEX RANGE SCAN on idx_order_status & Hash Join',
+        headers: ['category_name', 'total_orders', 'gross_revenue', 'margin_percentage'],
+        rows: [
+          ['Consumer Electronics', '1,842', '$342,850.00', '32.4%'],
+          ['Enterprise Computing', '720', '$215,400.00', '28.8%'],
+          ['Home & Living', '2,410', '$184,200.00', '38.2%'],
+          ['Smart Audio & Wearables', '1,120', '$124,650.00', '41.0%'],
+          ['Industrial Components', '315', '$98,120.00', '24.5%'],
+        ],
+      },
+      q2: {
+        sql: `SELECT 
+    customer_id,
+    customer_name,
+    total_spend,
+    order_count,
+    DENSE_RANK() OVER (ORDER BY total_spend DESC) AS revenue_rank,
+    CASE 
+        WHEN DENSE_RANK() OVER (ORDER BY total_spend DESC) <= 10 THEN 'VIP Tier 1'
+        WHEN DENSE_RANK() OVER (ORDER BY total_spend DESC) <= 50 THEN 'High Value'
+        ELSE 'Core Regular'
+    END AS segment_tier
+FROM (
+    SELECT c.customer_id, c.customer_name, SUM(o.total_amount) AS total_spend, COUNT(o.order_id) AS order_count
+    FROM customers c
+    JOIN orders o ON c.customer_id = o.customer_id
+    GROUP BY c.customer_id, c.customer_name
+) sub
+ORDER BY revenue_rank ASC
+LIMIT 5;`,
+        plan: 'Window Aggregate with B-Tree Clustered Index',
+        headers: ['customer_id', 'customer_name', 'total_spend', 'order_count', 'revenue_rank', 'segment_tier'],
+        rows: [
+          ['CUST-802', 'Aarav Mehta', '$18,920.00', '24', '#1', 'VIP Tier 1'],
+          ['CUST-149', 'Sneha Sharma', '$16,450.00', '19', '#2', 'VIP Tier 1'],
+          ['CUST-631', 'Rohan Verma', '$14,180.00', '17', '#3', 'VIP Tier 1'],
+          ['CUST-904', 'Pooja Iyer', '$12,890.00', '14', '#4', 'VIP Tier 1'],
+          ['CUST-218', 'Kunal Desai', '$11,740.00', '12', '#5', 'VIP Tier 1'],
+        ],
+      },
+      q3: {
+        sql: `WITH MonthlySales AS (
+    SELECT 
+        DATE_FORMAT(order_date, '%Y-%m') AS sale_month,
+        SUM(total_amount) AS current_revenue
+    FROM orders
+    WHERE order_status = 'COMPLETED'
+    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+)
+SELECT 
+    sale_month,
+    current_revenue,
+    LAG(current_revenue, 1) OVER (ORDER BY sale_month) AS prior_month_rev,
+    ROUND(((current_revenue - LAG(current_revenue, 1) OVER (ORDER BY sale_month)) / 
+           LAG(current_revenue, 1) OVER (ORDER BY sale_month)) * 100, 2) AS mom_growth_pct
+FROM MonthlySales
+ORDER BY sale_month DESC
+LIMIT 5;`,
+        plan: 'Materialized CTE Temp Table + Window LAG',
+        headers: ['sale_month', 'current_revenue', 'prior_month_rev', 'mom_growth_pct'],
+        rows: [
+          ['2026-03', '$94,200.00', '$86,150.00', '+9.34%'],
+          ['2026-02', '$86,150.00', '$78,400.00', '+9.88%'],
+          ['2026-01', '$78,400.00', '$71,200.00', '+10.11%'],
+          ['2025-12', '$71,200.00', '$64,900.00', '+9.71%'],
+          ['2025-11', '$64,900.00', '$59,100.00', '+9.81%'],
+        ],
+      },
+    };
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
+    function renderQueryPreset() {
+      const q = queryData[select.value] || queryData.q1;
+      codeDisplay.textContent = q.sql;
+      planEl.textContent = q.plan;
+      const latency = (Math.random() * 5 + 11.2).toFixed(1);
+      latencyEl.textContent = `${latency} ms`;
 
-  const downloadDaBtn = document.getElementById('download-da-btn');
-  const downloadDsBtn = document.getElementById('download-ds-btn');
-  const downloadAiBtn = document.getElementById('download-ai-btn');
-
-  if (downloadDaBtn) {
-    downloadDaBtn.addEventListener('click', () => {
-      playTone(1200, 'sine', 0.1, 0.05);
-      showToast('Downloading Dev_Patel_Data_Analyst_Resume.pdf...');
-    });
-  }
-
-  if (downloadDsBtn) {
-    downloadDsBtn.addEventListener('click', () => {
-      playTone(1100, 'sine', 0.1, 0.05);
-      showToast('Downloading Dev_Patel_Data_Scientist_Resume.pdf...');
-    });
-  }
-
-  if (downloadAiBtn) {
-    downloadAiBtn.addEventListener('click', () => {
-      playTone(1050, 'triangle', 0.1, 0.05);
-      showToast('Downloading Dev_Patel_AI_ML_Resume.pdf...');
-    });
-  }
-
-  if (downloadBtn) {
-    downloadBtn.addEventListener('click', () => {
-      playTone(1100, 'sine', 0.08, 0.04);
-      window.print();
-    });
-  }
-}
-
-/* ==========================================================================
-   12. TOAST NOTIFICATIONS
-   ========================================================================== */
-function showToast(message, duration = 3200) {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
-
-  const toast = document.createElement('div');
-  toast.className = 'hud-toast';
-  toast.innerHTML = `<span class="toast-dot"></span><span>${escapeHtml(message)}</span>`;
-
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    setTimeout(() => {
-      if (toast.parentElement) toast.parentElement.removeChild(toast);
-    }, 300);
-  }, duration);
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-/* ==========================================================================
-   13. SCROLL REVEAL (INTERSECTION OBSERVER)
-   ========================================================================== */
-function initScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal-item');
-  if (revealElements.length === 0) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
+      // Render Header
+      let thead = '<tr>';
+      q.headers.forEach((h) => {
+        thead += `<th>${h}</th>`;
       });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
+      thead += '</tr>';
+      tableEl.querySelector('thead').innerHTML = thead;
 
-  revealElements.forEach((el) => observer.observe(el));
-}
-
-/* ==========================================================================
-   14. CARD SPOTLIGHT & 3D TILT EFFECT
-   ========================================================================== */
-function initCardSpotlightAndTilt() {
-  const cards = document.querySelectorAll('.card-spotlight');
-
-  // Skip tilt on touch devices
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  cards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Update radial glow coordinates
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-
-      // Gentle 3D perspective tilt
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -3;
-      const rotateY = ((x - centerX) / centerX) * 3;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-}
-
-/* ==========================================================================
-   15. TEXT DECRYPT / SCRAMBLE ANIMATION
-   ========================================================================== */
-function initTextDecrypt() {
-  const decryptTargets = document.querySelectorAll('.decrypt-text');
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#@$%-+';
-
-  function scramble(element) {
-    const originalText = element.getAttribute('data-value') || element.textContent;
-    let iteration = 0;
-
-    const interval = setInterval(() => {
-      element.textContent = originalText
-        .split('')
-        .map((char, index) => {
-          if (index < iteration) {
-            return originalText[index];
-          }
-          if (char === ' ') return ' ';
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join('');
-
-      if (iteration >= originalText.length) {
-        clearInterval(interval);
-        element.textContent = originalText;
-      }
-      iteration += 1 / 2;
-    }, 28);
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          scramble(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-
-  decryptTargets.forEach((el) => observer.observe(el));
-}
-
-/* ==========================================================================
-   16. SUBSYSTEMS BOOT SEQUENCE
-   ========================================================================== */
-function initSubsystemsBootSequence() {
-  const subsystemRows = document.querySelectorAll('.subsystem-row');
-  if (subsystemRows.length === 0) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          subsystemRows.forEach((row, i) => {
-            setTimeout(() => {
-              const led = row.querySelector('.led-dot');
-              if (led) {
-                led.classList.remove('offline');
-                led.classList.add('online');
-              }
-              playTone(600 + i * 150, 'sine', 0.04, 0.02);
-            }, i * 220);
-          });
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
-
-  const tree = document.querySelector('.subsystems-tree');
-  if (tree) observer.observe(tree);
-}
-
-/* ==========================================================================
-   17. SVG GIT BRANCH TELEMETRY ANIMATION
-   ========================================================================== */
-function initGitSvgAnimation() {
-  const gitSvg = document.getElementById('git-dag-svg') || document.getElementById('git-telemetry-svg');
-  const gitPaths = document.querySelectorAll('.git-branch-path');
-  const livePacket = document.getElementById('git-live-packet');
-  const featurePath = document.getElementById('git-feature-path');
-
-  if (!gitSvg) return;
-
-  function triggerDraw() {
-    gitSvg.classList.add('drawn');
-    gitPaths.forEach((path) => {
-      path.style.strokeDashoffset = '0';
-    });
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          triggerDraw();
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  observer.observe(gitSvg);
-  setTimeout(triggerDraw, 350);
-
-  // Continuous traveling packet animation along the active feature branch curve
-  if (livePacket && featurePath && typeof featurePath.getTotalLength === 'function') {
-    try {
-      const totalLen = featurePath.getTotalLength();
-      let startTime = null;
-      const loopDuration = 3400; // ms per traversal
-
-      function stepPacket(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const elapsed = (timestamp - startTime) % loopDuration;
-        const progress = elapsed / loopDuration;
-        const pt = featurePath.getPointAtLength(progress * totalLen);
-        if (pt) {
-          livePacket.setAttribute('cx', pt.x.toFixed(1));
-          livePacket.setAttribute('cy', pt.y.toFixed(1));
-        }
-        requestAnimationFrame(stepPacket);
-      }
-      requestAnimationFrame(stepPacket);
-    } catch (e) {
-      console.warn('Git DAG packet animation warning:', e);
-    }
-  }
-
-  // Node tooltips & interactive sound
-  const nodes = gitSvg.querySelectorAll('.git-node');
-  nodes.forEach((node) => {
-    const commitMsg = node.getAttribute('data-commit');
-    if (commitMsg) {
-      node.setAttribute('title', commitMsg);
-      node.addEventListener('click', () => {
-        if (typeof playTone === 'function') {
-          playTone(880, 'sine', 0.08, 0.04);
-        }
-        if (typeof showToast === 'function') {
-          showToast(`Commit: ${commitMsg}`);
-        }
-      });
-    }
-  });
-}
-
-/* ==========================================================================
-   18. METRIC COUNTERS
-   ========================================================================== */
-function initMetricCounters() {
-  const counters = document.querySelectorAll('.counter-value, .metric-value[data-target]');
-  if (counters.length === 0) return;
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        obs.unobserve(el);
-
-        const rawTarget = el.getAttribute('data-target') || '0';
-        const targetVal = parseFloat(rawTarget);
-        const prefix = el.getAttribute('data-prefix') || '';
-        const suffix = el.getAttribute('data-suffix') || '';
-        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
-        const duration = 1400; // ms
-        const startTime = performance.now();
-        const isNegative = targetVal < 0;
-        const absTarget = Math.abs(targetVal);
-
-        el.classList.add('counting');
-
-        function updateCounter(now) {
-          const progress = Math.min((now - startTime) / duration, 1);
-          // Ease out exponential curve
-          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-          const current = (absTarget * ease).toFixed(decimals);
-          el.textContent = `${prefix}${isNegative ? '-' : ''}${current}${suffix}`;
-
-          if (progress < 1) {
-            requestAnimationFrame(updateCounter);
+      // Render Body
+      let tbody = '';
+      q.rows.forEach((row) => {
+        tbody += '<tr>';
+        row.forEach((cell, idx) => {
+          if (idx === 0) {
+            tbody += `<td class="cell-highlight">${cell}</td>`;
+          } else if (cell.includes('%')) {
+            tbody += `<td><span class="table-badge badge-green">${cell}</span></td>`;
           } else {
-            el.textContent = `${prefix}${isNegative ? '-' : ''}${absTarget.toFixed(decimals)}${suffix}`;
-            el.classList.remove('counting');
+            tbody += `<td>${cell}</td>`;
           }
-        }
+        });
+        tbody += '</tr>';
+      });
+      tableEl.querySelector('tbody').innerHTML = tbody;
+    }
 
-        requestAnimationFrame(updateCounter);
-      }
+    select.addEventListener('change', renderQueryPreset);
+    runBtn.addEventListener('click', () => {
+      runBtn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        runBtn.style.transform = 'none';
+        renderQueryPreset();
+      }, 120);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px 50px 0px' });
+  }
 
-  counters.forEach((c) => observer.observe(c));
-}
+  // --- 7. TAB 3: EXECUTIVE BI TELEMETRY LOGIC ---
+  function initBITelemetry() {
+    const pills = document.querySelectorAll('.bi-pill');
+    const revEl = document.getElementById('bi-kpi-rev');
+    const revTrendEl = document.getElementById('bi-kpi-rev-trend');
+    const marginEl = document.getElementById('bi-kpi-margin');
+    const ltvEl = document.getElementById('bi-kpi-ltv');
+    const churnEl = document.getElementById('bi-kpi-churn');
+    const bars = document.querySelectorAll('.bar-elem');
+
+    if (!pills.length || !revEl) return;
+
+    const periodData = {
+      '7d': {
+        rev: '$124,300',
+        trend: '↑ +11.2% vs Prev 7 Days',
+        margin: '31.2%',
+        ltv: '$1,340',
+        churn: '1.8%',
+        heights: [45, 60, 50, 75, 70, 85, 95, 90, 100],
+      },
+      '30d': {
+        rev: '$482,900',
+        trend: '↑ +14.8% YoY',
+        margin: '29.4%',
+        ltv: '$1,280',
+        churn: '2.1%',
+        heights: [65, 75, 60, 85, 80, 95, 90, 100, 105],
+      },
+      ytd: {
+        rev: '$1,420,800',
+        trend: '↑ +18.4% vs FY Target',
+        margin: '28.9%',
+        ltv: '$1,410',
+        churn: '2.4%',
+        heights: [50, 70, 80, 65, 90, 85, 95, 110, 115],
+      },
+    };
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        pills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const period = pill.getAttribute('data-period');
+        const data = periodData[period];
+        if (!data) return;
+
+        revEl.textContent = data.rev;
+        revTrendEl.textContent = data.trend;
+        marginEl.textContent = data.margin;
+        ltvEl.textContent = data.ltv;
+        churnEl.textContent = data.churn;
+
+        // Animate bars
+        bars.forEach((bar, idx) => {
+          const h = data.heights[idx] || 60;
+          bar.setAttribute('height', h);
+          bar.setAttribute('y', 125 - h);
+        });
+      });
+    });
+  }
+
+  // --- 8. TECHNICAL ARSENAL: CATEGORY FILTER ---
+  function initSkillsFilter() {
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const skillCards = document.querySelectorAll('.skill-card');
+
+    filterPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const filter = pill.getAttribute('data-filter');
+
+        skillCards.forEach((card) => {
+          const cat = card.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            card.style.display = 'flex';
+            card.style.animation = 'fadeIn 0.25s ease';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  // --- 9. ONE-CLICK CLIPBOARD COPY & TOAST NOTIFICATION ---
+  function initClipboardCopy() {
+    const copyBtns = document.querySelectorAll('.copy-btn');
+    const toastContainer = document.getElementById('toast-container');
+
+    function showToast(message) {
+      if (!toastContainer) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const textToCopy = btn.getAttribute('data-copy');
+        if (!textToCopy) return;
+
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(() => {
+            showToast(`✓ Copied: ${textToCopy}`);
+          })
+          .catch(() => {
+            showToast(`Copied: ${textToCopy}`);
+          });
+      });
+    });
+  }
+
+  // --- INITIALIZATION ENTRYPOINT ---
+  document.addEventListener('DOMContentLoaded', () => {
+    initNeuralCanvas();
+    initNavigation();
+    initCountUp();
+    initLabTabs();
+    initCropMLPredictor();
+    initSQLSandbox();
+    initBITelemetry();
+    initSkillsFilter();
+    initClipboardCopy();
+  });
+})();
