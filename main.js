@@ -272,7 +272,8 @@
   function getMode() { return root.dataset.mode === 'dark' ? 'dark' : 'light'; }
   function setMode(m, animate = true) {
     if (animate && !reduced && document.startViewTransition) {
-      const hit = $('#cordHit')?.getBoundingClientRect();
+      const originBtn = m === 'light' ? ($('#cordBulb') || $('#cordHit')) : ($('#cordHit') || $('#cordBulb'));
+      const hit = originBtn?.getBoundingClientRect();
       if (hit && hit.width) {
         root.style.setProperty('--vt-x', Math.round(hit.left + hit.width / 2) + 'px');
         root.style.setProperty('--vt-y', Math.round(hit.top + hit.height / 2) + 'px');
@@ -354,17 +355,18 @@
     }
   });
 
-  /* ---------- Pull Cord + Edison Pendant Bulb: Light (ON) / Dark (OFF) ---------- */
+  /* ---------- Connected Pull Cord & Edison Bulb: Pull Bulb -> Light | Pull Rope -> Dark ---------- */
   (function pullCord() {
     const wrap = $('#cord'), cv = $('.cord__cv', wrap), hit = $('#cordHit'), bulbBtn = $('#cordBulb');
     if (!wrap || !cv || !hit) return;
     const ctx = cv.getContext('2d');
     const N = 26, G = 4600, STEP = 1 / 120, ITER = 16;
     let dpr = 1, W = 300, H = 420;
-    let L = 220, EXT_MAX = 72, HIDDEN = 90, seg = 10, ax = 200, thick = 3.7, knobS = 1.3;
+    let L = 220, EXT_MAX = 72, BULB_MAX = 44, HIDDEN = 90, seg = 10, ax = 200, thick = 3.7, knobS = 1.3;
     let lampY = 82, bulbSc = 1;
     let bulbLit = getMode() === 'light' ? 1 : 0, bulbTarget = bulbLit;
     let pts = [], ext = 0, extV = 0, armed = true;
+    let bulbExt = 0, bulbExtV = 0, bulbArmed = true, bulbDrag = null, bulbMoved = 0, bulbDownAt = 0;
     let grab = -1, grabOff = { x: 0, y: 0 }, target = null, ptr = null, ptrPrev = null;
     let downAt = 0, downPos = null, moved = 0;
     let acc = 0, lastT = 0, t = 0, dropped = false, live = false;
@@ -374,14 +376,14 @@
       const vw = innerWidth, vh = innerHeight;
       let offset;
       if (vw >= 1024) {
-        offset = 4.25 * rem; L = Math.min(265, Math.max(195, vh * .29)); EXT_MAX = 72; thick = 3.7; knobS = 1.3;
-        lampY = 82; bulbSc = 1;
+        offset = 4.25 * rem; L = Math.min(265, Math.max(195, vh * .29)); EXT_MAX = 72; BULB_MAX = 46; thick = 3.7; knobS = 1.3;
+        lampY = 110; bulbSc = 1;
       } else if (vw >= 640) {
-        offset = 5.9 * rem; L = Math.min(210, Math.max(155, vh * .21)); EXT_MAX = 62; thick = 3.4; knobS = 1.2;
-        lampY = 68; bulbSc = .88;
+        offset = 5.9 * rem; L = Math.min(210, Math.max(155, vh * .21)); EXT_MAX = 62; BULB_MAX = 38; thick = 3.4; knobS = 1.2;
+        lampY = 92; bulbSc = .88;
       } else {
-        L = 44; EXT_MAX = 34; thick = 2.7; knobS = .82;
-        lampY = 18; bulbSc = .6;
+        L = 44; EXT_MAX = 34; BULB_MAX = 26; thick = 2.7; knobS = .82;
+        lampY = 30; bulbSc = .6;
       }
       HIDDEN = EXT_MAX + 18;
       W = vw < 1024 ? vw : Math.min(vw, 340);
@@ -424,8 +426,15 @@
         extV += (-K * ext - C * extV) * dt;
         ext += extV * dt;
       }
-      if (ext > EXT_MAX * .8 && armed && live) { armed = false; toggleMode(); try { navigator.vibrate?.(12); } catch (e) {} }
+      if (!bulbDrag) {
+        const KB = 720, CB = 20;
+        bulbExtV += (-KB * bulbExt - CB * bulbExtV) * dt;
+        bulbExt += bulbExtV * dt;
+      }
+      if (ext > EXT_MAX * .8 && armed && live) { armed = false; setMode('dark'); try { navigator.vibrate?.(12); } catch (e) {} }
       if (ext < EXT_MAX * .22) armed = true;
+      if (bulbExt > BULB_MAX * .65 && bulbArmed && live) { bulbArmed = false; setMode('light'); try { navigator.vibrate?.(12); } catch (e) {} }
+      if (bulbExt < BULB_MAX * .22) bulbArmed = true;
 
       const a = pts[0];
       a.x = a.px = ax; a.y = a.py = -HIDDEN + ext;
@@ -509,7 +518,14 @@
       removeEventListener('pointercancel', endDrag);
       if (tap) tug();
     }
+    const splitIdx = () => Math.min(N - 2, Math.max(1, Math.round(N * (HIDDEN + L * .36) / (HIDDEN + L))));
     function tug() { dropped = true; live = true; wake(); extV = EXT_MAX * 48; pts[N].px = pts[N].x + 1.5; }
+    function tugBulb() {
+      dropped = true; live = true; wake();
+      bulbExtV = BULB_MAX * 42;
+      const ji = splitIdx();
+      if (pts[ji]) pts[ji].px = pts[ji].x - 1.4;
+    }
 
     hit.addEventListener('pointerdown', e => {
       if (!dropped) return;
@@ -519,8 +535,43 @@
     });
     hit.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tug(); } });
     hit.addEventListener('click', e => e.preventDefault());
-    bulbBtn?.addEventListener('click', e => { e.preventDefault(); tug(); });
-    bulbBtn?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tug(); } });
+
+    if (bulbBtn) {
+      const onBulbMove = e => {
+        if (!bulbDrag) return;
+        e.preventDefault();
+        const p = local(e);
+        const dy = Math.max(0, Math.min(BULB_MAX * 1.15, p.y - bulbDrag.y0));
+        bulbMoved = Math.max(bulbMoved, Math.hypot(p.x - bulbDrag.x0, p.y - bulbDrag.y0));
+        bulbExt += (dy - bulbExt) * .55;
+        const ji = splitIdx();
+        if (pts[ji]) pts[ji].x += (p.x - bulbDrag.x0) * .04;
+      };
+      const endBulbDrag = () => {
+        if (!bulbDrag) return;
+        const tap = bulbMoved < 6 && performance.now() - bulbDownAt < 320;
+        bulbDrag = null;
+        wrap.classList.remove('dragging');
+        removeEventListener('pointermove', onBulbMove);
+        removeEventListener('pointerup', endBulbDrag);
+        removeEventListener('pointercancel', endBulbDrag);
+        if (tap) tugBulb();
+      };
+      bulbBtn.addEventListener('pointerdown', e => {
+        if (!dropped) return;
+        e.preventDefault();
+        try { bulbBtn.setPointerCapture(e.pointerId); } catch (_) {}
+        dropped = true; live = true; wake();
+        bulbDrag = { x0: local(e).x, y0: local(e).y };
+        bulbMoved = 0; bulbDownAt = performance.now();
+        wrap.classList.add('dragging');
+        addEventListener('pointermove', onBulbMove, { passive: false });
+        addEventListener('pointerup', endBulbDrag);
+        addEventListener('pointercancel', endBulbDrag);
+      });
+      bulbBtn.addEventListener('click', e => { e.preventDefault(); if (!bulbMoved) tugBulb(); });
+      bulbBtn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tugBulb(); } });
+    }
 
     const brush = { last: null };
     addEventListener('pointermove', e => {
@@ -599,14 +650,16 @@
       c.bezierCurveTo(12.8, 14.5, 6.2, 11, 6.2, 6);
       c.closePath();
     }
-    function drawBulb(c, bx, by, sc, lit, dir, sway) {
-      const jy = by - 22 * sc;
-      // Brass Y-junction collar clamped onto vertical drop wire
+    function drawBulb(c, jx, jy, bx, by, sc, lit, dir, sway) {
+      // Connected brushed brass collar + flexible braided lead straight from moving rope node to Edison socket
       c.save();
-      c.strokeStyle = '#3b2e1b'; c.lineWidth = 2.4 * sc; c.lineCap = 'round';
-      c.beginPath(); c.moveTo(ax, jy); c.quadraticCurveTo(ax + dir * 9 * sc, jy + 1.5 * sc, bx, by - 5 * sc); c.stroke();
-      c.fillStyle = '#b0924f';
-      c.beginPath(); c.arc(ax, jy, 3.6 * sc, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = '#6f6455'; c.lineWidth = 3.2 * sc; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(jx, jy); c.quadraticCurveTo(jx + dir * 14 * sc, jy + 12 * sc, bx, by - 5 * sc); c.stroke();
+      c.strokeStyle = '#c8b896'; c.lineWidth = 1.6 * sc;
+      c.beginPath(); c.moveTo(jx, jy); c.quadraticCurveTo(jx + dir * 14 * sc, jy + 12 * sc, bx, by - 5 * sc); c.stroke();
+      c.fillStyle = '#d4b46c';
+      c.beginPath(); c.arc(jx, jy, 4.1 * sc, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = '#3b2e1b'; c.lineWidth = .8 * sc; c.stroke();
       c.restore();
 
       c.save();
@@ -695,9 +748,12 @@
       c.strokeStyle = 'rgba(255,252,244,.55)'; c.lineWidth = thick * .28; c.stroke();
       c.restore();
       const dir = innerWidth < 640 ? 1 : -1;
-      const bx = ax + dir * 21 * bulbSc, by = lampY;
-      const sway = Math.max(-.14, Math.min(.14, ((pts[3]?.x ?? ax) - ax) * .018 + Math.sin(t * 1.1) * .018));
-      drawBulb(c, bx, by, bulbSc, bulbLit, dir, sway);
+      const ji = splitIdx();
+      const jPt = ps[ji] || { x: ax, y: Math.max(12, lampY - 22 * bulbSc) };
+      const jy = Math.max(10, jPt.y);
+      const bx = jPt.x + dir * 23 * bulbSc, by = Math.max(jy + 18 * bulbSc, lampY + Math.max(0, bulbExt));
+      const sway = Math.max(-.16, Math.min(.16, (jPt.x - ax) * .022 + Math.sin(t * 1.1) * .018));
+      drawBulb(c, jPt.x, jy, bx, by, bulbSc, bulbLit, dir, sway);
       drawKnob(c, last.x, last.y, ang, false);
       const kx = last.x + Math.cos(ang) * 20 * knobS, ky = last.y + Math.sin(ang) * 20 * knobS;
       hit.style.transform = `translate(${kx}px, ${ky}px)`;
@@ -721,9 +777,9 @@
       while (acc >= STEP) { step(STEP); acc -= STEP; }
       if (dropped && live && grab < 0 && now - touchedAt > 2500) for (const q of pts) { q.px += (q.x - q.px) * .06; q.py += (q.y - q.py) * .06; }
       draw();
-      let motion = Math.abs(extV) + Math.abs(ext) + Math.abs(bulbTarget - bulbLit) * 4;
+      let motion = Math.abs(extV) + Math.abs(ext) + Math.abs(bulbExtV) + Math.abs(bulbExt) + Math.abs(bulbTarget - bulbLit) * 4;
       for (const q of pts) motion = Math.max(motion, Math.abs(q.x - q.px) + Math.abs(q.y - q.py));
-      if (dropped && live && grab < 0 && motion < .06) { if (++still > 30) { for (const q of pts) { q.px = q.x; q.py = q.y; } sleeping = true; return; } } else still = 0;
+      if (dropped && live && grab < 0 && !bulbDrag && motion < .06) { if (++still > 30) { for (const q of pts) { q.px = q.x; q.py = q.y; } sleeping = true; return; } } else still = 0;
       requestAnimationFrame(loop);
     }
 
@@ -957,7 +1013,8 @@
       const near = new IntersectionObserver(es => {
         if (es.some(e => e.isIntersecting)) {
           near.disconnect();
-          setTimeout(() => [0, 1, 2, 3].forEach(warm), 600);
+          if (MOB.matches) warm(0);
+          else setTimeout(() => [0, 1, 2, 3].forEach(warm), 600);
         }
       }, { rootMargin: '240px' });
       near.observe(sec);
@@ -1029,6 +1086,7 @@
     function mShow(i) {
       if (i === mShown) return;
       mShown = i; setInfo(i);
+      if (MOB.matches) warm(i);
       mDots?.querySelectorAll('i').forEach((d, k) => d.classList.toggle('on', k === Math.min(3, i)));
     }
     function mFrame(now) {
@@ -1131,31 +1189,33 @@
       doorsState.forEach((o, k) => { if (k !== i) o.s.set(0); });
       d.u.classList.add('press');
       setTimeout(() => d.u.classList.remove('press'), 350);
-      setTimeout(() => d.s.set(ANG_WALK / ANG), reduced ? 0 : 150);
-      setTimeout(() => through(i), reduced ? 0 : 680);
+      setTimeout(() => d.s.set(ANG_WALK / ANG), reduced ? 0 : 110);
+      setTimeout(() => through(i), reduced ? 0 : (MOB.matches ? 360 : 520));
     }
 
+    function zoomTarget() { return MOB.matches ? (mPin || sec) : sec; }
+
     function through(i) {
-      const u = units[i];
+      const u = units[i], z = zoomTarget();
       const r = $('.opening', u).getBoundingClientRect(), dr = $('.door', u).getBoundingClientRect();
       const gapL = Math.min(Math.max(dr.right, r.left), r.right - 6);
-      const gw = Math.max(r.right - gapL, 10), gh = r.height;
+      const gw = Math.max(r.width * .34, r.right - gapL, 28), gh = r.height;
       const cx = (gapL + r.right) / 2, cy = r.top + gh * .5;
       holdScroll(true);
       $('#cord')?.classList.add('away'); $('.hdr')?.classList.add('away');
-      const sr = sec.getBoundingClientRect();
-      sec.style.transformOrigin = `${cx - sr.left}px ${cy - sr.top}px`;
+      const sr = z.getBoundingClientRect();
+      z.style.transformOrigin = `${cx - sr.left}px ${cy - sr.top}px`;
       sec.classList.add('through');
       const tx = innerWidth / 2 - cx, ty = innerHeight / 2 - cy;
-      const sEnd = Math.max(innerWidth / gw, innerHeight / gh) * 1.15;
+      const sEnd = Math.min(6.5, Math.max(innerWidth / gw, innerHeight / gh) * 1.05);
       const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
       const zoomOf = e => Math.exp(Math.log(sEnd) * e);
-      const t0 = performance.now(), D = reduced ? 1 : 1200;
+      const t0 = performance.now(), D = reduced ? 1 : (MOB.matches ? 420 : 680);
       let handed = false;
       const step = now => {
         const p = Math.min(1, (now - t0) / D), e = ease(p), sc = zoomOf(e), f = Math.min(1, e * 1.6);
-        sec.style.transform = `translate(${tx * f}px, ${ty * f}px) scale(${sc})`;
-        if (!handed && (sc >= sEnd / 1.15 || p >= 1)) { handed = true; handoff(); }
+        z.style.transform = `translate(${tx * f}px, ${ty * f}px) scale(${sc})`;
+        if (!handed && (p >= .82 || p >= 1)) { handed = true; handoff(); }
         if (p < 1) walkRaf = requestAnimationFrame(step);
       };
       walkRaf = requestAnimationFrame(step);
@@ -1187,32 +1247,34 @@
         wallv.classList.remove('on');
         setTimeout(() => {
           cancelAnimationFrame(walkRaf);
-          const from = sec.style.transform;
+          doorsState[cur].s.set(0);
+          const z = zoomTarget();
+          const from = z.style.transform;
           const m = /translate\(([-\d.]+)px, ([-\d.]+)px\) scale\(([\d.]+)\)/.exec(from) || [0, 0, 0, 1];
-          const X = +m[1], Y = +m[2], S = +m[3], t0 = performance.now(), D = reduced ? 1 : 900;
+          const X = +m[1], Y = +m[2], S = +m[3], t0 = performance.now(), D = reduced ? 1 : (MOB.matches ? 260 : 420);
           const ease = x => 1 - Math.pow(1 - x, 3);
           const step = now => {
             const p = Math.min(1, (now - t0) / D), e = ease(p);
             const sc = Math.exp(Math.log(S) * (1 - e));
-            sec.style.transform = `translate(${X * (1 - e)}px, ${Y * (1 - e)}px) scale(${sc})`;
+            z.style.transform = `translate(${X * (1 - e)}px, ${Y * (1 - e)}px) scale(${sc})`;
             if (p < 1) requestAnimationFrame(step);
             else {
-              sec.style.transform = '';
-              sec.classList.remove('through', 'lift'); sec.style.transformOrigin = '';
+              z.style.transform = ''; z.style.transformOrigin = '';
+              sec.classList.remove('through', 'lift');
               doorsState[cur].s.set(0);
               $('#cord')?.classList.remove('away'); $('.hdr')?.classList.remove('away');
               busy = false; holdScroll(false);
-              if (afterLeave) { const f = afterLeave; afterLeave = null; setTimeout(f, 60); }
+              if (afterLeave) { const f = afterLeave; afterLeave = null; setTimeout(f, 40); }
               if (cur === SECRET) {
-                if (MOB.matches) { mForce = -1; mFromScroll(); mApply(); setTimeout(() => reveal(false), reduced ? 0 : 480); }
-                else setTimeout(() => reveal(false), reduced ? 0 : 400);
+                if (MOB.matches) { mForce = -1; mFromScroll(); mApply(); setTimeout(() => reveal(false), reduced ? 0 : 280); }
+                else setTimeout(() => reveal(false), reduced ? 0 : 260);
                 units[SECRET - 1].querySelector('.doorway').focus({ preventScroll: true });
               } else doorsState[cur].way.focus({ preventScroll: true });
             }
           };
           requestAnimationFrame(step);
-        }, reduced ? 0 : 180);
-      }, reduced ? 0 : 240);
+        }, reduced ? 0 : 60);
+      }, reduced ? 0 : 120);
     }
 
     addEventListener('message', e => {

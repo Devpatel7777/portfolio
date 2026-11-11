@@ -100,11 +100,11 @@
     </div>
   </header>
 
-  <!-- ============ Pull cord + Edison Bulb: light / dark switch ============ -->
+  <!-- ============ Connected Rope & Edison Bulb: Pull Bulb -> Light | Pull Rope -> Dark ============ -->
   <div class="cord" id="cord">
     <canvas aria-hidden="true" class="cord__cv"></canvas>
-    <button type="button" aria-checked="false" aria-label="Toggle lamp bulb to switch between Light and Dark mode" class="cord__bulb" id="cordBulb" role="switch"></button>
-    <button type="button" aria-checked="true" aria-label="Pull rope to turn bulb ON (Light mode) or OFF (Dark mode)" class="cord__hit" id="cordHit" role="switch"></button>
+    <button type="button" aria-checked="false" aria-label="Pull Edison bulb for Light mode" title="Pull bulb → Light mode" class="cord__bulb" id="cordBulb" role="switch"></button>
+    <button type="button" aria-checked="true" aria-label="Pull braided rope for Dark mode" title="Pull rope → Dark mode" class="cord__hit" id="cordHit" role="switch"></button>
   </div>
 
   <main id="main">
@@ -211,7 +211,7 @@
           <p aria-hidden="true" class="doors__dots"><i class="on"></i><i></i><i></i><i></i></p>
 
           <ul class="doors__row">
-            <li class="unit" style="--i:0;--door:#22354E;--door-dk:#1E2C42;--glow:255,200,130">
+            <li class="unit" style="--i:0;--door:#1B2A3E;--door-dk:#162233;--glow:223,186,116">
               <button type="button" aria-label="Open the Power BI room" class="doorway">
                 <span class="casing"></span>
                 <span class="opening">
@@ -229,7 +229,7 @@
               </button>
             </li>
 
-            <li class="unit" style="--i:1;--door:#4A3142;--door-dk:#452E3C;--glow:255,195,145">
+            <li class="unit" style="--i:1;--door:#382433;--door-dk:#311F2D;--glow:223,186,116">
               <button type="button" aria-label="Open the SQL Systems room" class="doorway">
                 <span class="casing"></span>
                 <span class="opening">
@@ -247,7 +247,7 @@
               </button>
             </li>
 
-            <li class="unit" style="--i:2;--door:#65755B;--door-dk:#5D6A54;--glow:245,210,155">
+            <li class="unit" style="--i:2;--door:#475644;--door-dk:#3E4B3B;--glow:223,186,116">
               <button type="button" aria-label="Open the ML Engineer room" class="doorway">
                 <span class="casing"></span>
                 <span class="opening">
@@ -265,7 +265,7 @@
               </button>
             </li>
 
-            <li class="unit" style="--i:3;--door:#9D5328;--door-dk:#964D24;--glow:255,185,125">
+            <li class="unit" style="--i:3;--door:#7E4322;--door-dk:#6E391B;--glow:223,186,116">
               <button type="button" aria-label="Open the GenAI &amp; RAG room" class="doorway">
                 <span class="casing"></span>
                 <span class="opening">
@@ -283,7 +283,7 @@
               </button>
             </li>
 
-            <li class="unit unit--secret" inert style="--i:4;--door:#36312F;--door-dk:#2B2725;--glow:245,205,145">
+            <li class="unit unit--secret" inert style="--i:4;--door:#282524;--door-dk:#1E1B1A;--glow:223,186,116">
               <button type="button" aria-label="Open the Open Source &amp; CLI room" class="doorway">
                 <span class="casing"></span>
                 <span class="opening">
