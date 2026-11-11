@@ -6,6 +6,7 @@
 
   const params = new URLSearchParams(location.search);
   const embedded = params.get('embed') === '1' || window.parent !== window;
+  const TARGET_ORIGIN = location.origin === 'null' ? '*' : location.origin;
 
   function applyTheme(mode) {
     if (mode === 'dark') {
@@ -21,7 +22,8 @@
   } catch (e) {}
 
   window.addEventListener('message', e => {
-    if (!e.data) return;
+    if (location.origin !== 'null' && e.origin !== location.origin) return;
+    if (e.source !== window.parent || !e.data) return;
     if (e.data.wall === 'mode') applyTheme(e.data.mode);
     else if (e.data.theme) applyTheme(e.data.theme);
   });
@@ -29,7 +31,7 @@
   // Notify parent frame immediately once interactive DOM + styles are painted
   if (embedded) {
     requestAnimationFrame(() => {
-      try { window.parent.postMessage({ roomReady: true }, '*'); } catch (e) {}
+      try { window.parent.postMessage({ roomReady: true }, TARGET_ORIGIN); } catch (e) {}
     });
   }
 
@@ -38,7 +40,7 @@
     backBtn.addEventListener('click', e => {
       if (embedded) {
         e.preventDefault();
-        window.parent.postMessage({ wall: 'go' }, '*');
+        window.parent.postMessage({ wall: 'go' }, TARGET_ORIGIN);
       }
     });
   }
@@ -50,14 +52,14 @@
         window.parent.postMessage({
           wall: 'go',
           switchDoor: Number(pill.dataset.door)
-        }, '*');
+        }, TARGET_ORIGIN);
       }
     });
   });
 
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape' && embedded) {
-      window.parent.postMessage({ wall: 'go' }, '*');
+      window.parent.postMessage({ wall: 'go' }, TARGET_ORIGIN);
     }
   });
 

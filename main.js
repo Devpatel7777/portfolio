@@ -155,7 +155,74 @@
   $('#mClose')?.addEventListener('click', closeModal);
   $('#mDone')?.addEventListener('click', closeModal);
 
-  function openResumeModal() {
+  const RESUME_TRACKS = {
+    aiml: {
+      idx: 'TRACK 01 · ATS VERIFIED PDF',
+      title: 'AI / ML & GenAI Engineer',
+      desc: 'Multi-PDF Vector RAG (Gemini), LangGraph workflows, Groq LPU inference, Serper agents, and XGBoost 5-fold CV pipelines.',
+      tags: ['LangGraph', 'Gemini RAG', 'Groq', 'XGBoost', 'PyTorch / Sklearn'],
+      url: 'assets/resumes/Dev_Patel_AI_ML_Resume.pdf',
+      file: 'Dev_Patel_AI_ML_Resume.pdf'
+    },
+    ds: {
+      idx: 'TRACK 02 · ATS VERIFIED PDF',
+      title: 'Data Scientist',
+      desc: '5-fold CV (99.1% accuracy), IQR/Z-score feature engineering, K-Means & Decision Tree modeling on 500k+ Prodigy records.',
+      tags: ['Scikit-learn', 'XGBoost', '5-Fold CV', '500k+ EDA', 'K-Means'],
+      url: 'assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf',
+      file: 'Dev_Patel_Data_Scientist_Resume.pdf'
+    },
+    analyst: {
+      idx: 'TRACK 03 · ATS VERIFIED PDF',
+      title: 'Data Analyst & BI',
+      desc: 'Executive Power BI Star Schema semantic models over 10k+ rows, DAX time-intelligence, 6-table 3NF MySQL & TATA/Deloitte sims.',
+      tags: ['Power BI', 'DAX', 'MySQL 3NF', 'Window Functions', 'Python EDA'],
+      url: 'assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf',
+      file: 'Dev_Patel_Data_Analyst_Resume.pdf'
+    }
+  };
+  let currentResumeTrack = 'aiml';
+  function selectResumeTrack(trackKey) {
+    const k = RESUME_TRACKS[trackKey] ? trackKey : 'aiml';
+    currentResumeTrack = k;
+    const d = RESUME_TRACKS[k];
+    document.querySelectorAll('#rvTabs .rvault__tab').forEach(btn => {
+      const on = btn.dataset.rv === k;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-selected', String(on));
+    });
+    const idx = $('#rvIdx'), title = $('#rvTitle'), desc = $('#rvDesc'), tags = $('#rvTags');
+    const prev = $('#rvPreview'), dl = $('#rvDownload');
+    if (idx) idx.textContent = d.idx;
+    if (title) title.textContent = d.title;
+    if (desc) desc.textContent = d.desc;
+    if (tags) {
+      tags.replaceChildren(...d.tags.map(t => {
+        const s = document.createElement('span');
+        s.textContent = t;
+        return s;
+      }));
+    }
+    if (prev) prev.href = d.url;
+    if (dl) { dl.href = d.url; dl.setAttribute('download', d.file); }
+  }
+  $('#rvTabs')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-rv]');
+    if (btn) selectResumeTrack(btn.dataset.rv);
+  });
+  $('#rvTabs')?.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const tabs = [...document.querySelectorAll('#rvTabs .rvault__tab')];
+    const i = tabs.findIndex(t => t.dataset.rv === currentResumeTrack);
+    if (i < 0) return;
+    e.preventDefault();
+    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    selectResumeTrack(next.dataset.rv);
+    next.focus();
+  });
+
+  function openResumeModal(trackKey) {
+    if (typeof trackKey === 'string' && RESUME_TRACKS[trackKey]) selectResumeTrack(trackKey);
     lastFocus = document.activeElement;
     openLayer(resumeModal, closeResumeModal);
     setTimeout(() => $('#rClose')?.focus(), 120);
@@ -168,7 +235,7 @@
   $('#rClose')?.addEventListener('click', closeResumeModal);
 
   document.querySelectorAll('[data-contact]').forEach(b => b.addEventListener('click', openModal));
-  document.querySelectorAll('[data-resume]').forEach(b => b.addEventListener('click', openResumeModal));
+  document.querySelectorAll('[data-resume]').forEach(b => b.addEventListener('click', () => openResumeModal()));
 
   const EMAIL = 'devpatel846211@gmail.com';
   let lastMailText = '';
@@ -235,9 +302,11 @@
   const roleParam = new URLSearchParams(location.search).get('role')?.toLowerCase().trim() || '';
   const activePreset = ROLE_PRESETS[roleParam] || null;
   if (activePreset) {
-    const eye = $('#heroEye'), rb = $('#heroResumeBtn');
+    const eye = $('#heroEye');
     if (eye) eye.textContent = activePreset.badge;
-    if (rb) rb.textContent = activePreset.label;
+    selectResumeTrack(activePreset.key.split(':')[1]);
+  } else {
+    selectResumeTrack('aiml');
   }
 
   /* ---------- Mobile Nav Menu ---------- */
@@ -864,6 +933,7 @@
       });
     }
 
+    const SAME_ORIGIN = location.origin === 'null' ? '*' : location.origin;
     const frames = [], ready = [], warmed = new Set();
     let frame = null, frameReady = false, cur = 0, inWall = false, pushed = false;
     function loadRoom(i) {
@@ -875,7 +945,7 @@
       f.addEventListener('load', () => {
         ready[i] = true;
         if (i === cur) frameReady = true;
-        try { f.contentWindow?.postMessage({ wall: 'mode', mode: getMode(), theme: getMode() }, '*'); } catch (e) {}
+        try { f.contentWindow?.postMessage({ wall: 'mode', mode: getMode(), theme: getMode() }, SAME_ORIGIN); } catch (e) {}
       }, { once: true });
       frames[i] = f;
       wallv.appendChild(f);
@@ -1098,7 +1168,7 @@
             inWall = true; wallv.classList.add('live');
             try { history.pushState({ wall: 1 }, '', ROUTES[i]); pushed = true; } catch (e) { pushed = false; }
             document.title = TITLES[i] + ' — Dev Patel';
-            try { frame.contentWindow?.postMessage({ wall: 'enter', mode: getMode(), theme: getMode() }, '*'); frame.contentWindow?.focus(); } catch (e) {}
+            try { frame.contentWindow?.postMessage({ wall: 'enter', mode: getMode(), theme: getMode() }, SAME_ORIGIN); frame.contentWindow?.focus(); } catch (e) {}
           }, 0);
         } else {
           veil.className = 'veil veil--glow'; veil.style.clipPath = 'none'; veil.hidden = false;
@@ -1112,7 +1182,7 @@
       inWall = false;
       wallv.classList.remove('live');
       document.title = DOC_TITLE;
-      try { frame?.contentWindow?.postMessage({ wall: 'exit' }, '*'); } catch (e) {}
+      try { frame?.contentWindow?.postMessage({ wall: 'exit' }, SAME_ORIGIN); } catch (e) {}
       setTimeout(() => {
         wallv.classList.remove('on');
         setTimeout(() => {
@@ -1146,7 +1216,8 @@
     }
 
     addEventListener('message', e => {
-      if (e.source !== frame?.contentWindow || !e.data) return;
+      if (location.origin !== 'null' && e.origin !== location.origin) return;
+      if (e.source !== frame?.contentWindow || !e.data || typeof e.data !== 'object') return;
       if (e.data.wall === 'go') {
         if (typeof e.data.switchDoor === 'number' && e.data.switchDoor !== cur) {
           const targetIdx = e.data.switchDoor;
@@ -1164,7 +1235,7 @@
     addEventListener('popstate', () => { if (inWall && !(history.state && history.state.wall)) { pushed = false; leaveWall(); } });
     addEventListener('keydown', e => { if (e.key === 'Escape' && inWall && modal.hidden && navm.hidden) { if (pushed) { pushed = false; history.back(); } else leaveWall(); } });
     new MutationObserver(() => frames.forEach(f => {
-      try { f?.contentWindow?.postMessage({ wall: 'mode', mode: getMode(), theme: getMode() }, '*'); } catch (e) {}
+      try { f?.contentWindow?.postMessage({ wall: 'mode', mode: getMode(), theme: getMode() }, SAME_ORIGIN); } catch (e) {}
     })).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
 
     const hashSlug = SLUGS.indexOf(decodeURIComponent(location.hash.slice(1)));
@@ -1404,6 +1475,7 @@
       if (from && Math.hypot(e.clientX - from[0], e.clientY - from[1]) < 10) hc.classList.toggle('flip');
       from = null;
     });
+    hc.addEventListener('click', e => { if (e.detail === 0) hc.classList.toggle('flip'); });
     layer.addEventListener('click', e => { if (e.target === layer) hide(); });
     open?.addEventListener('click', e => { e.stopPropagation(); show(); });
     fig?.addEventListener('click', e => { if (!e.target.closest('.fig__card')) show(); });
@@ -1411,17 +1483,11 @@
     $('#holoResumes')?.addEventListener('click', () => { hide(); setTimeout(openResumeModal, 240); });
   })();
 
-  /* ---------- Dev-AI Grounded Recruiter Copilot (1-Tap Role Fit + In-Chat PDF + RAG Trace) ---------- */
+  /* ---------- Dev-AI Grounded Recruiter Copilot (1-Tap Role Fit + Slim Dossier Trackbar + RAG Trace) ---------- */
   (function initRecruiterCopilot() {
     const modalEl = $('#copilot'), panel = $('#cpPanel'), log = $('#cpLog');
     const formEl = $('#cpForm'), inp = $('#cpInput'), copyBriefBtn = $('#cpCopyBrief');
     if (!modalEl || !log) return;
-
-    const RESUMES = {
-      aiml: { title: 'AI / ML & GenAI Engineer Resume (PDF)', sub: 'Multi-PDF RAG, LangGraph, Gemini, Groq & XGBoost', url: 'assets/resumes/Dev_Patel_AI_ML_Resume.pdf' },
-      ds: { title: 'Data Scientist Resume (PDF)', sub: '5-Fold CV 99.1%, Scikit-learn, Statistical EDA & Cohorts', url: 'assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf' },
-      analyst: { title: 'Data Analyst Resume (PDF)', sub: 'Power BI Star Schema, DAX, 3NF MySQL & 500k+ Audit', url: 'assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf' }
-    };
 
     const DOORS = [
       { id: 0, label: 'Explore Door 01 · Power BI & BI →' },
@@ -1576,7 +1642,10 @@
       if (userLabel) {
         const u = document.createElement('div');
         u.className = 'cp-msg cp-msg--user';
-        u.innerHTML = `<div class="cp-bubble">${fmtInline(userLabel)}</div>`;
+        const ub = document.createElement('div');
+        ub.className = 'cp-bubble';
+        ub.textContent = String(userLabel);
+        u.appendChild(ub);
         log.appendChild(u);
       }
       const b = document.createElement('div');
@@ -1595,13 +1664,46 @@
           ul.innerHTML = res.bullets.map(x => `<li>${fmtInline(x)}</li>`).join('');
           bubble.appendChild(ul);
         }
-        const pdfWrap = document.createElement('div');
-        pdfWrap.className = 'cp-pdf-row';
-        pdfWrap.innerHTML = (res.resumes || ['aiml']).map(k => {
-          const r = RESUMES[k];
-          return `<a class="cp-pdf" href="${r.url}" target="_blank" rel="noopener"><div><strong>${r.title}</strong><span>${r.sub}</span></div><span class="cp-pdf__btn">Open PDF ↗</span></a>`;
-        }).join('');
-        b.appendChild(pdfWrap);
+        const primaryKey = (res.resumes && RESUME_TRACKS[res.resumes[0]]) ? res.resumes[0] : 'aiml';
+        const r = RESUME_TRACKS[primaryKey];
+        const bar = document.createElement('div');
+        bar.className = 'cp-trackbar';
+
+        const info = document.createElement('div');
+        info.className = 'cp-trackbar__info';
+        const lbl = document.createElement('span');
+        lbl.className = 'cp-trackbar__lbl';
+        lbl.textContent = 'RECOMMENDED DOSSIER · ATS PDF';
+        const nameEl = document.createElement('strong');
+        nameEl.className = 'cp-trackbar__name';
+        nameEl.textContent = `${r.title} Resume`;
+        info.append(lbl, nameEl);
+
+        const acts = document.createElement('div');
+        acts.className = 'cp-trackbar__acts';
+        const prevA = document.createElement('a');
+        prevA.className = 'cp-trackbar__btn';
+        prevA.href = r.url;
+        prevA.target = '_blank';
+        prevA.rel = 'noopener noreferrer';
+        prevA.textContent = 'Preview ↗';
+        const dlA = document.createElement('a');
+        dlA.className = 'cp-trackbar__dl';
+        dlA.href = r.url;
+        dlA.setAttribute('download', r.file);
+        dlA.setAttribute('aria-label', `Download ${r.title} PDF`);
+        dlA.textContent = '↓';
+        const allBtn = document.createElement('button');
+        allBtn.type = 'button';
+        allBtn.className = 'cp-trackbar__all';
+        allBtn.textContent = 'Tracks';
+        allBtn.addEventListener('click', () => {
+          closeCopilot();
+          setTimeout(() => openResumeModal(primaryKey), 240);
+        });
+        acts.append(prevA, dlA, allBtn);
+        bar.append(info, acts);
+        b.appendChild(bar);
 
         const meta = document.createElement('div');
         meta.className = 'cp-meta';
@@ -1620,7 +1722,7 @@
 
         const trace = document.createElement('div');
         trace.className = 'cp-trace'; trace.hidden = true;
-        trace.innerHTML = `<div><b>Intent:</b> ${res.intent} · <b>Status:</b> Grounded (0 hallucinations)</div><div><b>Top Chunks:</b> ${(res.chunks || []).map(c => `${c.id} (${c.score})`).join(' · ')}</div>`;
+        trace.innerHTML = `<div><b>Intent:</b> ${fmtInline(String(res.intent))} · <b>Status:</b> Grounded (0 hallucinations)</div><div><b>Top Chunks:</b> ${(res.chunks || []).map(c => fmtInline(`${c.id} (${c.score})`)).join(' · ')}</div>`;
         b.appendChild(trace);
         tBtn.addEventListener('click', () => {
           trace.hidden = !trace.hidden;
@@ -1691,7 +1793,7 @@
         'Credentials: TATA GenAI Analytics | Deloitte Analytics | Nasscom thingQbator | TechWar 2026',
         'Availability: Immediate Joiner (Ahmedabad / Relocation Ready / Remote)',
         'Contact: devpatel846211@gmail.com | +91 93289 77322 | github.com/Devpatel7777',
-        'Portfolio & PDFs: https://dev-7-patel-portfolio.vercel.app/?role=aiml'
+        `Portfolio & PDFs: ${location.origin && location.origin !== 'null' ? location.origin : ''}/?role=aiml`
       ].join('\n');
       navigator.clipboard?.writeText(brief).then(() => {
         const prev = copyBriefBtn.textContent;

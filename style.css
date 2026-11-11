@@ -681,8 +681,8 @@ html:not([data-mode="dark"]) .cal__back {
 }
 .pill--ai:hover { background: rgba(var(--fg-rgb), .13); border-color: rgba(var(--fg-rgb), .42); }
 .ai-dot {
-  display: inline-block; width: .48rem; height: .48rem; border-radius: 50%;
-  background: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, .2);
+  display: inline-block; width: .45rem; height: .45rem; border-radius: 50%;
+  background: #DFBA74; box-shadow: 0 0 0 3px rgba(223, 186, 116, .24);
   flex: none;
 }
 
@@ -1346,7 +1346,7 @@ html[data-mode="dark"] .sf { --sf-bg: #0F0E0E; box-shadow: inset 0 1px 0 rgba(23
   border-top: 1px solid rgba(255, 255, 255, .1); padding-block: 1.25rem;
   font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, .5);
 }
-.navm__bot-actions { display: flex; align-items: center; gap: 1rem; }
+.navm__bot-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem 1rem; }
 .navm__bot button { min-height: 44px; text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, .82); }
 .navm__bot button:hover { color: #fff; text-decoration: underline; }
 
@@ -1640,76 +1640,128 @@ html[data-mode="dark"] .sf { --sf-bg: #0F0E0E; box-shadow: inset 0 1px 0 rgba(23
 }
 .msuccess__links a.prim { background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; }
 
-.resumes { display: flex; flex-direction: column; gap: .75rem; }
-.res-card {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .95rem 1.1rem; border-radius: var(--radius-control);
-  border: 1px solid var(--line); background: var(--field);
-  text-decoration: none; transition: border-color .2s, background .2s, transform .2s;
+/* ---------- Architectural Single-Dossier Resume Vault ---------- */
+.rvault__panel { max-width: 34rem; }
+.rvault__tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .38rem;
+  padding: .3rem; border-radius: var(--radius-control);
+  background: var(--field); border: 1px solid var(--line);
+  margin-bottom: 1rem;
 }
-.res-card:hover { border-color: rgba(var(--fg-rgb), .32); background: var(--surface); transform: translateY(-1px); }
-.res-card > div strong { display: block; font-size: .95rem; font-weight: 600; color: var(--foreground); margin-bottom: .15rem; }
-.res-card > div span { display: block; font-size: .78rem; color: rgba(var(--fg-rgb), .65); }
-.res-card .res-card__dl {
-  flex: none; padding: .45rem .9rem; border-radius: 999px;
-  background: var(--btn-bg); color: var(--btn-fg); font-size: .75rem; font-weight: 600;
-  white-space: nowrap; letter-spacing: .01em;
+.rvault__tab {
+  padding: .55rem .5rem; border-radius: .52rem;
+  font-size: .74rem; font-weight: 600; color: rgba(var(--fg-rgb), .7);
+  text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background .2s, color .2s;
 }
+.rvault__tab:hover { color: var(--foreground); }
+.rvault__tab.on { background: var(--btn-bg); color: var(--btn-fg); }
 
-/* ---------- Dev-AI Recruiter Copilot Modal ---------- */
-.modal[hidden] { display: none !important; }
-.cp__panel {
-  max-width: 40rem; width: 100%; padding: 1.25rem;
-  display: flex; flex-direction: column; gap: .9rem;
-  max-height: min(88dvh, 46rem); overflow: hidden;
+.rvault__card {
+  padding: 1.2rem 1.25rem; border-radius: var(--radius-card-sm);
+  border: 1px solid var(--line); background: var(--field);
+  display: flex; flex-direction: column; gap: .7rem;
 }
-@media (min-width: 640px) { .cp__panel { padding: 1.5rem 1.6rem; } }
-.cp__head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.rvault__meta {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap;
+}
+.rvault__idx {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 600;
+  letter-spacing: .06em; color: var(--accent);
+}
+.rvault__size {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  color: rgba(var(--fg-rgb), .55); padding: .16rem .55rem; border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.rvault__title { font-size: 1.25rem; font-weight: 600; letter-spacing: -.015em; color: var(--foreground); }
+.rvault__desc { font-size: .86rem; line-height: 1.55; color: rgba(var(--fg-rgb), .76); margin: 0; }
+.rvault__tags { display: flex; flex-wrap: wrap; gap: .38rem; }
+.rvault__tags span {
+  padding: .22rem .6rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--panel);
+  font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: rgba(var(--fg-rgb), .76);
+}
+.rvault__acts { display: flex; flex-wrap: wrap; gap: .55rem; padding-top: .35rem; }
+.rvault__prim, .rvault__sec {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  min-height: 2.65rem; padding: 0 1.2rem; border-radius: 999px;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: transform .2s, opacity .2s, background .2s;
+}
+.rvault__prim { background: var(--btn-bg); color: var(--btn-fg); flex: 1; }
+.rvault__sec { border: 1px solid var(--line); background: var(--surface); color: var(--foreground); }
+.rvault__prim:hover, .rvault__sec:hover { transform: translateY(-1px); }
+
+/* ---------- Dev-AI Recruiter Concierge Drawer ---------- */
+.modal[hidden] { display: none !important; }
+@media (min-width: 768px) {
+  .cp-modal { justify-content: flex-end; align-items: stretch; padding: 1rem; }
+  .cp-modal .cp__panel {
+    max-width: 32.5rem; height: 100%; max-height: none;
+    transform: translateX(28px);
+  }
+  .cp-modal.open .cp__panel { transform: none; }
+  .cp-modal.closing .cp__panel { transform: translateX(22px); }
+}
+.cp__panel {
+  max-width: 36rem; width: 100%; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: .85rem;
+  max-height: min(90dvh, 48rem); overflow: hidden;
+  border-left: 1px solid rgba(var(--fg-rgb), .16);
+}
+@media (min-width: 640px) { .cp__panel { padding: 1.5rem 1.55rem; } }
+.cp__head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem;
+  padding-bottom: .75rem; border-bottom: 1px solid var(--line);
+}
+.cp__head > div:first-child { min-width: 0; }
 .cp__eye {
-  display: inline-flex; align-items: center; gap: .45rem;
-  font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .06em; color: rgba(var(--fg-rgb), .65);
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: 'JetBrains Mono', monospace; font-size: .64rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .05em; color: rgba(var(--fg-rgb), .62);
   margin-bottom: .25rem;
 }
-.cp__head h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: -.015em; }
+@media (max-width: 639px) { .cp-kbd { display: none; } }
+.cp__head h2 { font-size: clamp(1.06rem, 4.2vw, 1.25rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
 .cp__head-acts { display: flex; align-items: center; gap: .45rem; flex: none; }
 .cp__brief-btn {
-  height: 2.2rem; padding: 0 .85rem; border-radius: 999px;
+  height: 2.15rem; padding: 0 .85rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--surface); color: var(--foreground);
-  font-size: .74rem; font-weight: 600; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 500; white-space: nowrap;
   transition: background .2s, border-color .2s;
 }
 .cp__brief-btn:hover { background: var(--surface-2); border-color: rgba(var(--fg-rgb), .32); }
 .cp__x {
-  width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border-radius: 9999px;
+  width: 2.15rem; height: 2.15rem; display: grid; place-items: center; border-radius: 9999px;
   background: var(--surface); color: rgba(var(--fg-rgb), .75); font-size: 1rem;
 }
 .cp__x:hover { background: var(--surface-2); color: var(--foreground); }
 
 .cp__chips {
-  display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .45rem;
-  padding-bottom: .2rem; scrollbar-width: none;
+  display: flex; flex-wrap: nowrap; overflow-x: auto; gap: .42rem;
+  padding-bottom: .18rem; scrollbar-width: none;
 }
 .cp__chips::-webkit-scrollbar { display: none; }
 @media (min-width: 640px) { .cp__chips { flex-wrap: wrap; overflow-x: visible; padding-bottom: 0; } }
 .cp-chip {
-  flex: none; padding: .42rem .78rem; border-radius: 999px;
-  border: 1px solid var(--line); background: var(--field); color: var(--foreground);
-  font-size: .76rem; font-weight: 500; white-space: nowrap;
-  transition: border-color .2s, background .2s, transform .2s;
+  flex: none; padding: .4rem .75rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--field); color: rgba(var(--fg-rgb), .86);
+  font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 500; white-space: nowrap;
+  transition: border-color .2s, background .2s, color .2s;
 }
 .cp-chip:hover, .cp-chip.active {
   background: var(--btn-bg); color: var(--btn-fg); border-color: transparent;
 }
 
 .cp__log {
-  flex: 1; min-height: 12rem; max-height: 25rem; overflow-y: auto;
-  display: flex; flex-direction: column; gap: .85rem;
-  padding: .2rem .35rem .2rem 0;
+  flex: 1; min-height: 12rem; overflow-y: auto;
+  display: flex; flex-direction: column; gap: .95rem;
+  padding: .2rem .35rem .55rem 0;
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--fg-rgb), .22) transparent;
 }
-.cp__log::-webkit-scrollbar { width: 6px; }
+.cp__log::-webkit-scrollbar { width: 5px; }
 .cp__log::-webkit-scrollbar-track { background: transparent; }
 .cp__log::-webkit-scrollbar-thumb { background: rgba(var(--fg-rgb), .22); border-radius: 999px; }
 .cp__log::-webkit-scrollbar-thumb:hover { background: rgba(var(--fg-rgb), .36); }
@@ -1717,46 +1769,56 @@ html[data-mode="dark"] .sf { --sf-bg: #0F0E0E; box-shadow: inset 0 1px 0 rgba(23
 .cp-msg--user { align-items: flex-end; }
 .cp-msg--bot { align-items: flex-start; }
 .cp-bubble {
-  max-width: 94%; padding: .85rem 1rem; border-radius: var(--radius-card-sm);
-  font-size: .86rem; line-height: 1.55;
-  border: 1px solid var(--line); background: var(--field); color: var(--foreground);
+  max-width: 96%; padding: .9rem 1.05rem; border-radius: var(--radius-card-sm);
+  font-size: .855rem; line-height: 1.56;
+  border: 1px solid var(--line); border-left: 2px solid var(--accent);
+  background: var(--field); color: var(--foreground);
 }
 .cp-msg--user .cp-bubble {
-  background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; font-weight: 500;
+  background: var(--btn-bg); color: var(--btn-fg); border-color: transparent; border-left: 0;
+  font-weight: 500; max-width: 85%;
 }
-.cp-bubble ul { margin: .45rem 0 0; padding-left: 1rem; list-style: disc; }
-.cp-bubble li { margin-bottom: .25rem; }
+.cp-bubble ul { margin: .5rem 0 0; padding-left: 1rem; list-style: disc; }
+.cp-bubble li { margin-bottom: .28rem; }
 .cp-bubble strong { font-weight: 600; }
 
-.cp-pdf-row { display: flex; flex-direction: column; gap: .45rem; width: 100%; margin-top: .55rem; }
-.cp-pdf {
-  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-  padding: .65rem .85rem; border-radius: var(--radius-control);
-  border: 1px solid var(--line); background: var(--surface); text-decoration: none;
-  transition: border-color .2s, transform .2s;
+.cp-trackbar {
+  flex: none; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap;
+  padding: .62rem .85rem; border-radius: var(--radius-control);
+  border: 1px solid var(--line); background: var(--surface);
 }
-.cp-pdf:hover { border-color: rgba(var(--fg-rgb), .36); transform: translateY(-1px); }
-.cp-pdf > div strong { display: block; font-size: .82rem; font-weight: 600; color: var(--foreground); }
-.cp-pdf > div span { display: block; font-size: .71rem; color: rgba(var(--fg-rgb), .64); }
-.cp-pdf .cp-pdf__btn {
-  flex: none; padding: .35rem .72rem; border-radius: 999px;
-  background: var(--btn-bg); color: var(--btn-fg); font-size: .71rem; font-weight: 600; white-space: nowrap;
+.cp-trackbar__info { display: flex; flex-direction: column; gap: .12rem; min-width: 0; }
+.cp-trackbar__lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: .64rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
 }
+.cp-trackbar__name { font-size: .82rem; font-weight: 600; color: var(--foreground); }
+.cp-trackbar__acts { display: flex; align-items: center; gap: .4rem; flex: none; }
+.cp-trackbar__btn, .cp-trackbar__dl {
+  padding: .34rem .72rem; border-radius: 999px; font-size: .72rem; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+}
+.cp-trackbar__btn { background: var(--btn-bg); color: var(--btn-fg); }
+.cp-trackbar__dl { border: 1px solid var(--line); background: var(--panel); color: var(--foreground); }
+.cp-trackbar__all {
+  padding: .34rem .68rem; border-radius: 999px; border: 1px solid var(--line);
+  background: transparent; color: rgba(var(--fg-rgb), .74);
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+}
+.cp-trackbar__all:hover { color: var(--foreground); border-color: rgba(var(--fg-rgb), .35); }
 
-.cp-meta {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin-top: .45rem;
-}
+.cp-meta { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: .42rem; }
 .cp-door-btn, .cp-trace-btn {
   padding: .3rem .68rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--panel); color: rgba(var(--fg-rgb), .8);
-  font-family: 'JetBrains Mono', monospace; font-size: .69rem; font-weight: 500;
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 500;
 }
 .cp-door-btn:hover, .cp-trace-btn:hover { color: var(--foreground); border-color: rgba(var(--fg-rgb), .35); }
 
 .cp-trace {
-  width: 100%; margin-top: .45rem; padding: .65rem .8rem; border-radius: .6rem;
+  flex: none; width: 100%; padding: .65rem .8rem; border-radius: .6rem;
   border: 1px dashed var(--line); background: rgba(var(--fg-rgb), .03);
-  font-family: 'JetBrains Mono', monospace; font-size: .7rem; line-height: 1.5;
+  font-family: 'JetBrains Mono', monospace; font-size: .69rem; line-height: 1.5;
   color: rgba(var(--fg-rgb), .74);
 }
 .cp-trace b { color: var(--foreground); font-weight: 600; }
