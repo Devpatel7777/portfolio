@@ -708,32 +708,48 @@
     </div>
   </div>
 
-  <!-- ============ Dev-AI Recruiter Concierge Drawer ============ -->
+  <!-- ============ Dev-AI Recruiter Concierge Studio ============ -->
   <div aria-labelledby="cpTitle" aria-modal="true" class="modal cp-modal" hidden id="copilot" role="dialog">
     <div class="modal__panel cp__panel" id="cpPanel">
       <div class="cp__head">
-        <div>
-          <p class="cp__eye"><i class="ai-dot" aria-hidden="true"></i> CONCIERGE · PORTFOLIO AI<span class="cp-kbd"> · CTRL+K</span></p>
-          <h2 id="cpTitle">Dev-AI Recruiter Concierge</h2>
+        <div class="cp__brand">
+          <div class="cp__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M4 26V11a8 8 0 0 1 16 0v15H4Z"/>
+              <path d="M12 7v6m0 0-2 3m2-3 2 3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="cp__eye"><i class="ai-dot" aria-hidden="true"></i> <span>DEV-AI STUDIO · RAG</span><span class="cp-kbd"> · CTRL+K</span></p>
+            <h2 id="cpTitle">Dev-AI Concierge</h2>
+          </div>
         </div>
         <div class="cp__head-acts">
+          <button type="button" class="cp__act-btn" id="cpHoloBtn" title="Inspect 3D Gold Ability Card">Ability Card</button>
           <button type="button" class="cp__brief-btn" id="cpCopyBrief" title="Copy formatted hiring summary">Copy Brief</button>
           <button type="button" aria-label="Close AI Concierge" class="cp__x" id="cpClose">×</button>
         </div>
       </div>
 
-      <div class="cp__chips" id="cpChips" aria-label="One-tap recruiter shortcuts">
-        <button type="button" class="cp-chip" data-cp-q="role:aiml">01 · GenAI &amp; AI/ML</button>
-        <button type="button" class="cp-chip" data-cp-q="role:ds">02 · Data Science</button>
-        <button type="button" class="cp-chip" data-cp-q="role:analyst">03 · Data Analytics</button>
-        <button type="button" class="cp-chip" data-cp-q="summary">04 · Quick Brief</button>
-        <button type="button" class="cp-chip" data-cp-q="rag">05 · RAG Architecture</button>
+      <div class="cp__toolbar">
+        <div class="cp__lenses" id="cpLenses" role="tablist" aria-label="Role evaluation lens">
+          <button type="button" class="cp-lens" role="tab" aria-selected="false" data-cp-lens="aiml">GenAI &amp; ML</button>
+          <button type="button" class="cp-lens" role="tab" aria-selected="false" data-cp-lens="ds">Data Science</button>
+          <button type="button" class="cp-lens" role="tab" aria-selected="false" data-cp-lens="analyst">Data Analyst</button>
+        </div>
+        <div class="cp__prompts" id="cpChips" aria-label="Quick recruiter probes">
+          <button type="button" class="cp-chip" data-cp-q="summary"><i>01</i> 30s Brief</button>
+          <button type="button" class="cp-chip" data-cp-q="rag"><i>02</i> Multi-PDF RAG</button>
+          <button type="button" class="cp-chip" data-cp-q="ml"><i>03</i> 99.1% Crop ML</button>
+          <button type="button" class="cp-chip" data-cp-q="eda"><i>04</i> 500k+ EDA</button>
+          <button type="button" class="cp-chip" data-cp-q="hiring"><i>05</i> Notice &amp; Hire</button>
+        </div>
       </div>
 
       <div class="cp__log" id="cpLog" aria-live="polite"></div>
 
       <form class="cp__form" id="cpForm" autocomplete="off">
-        <input id="cpInput" type="text" placeholder="Ask about LangGraph, 500k EDA, SQL, or notice period..." aria-label="Ask a question about Dev Patel">
+        <input id="cpInput" type="text" placeholder="Ask stack, EDA, notice, or JD..." aria-label="Ask a question about Dev Patel or paste job skills">
         <button type="submit" class="cp__send">Ask →</button>
       </form>
     </div>
