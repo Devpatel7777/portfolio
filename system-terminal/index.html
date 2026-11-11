@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dev Patel — Secret Room: Open Source, CLI &amp; Resumes</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <title>Dev Patel — Open Source, CLI Lab &amp; Resumes</title>
+  <script>(function(){try{if(localStorage.getItem('dp-theme')==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../rooms/room.css" />
 </head>
 <body>
   <header class="rn">
-    <a class="backd" id="backDoors" href="../#works">
+    <a class="backd" href="../">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      <span>Back to the doors</span>
+      <span>Back to Portfolio</span>
     </a>
-    <nav class="rn__rooms" aria-label="Switch room">
-      <a class="rn__pill" href="../power-bi/" data-door="0">Power BI</a>
-      <a class="rn__pill" href="../sql-analytics/" data-door="1">SQL Systems</a>
-      <a class="rn__pill" href="../machine-learning/" data-door="2">ML Models</a>
-      <a class="rn__pill" href="../genai-agents/" data-door="3">GenAI &amp; RAG</a>
-      <a class="rn__pill on" href="../system-terminal/" data-door="4">Lab &amp; CLI</a>
+    <nav class="rn__rooms" aria-label="Case studies">
+      <a class="rn__pill" href="../power-bi/">Power BI</a>
+      <a class="rn__pill" href="../sql-analytics/">SQL Systems</a>
+      <a class="rn__pill" href="../machine-learning/">ML Models</a>
+      <a class="rn__pill" href="../genai-agents/">GenAI &amp; RAG</a>
+      <a class="rn__pill on" href="../system-terminal/">CLI Lab</a>
     </nav>
     <a class="rbtn" href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub (34+) ↗</a>
   </header>
 
   <main class="wrap">
     <section class="intro">
-      <p class="eyebrow">Secret Door 05 · Open Source &amp; CLI</p>
+      <p class="eyebrow">Case Study 05 · Open Source &amp; CLI</p>
       <h1>The backstage lab: DP-Systems shell, 34+ repos, and tailored CVs.</h1>
       <p>
         Type commands directly into the interactive terminal below, or grab any of Dev Patel's specialized PDF resumes.
@@ -101,7 +101,7 @@
           echo.textContent = `$ ${raw}`;
           out.appendChild(echo);
           const rep = document.createElement('div');
-          rep.style.color = '#C4B0B0';
+          rep.style.color = '#10B981';
           rep.style.marginBottom = '6px';
           rep.textContent = cmds[raw] || `Unknown command '${raw}'. Try: help`;
           out.appendChild(rep);

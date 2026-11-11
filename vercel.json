@@ -1,13 +1,5 @@
 {
   "trailingSlash": true,
-  "rewrites": [
-    { "source": "/home", "destination": "/index.html" },
-    { "source": "/home/", "destination": "/index.html" },
-    { "source": "/work", "destination": "/index.html" },
-    { "source": "/work/", "destination": "/index.html" },
-    { "source": "/my-story", "destination": "/index.html" },
-    { "source": "/my-story/", "destination": "/index.html" }
-  ],
   "headers": [
     {
       "source": "/(.*)",

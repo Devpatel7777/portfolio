@@ -1,592 +1,639 @@
 <!DOCTYPE html>
-<html data-mode="dark" lang="en">
+<html data-theme="dark" lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1A1818">
-  <meta name="description" content="Dev Patel — Data Analyst, ML Engineer & AI Systems Architect. Power BI star schemas, 500k+ row SQL/EDA pipelines, XGBoost models, and Multi-PDF RAG systems.">
-  <title>Dev Patel — Data Analyst & ML Engineer</title>
+  <meta name="theme-color" content="#0B0F17">
+  <meta name="description" content="Dev Patel — Data Analyst, Data Scientist & Machine Learning Engineer. Power BI star schemas, 500k+ row SQL & Python EDA pipelines, XGBoost models, and Multi-PDF RAG systems.">
+  <title>Dev Patel — Data Analyst, Data Scientist &amp; ML Engineer</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script>(function(){try{if(localStorage.getItem('dev-mode')==='light')delete document.documentElement.dataset.mode;}catch(e){}})();</script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>(function(){try{if(localStorage.getItem('dp-theme')==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- ============ PageLoader ============ -->
-  <div aria-hidden="true" class="loader" id="loader">
-    <div class="ld__bg"></div>
-    <div class="ld__stack">
-      <div class="ld__pill" style="--k:0;--c:#242121;--t:#E8E4E0;--dir:1"><span>Dev Patel</span></div>
-      <div class="ld__pill" style="--k:1;--c:#22354E;--t:#E8E4E0;--dir:-1"><span>Power BI &amp; BI</span></div>
-      <div class="ld__pill" style="--k:2;--c:#4A3142;--t:#E8E4E0;--dir:1"><span>SQL Architecture</span></div>
-      <div class="ld__pill" style="--k:3;--c:#65755B;--t:#F3EEEC;--dir:-1"><span>Machine Learning</span></div>
-      <div class="ld__pill" style="--k:4;--c:#9D5328;--t:#F3EEEC;--dir:1"><span>GenAI &amp; RAG</span></div>
-      <div class="ld__pill" style="--k:5;--c:#C4B0B0;--t:#1A1818;--dir:-1"><span>Open Source CLI</span></div>
-    </div>
-    <div class="ld__hud">
-      <div class="ld__top">
-        <span><b>Dev Patel</b> · Portfolio</span>
-        <span>BI · SQL · Machine Learning · GenAI Systems</span>
-      </div>
-      <div class="ld__bot">
-        <p class="ld__num">
-          <small>Opening the rooms</small>
-          <span id="ldCount">000</span>
-        </p>
-        <div class="ld__bar"><i></i></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ Header ============ -->
-  <header class="hdr rv" style="--d:80ms">
+  <!-- ============ Top Navigation ============ -->
+  <header class="hdr" id="topHdr">
     <div class="shell hdr__in">
-      <nav aria-label="Primary">
-        <ul class="nav">
-          <li><button type="button" aria-current="page" data-go="home"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">Home</span></button></li>
-          <li><button type="button" data-door="0"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">Power BI</span></button></li>
-          <li><button type="button" data-door="1"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">SQL Systems</span></button></li>
-          <li><button type="button" data-door="2"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">ML Models</span></button></li>
-          <li><button type="button" data-door="3"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">GenAI &amp; RAG</span></button></li>
-          <li><button type="button" data-go="about"><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">My story</span></button></li>
-          <li><button type="button" data-contact=""><span data-h="y 0 -2|o .75 1" data-hs="320 22" data-ht="button">Contact</span></button></li>
-        </ul>
+      <a class="brand" href="#top" aria-label="Dev Patel home">
+        <span class="brand__mark" aria-hidden="true">DP</span>
+        <span class="brand__text">
+          <strong>Dev Patel</strong>
+          <small>Ahmedabad, IN</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#workbench">Live Lab</a>
+        <a href="#projects">Case Studies</a>
+        <a href="#experience">Experience</a>
+        <a href="#resumes">Resumes</a>
       </nav>
-      <div class="hdr__right">
-        <div aria-label="Local time in India" class="chip clock">
-          <span class="clock__lbl">Local time</span>
-          <span class="clock__time tnum" data-time="">11:05am</span>
-          <span aria-hidden="true" class="clock__sep">·</span>
-          <span class="clock__date" data-date="">11 November, 2026</span>
-          <span class="clock__ds" data-dshort="">11 Nov</span>
-        </div>
-        <button type="button" aria-controls="navm" aria-haspopup="dialog" aria-label="Menu" class="chip menu-btn" id="menuBtn" style="min-height:44px;min-width:44px">
-          <span>
-            <svg aria-hidden="true" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            <span class="word">Menu</span>
-          </span>
+
+      <div class="hdr__actions">
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="Switch color theme" title="Switch light/dark theme">
+          <svg class="icon-sun" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+          <svg class="icon-moon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" class="btn btn--ghost hdr__res" data-resume="">3 PDF Resumes</button>
+        <button type="button" class="btn btn--primary hdr__cta" data-contact="">Schedule Interview</button>
+        <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ============ Pull cord: light / dark switch ============ -->
-  <div class="cord" id="cord">
-    <canvas aria-hidden="true" class="cord__cv"></canvas>
-    <button type="button" aria-checked="true" aria-label="Toggle light and dark theme (pull or click)" class="cord__hit" id="cordHit" role="switch"></button>
+  <!-- Mobile Navigation Drawer -->
+  <div class="mnav" id="mobileNav" hidden>
+    <div class="mnav__panel">
+      <div class="mnav__head">
+        <strong>Navigation</strong>
+        <button type="button" class="icon-btn" id="menuClose" aria-label="Close navigation menu">
+          <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <nav class="mnav__links" aria-label="Mobile menu">
+        <a href="#workbench" data-close-menu>Live Analytics &amp; ML Lab</a>
+        <a href="#projects" data-close-menu>Selected Case Studies</a>
+        <a href="#experience" data-close-menu>Experience &amp; Education</a>
+        <a href="#resumes" data-close-menu>PDF Resumes (3 Tracks)</a>
+      </nav>
+      <div class="mnav__acts">
+        <button type="button" class="btn btn--primary" data-contact="" data-close-menu>Schedule Interview</button>
+        <button type="button" class="btn btn--outline" data-resume="" data-close-menu>Open PDF Resumes</button>
+      </div>
+    </div>
   </div>
 
   <main id="main">
-    <!-- ============ Hero ============ -->
-    <section aria-label="Introduction" class="hero" id="home">
-      <div aria-hidden="true" class="hero__vig"></div>
+    <!-- ============ Recruiter Hero ============ -->
+    <section class="hero" id="top">
+      <div class="shell hero__grid">
+        <div class="hero__intro">
+          <div class="status-pill">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Open to Full-Time Data &amp; ML Roles · B.Tech CSE '25 · Immediate Joiner</span>
+          </div>
 
-      <div class="shell hero__content">
-        <div class="hero__left">
-          <p class="eyebrow rv" style="--d:180ms">Open to Full-Time Data &amp; ML Roles</p>
-          <h1 class="h1">
-            <span class="sr-only">Hi, I'm Dev. I am a Data Analyst, ML Engineer, Power BI Developer, SQL Architect and GenAI Builder.</span>
-            <span aria-hidden="true">
-              <span class="line"><span style="--d:240ms">Hi, I'm Dev.</span></span>
-              <span class="line"><span class="soft" style="--d:350ms">I am a</span></span>
-              <span class="cal-line">
-                <span class="cal rv" id="cal" style="--d:480ms">
-                  <span class="cal__body">
-                    <span class="cal__stand"></span>
-                    <span class="cal__stack">
-                      <span class="cal__back"><span class="cal__holes"></span></span>
-                      <span class="cal__page" data-under="">
-                        <span class="cal__holes"></span>
-                        <span class="cal__word">ML Engineer</span>
-                        <span class="cal__no">02 / 05</span>
-                        <span class="cal__shade"></span>
-                      </span>
-                      <span class="cal__leaf">
-                        <span class="cal__face">
-                          <span class="cal__holes"></span>
-                          <span class="cal__word">Data Analyst</span>
-                          <span class="cal__no">01 / 05</span>
-                          <span class="cal__shade"></span>
-                        </span>
-                        <span class="cal__rear"><span class="cal__holes"></span></span>
-                      </span>
-                    </span>
-                    <span class="cal__rings"></span>
-                  </span>
-                  <span class="cal__measure"></span>
-                </span>
-              </span>
-            </span>
+          <h1 class="hero__title">
+            Dev Patel
+            <span>Data Analyst, Data Scientist &amp; ML Engineer.</span>
           </h1>
-          <div class="ctas rv" style="--d:680ms">
-            <button type="button" class="pill pill--dark pill--arrow" data-contact="">
-              <span class="pill__in" data-h="s 1 1.04" data-hs="320 18" data-ht=".pill">
-                Contact for roles
-                <span class="pill__badge">
-                  <svg aria-hidden="true" data-h="x 0 3" data-hs="320 18" data-ht=".pill" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M5 12h14M13 6l6 6-6 6"></path>
-                  </svg>
-                </span>
-              </span>
-            </button>
-            <button type="button" class="pill pill--outline" data-go="works">
-              <span class="pill__in" data-h="s 1 1.04" data-hs="320 18" data-ht=".pill">See my work</span>
-            </button>
-            <button type="button" class="pill pill--ghost" data-resume="">3 Resumes</button>
+
+          <p class="hero__sub">
+            I model 10k+ row Power BI star schemas, optimize 3NF MySQL &amp; 500k+ row Python pipelines, and build evaluated XGBoost and Multi-PDF RAG systems ready for production teams.
+          </p>
+
+          <!-- Target Role Selector -->
+          <div class="role-switch" aria-label="Select target job track">
+            <span class="role-switch__lbl">Target Track:</span>
+            <div class="role-switch__tabs" role="tablist">
+              <button type="button" class="role-tab on" role="tab" aria-selected="true" data-track="analyst">Data Analyst</button>
+              <button type="button" class="role-tab" role="tab" aria-selected="false" data-track="scientist">Data Scientist</button>
+              <button type="button" class="role-tab" role="tab" aria-selected="false" data-track="aiml">AI / ML Engineer</button>
+            </div>
+          </div>
+
+          <div class="track-brief" id="trackBrief">
+            <div class="track-brief__meta">
+              <strong id="tbTitle">Data Analyst Track</strong>
+              <p id="tbStack">Power BI (DAX, Star Schema) · MySQL 8.0 (3NF, CTEs, Windows) · Python EDA (500K+ rows)</p>
+            </div>
+            <a class="track-brief__pdf" id="tbPdf" href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" rel="noopener">
+              Analyst Resume PDF ↗
+            </a>
+          </div>
+
+          <div class="hero__ctas">
+            <button type="button" class="btn btn--primary" data-resume="">View All 3 Resumes</button>
+            <button type="button" class="btn btn--outline" data-contact="">Schedule Interview</button>
+            <a class="btn btn--ghost" href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub (34+ Repos) ↗</a>
           </div>
         </div>
+
+        <aside class="hero__profile" aria-label="Candidate snapshot">
+          <div class="profile-card">
+            <div class="profile-card__media">
+              <img src="assets/avatar.jpg" alt="Dev Patel formal headshot wearing navy suit" width="512" height="512">
+              <div class="profile-card__badge">
+                <span>Parul University</span>
+                <strong>B.Tech CSE · 2025</strong>
+              </div>
+            </div>
+            <div class="profile-card__facts">
+              <div class="fact-row">
+                <span>Experience</span>
+                <strong>Prodigy InfoTech · Outstanding Remarks</strong>
+              </div>
+              <div class="fact-row">
+                <span>Certifications</span>
+                <strong>TATA GenAI &amp; BI · Deloitte · thingQbator</strong>
+              </div>
+              <div class="fact-row">
+                <span>Availability</span>
+                <strong>Immediate · Ahmedabad / Relocation Ready</strong>
+              </div>
+              <div class="fact-row">
+                <span>Direct Contact</span>
+                <a href="mailto:devpatel846211@gmail.com">devpatel846211@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
 
-      <div class="hero__stage">
-        <div class="fig" id="fig" aria-label="Dev Patel portrait stage">
-          <span class="fig__bgtype" aria-hidden="true">DP</span>
-          <img alt="" aria-hidden="true" decoding="async" fetchpriority="high" id="figBase" src="assets/portrait-cutout.png">
-          <canvas aria-hidden="true" id="figCanvas"></canvas>
-          <button type="button" aria-controls="holo" aria-haspopup="dialog" class="fig__card" id="holoOpen">My ability card</button>
+      <div class="shell metrics-strip" aria-label="Verified engineering highlights">
+        <div class="metric">
+          <strong class="tnum">500,000+</strong>
+          <span>Records Audited &amp; Standardized (Prodigy InfoTech)</span>
         </div>
-      </div>
-
-      <div class="shell hero__bar rv" style="--d:750ms">
-        <span>Open to Full-Time Roles</span>
-        <span class="mid">Ahmedabad · Ready to Relocate</span>
-        <button type="button" class="scroll" data-go="works">Scroll to explore <i aria-hidden="true">↓</i></button>
+        <div class="metric">
+          <strong class="tnum">10,420+</strong>
+          <span>Transactions Modeled in Power BI Star Schema</span>
+        </div>
+        <div class="metric">
+          <strong class="tnum">99.1%</strong>
+          <span>5-Fold CV Accuracy on Crop ML Benchmark</span>
+        </div>
+        <div class="metric">
+          <strong class="tnum">34+</strong>
+          <span>Open-Source Repositories on GitHub</span>
+        </div>
       </div>
     </section>
 
-    <!-- ============ Doors ============ -->
-    <section aria-labelledby="doorsTitle" class="doors" id="works">
-      <div aria-hidden="true" class="doors__tex"></div>
-      <div class="doors__pin">
-        <div class="shell doors__wall">
-          <h2 class="sr-only" id="doorsTitle">My work, one door per discipline</h2>
-          <p aria-hidden="true" class="paint">Magic happens<br class="mbr"> behind the doors</p>
-          <p aria-hidden="true" class="doors__hint">Swipe along the wall</p>
-          <div aria-live="polite" class="dinfo" id="dinfo">
-            <h3 class="dinfo__h">Power BI &amp; BI</h3>
-            <p class="dinfo__t">Star Schema · 10,000+ Sales Rows</p>
-            <ul class="dinfo__p">
-              <li>10,000+ sales rows modeled</li>
-              <li>Star-schema tables &amp; DAX</li>
-              <li>Time-intelligence YoY KPIs</li>
-              <li>Retention &amp; margin drilldowns</li>
-              <li>Live telemetry simulator</li>
-            </ul>
+    <!-- ============ Interactive Data & ML Workbench ============ -->
+    <section class="section" id="workbench">
+      <div class="shell">
+        <div class="sec-head">
+          <div>
+            <p class="eyebrow">01 / Live Engineering Workbench</p>
+            <h2>Inspect my analytical &amp; ML work interactively.</h2>
           </div>
-          <p aria-hidden="true" class="doors__dots"><i class="on"></i><i></i><i></i><i></i></p>
+          <p class="sec-desc">Switch tracks below to test Power BI slicing, MySQL 3NF queries, real-time ML inference, or RAG agent execution traces.</p>
+        </div>
 
-          <ul class="doors__row">
-            <li class="unit" style="--i:0;--door:#22354E;--door-dk:#1E2C42;--glow:255,200,130">
-              <button type="button" aria-label="Open the Power BI room" class="doorway">
-                <span class="casing"></span>
-                <span class="opening">
-                  <span class="room"></span>
-                  <span class="spill"></span>
-                  <span class="door">
-                    <span class="door__flute"></span>
-                    <span class="plate">Power BI</span>
-                    <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
-                    <span class="door__shade"></span>
-                    <span class="leak"></span>
-                  </span>
-                  <span class="sill"></span>
-                </span>
-              </button>
-            </li>
+        <div class="wb">
+          <div class="wb__nav" role="tablist" aria-label="Interactive discipline demos">
+            <button type="button" class="wb__tab on" role="tab" aria-selected="true" data-wb="bi">
+              <span>01</span> Power BI &amp; DAX
+            </button>
+            <button type="button" class="wb__tab" role="tab" aria-selected="false" data-wb="sql">
+              <span>02</span> MySQL 3NF &amp; EDA
+            </button>
+            <button type="button" class="wb__tab" role="tab" aria-selected="false" data-wb="ml">
+              <span>03</span> Crop ML Predictor
+            </button>
+            <button type="button" class="wb__tab" role="tab" aria-selected="false" data-wb="genai">
+              <span>04</span> GenAI RAG &amp; CLI
+            </button>
+          </div>
 
-            <li class="unit" style="--i:1;--door:#4A3142;--door-dk:#452E3C;--glow:255,195,145">
-              <button type="button" aria-label="Open the SQL Systems room" class="doorway">
-                <span class="casing"></span>
-                <span class="opening">
-                  <span class="room"></span>
-                  <span class="spill"></span>
-                  <span class="door">
-                    <span class="door__flute"></span>
-                    <span class="plate">SQL Systems</span>
-                    <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
-                    <span class="door__shade"></span>
-                    <span class="leak"></span>
-                  </span>
-                  <span class="sill"></span>
-                </span>
-              </button>
-            </li>
+          <div class="wb__body">
+            <!-- Pane 1: Power BI -->
+            <div class="wb__pane on" id="pane-bi" role="tabpanel">
+              <div class="wb__info">
+                <div class="wb__kicker">github.com/Devpatel7777/power-bi-final</div>
+                <h3>Sales Analytics Star Schema (10,000+ Rows)</h3>
+                <p>Built over Power Query ETL with normalized FactSales and DimDate/Product/Customer tables for sub-second regional drill-downs.</p>
+                <div class="wb__slicer">
+                  <span class="wb__slbl">Filter Zone:</span>
+                  <div class="chip-row" id="biFilter">
+                    <button type="button" class="chip on" data-reg="ALL">All Zones</button>
+                    <button type="button" class="chip" data-reg="WEST">West Zone</button>
+                    <button type="button" class="chip" data-reg="SOUTH">South Zone</button>
+                    <button type="button" class="chip" data-reg="EAST">East Zone</button>
+                  </div>
+                </div>
+                <div class="wb__kpis">
+                  <div class="wkpi"><span>Net Revenue</span><strong class="tnum" id="biRev">₹48.6L</strong></div>
+                  <div class="wkpi"><span>Orders Processed</span><strong class="tnum" id="biOrd">10,420</strong></div>
+                  <div class="wkpi"><span>Gross Margin</span><strong class="tnum" id="biMgn">31.4%</strong></div>
+                </div>
+                <div class="wb__links">
+                  <a class="btn btn--outline" href="power-bi/">Full BI Case Study ↗</a>
+                  <a class="btn btn--ghost" href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener">GitHub Repo ↗</a>
+                </div>
+              </div>
+              <div class="wb__code">
+                <div class="code-bar"><span>sales-star-schema.dax</span><span>Time Intelligence</span></div>
+                <pre><code>YoY Growth % :=
+VAR CurrRev = SUM(FactSales[NetAmount])
+VAR PrevRev = CALCULATE(
+  CurrRev,
+  SAMEPERIODLASTYEAR(DimDate[Date])
+)
+RETURN DIVIDE(CurrRev - PrevRev, PrevRev)</code></pre>
+              </div>
+            </div>
 
-            <li class="unit" style="--i:2;--door:#65755B;--door-dk:#5D6A54;--glow:245,210,155">
-              <button type="button" aria-label="Open the ML Engineer room" class="doorway">
-                <span class="casing"></span>
-                <span class="opening">
-                  <span class="room"></span>
-                  <span class="spill"></span>
-                  <span class="door">
-                    <span class="door__flute"></span>
-                    <span class="plate">ML Engineer</span>
-                    <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
-                    <span class="door__shade"></span>
-                    <span class="leak"></span>
-                  </span>
-                  <span class="sill"></span>
-                </span>
-              </button>
-            </li>
+            <!-- Pane 2: SQL -->
+            <div class="wb__pane" id="pane-sql" role="tabpanel" hidden>
+              <div class="wb__info">
+                <div class="wb__kicker">github.com/Devpatel7777/ecommerce-sql-analysis</div>
+                <h3>6-Table 3NF MySQL &amp; 500k+ Row EDA</h3>
+                <p>ACID-compliant schema with CTEs, DENSE_RANK windows, cohort retention views, and Pandas IQR/median standardization pipelines.</p>
+                <div class="wb__slicer">
+                  <span class="wb__slbl">Select Query:</span>
+                  <div class="chip-row" id="sqlTabs">
+                    <button type="button" class="chip on" data-q="ltv">Customer LTV</button>
+                    <button type="button" class="chip" data-q="cat">Category Rank</button>
+                    <button type="button" class="chip" data-q="ret">Monthly Cohort</button>
+                  </div>
+                </div>
+                <table class="data-tbl" id="sqlOut" aria-label="SQL Query output preview"></table>
+                <div class="wb__links">
+                  <a class="btn btn--outline" href="sql-analytics/">Full SQL Case Study ↗</a>
+                  <a class="btn btn--ghost" href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener">GitHub Repo ↗</a>
+                </div>
+              </div>
+              <div class="wb__code">
+                <div class="code-bar"><span id="sqlPath">mysql://ecommerce_3nf.sql</span><span>MySQL 8.0</span></div>
+                <pre><code id="sqlCode">WITH ltv AS (
+  SELECT c.customer_id, c.city, SUM(oi.net_total) AS total_spent
+  FROM customers c
+  JOIN orders o ON c.customer_id = o.customer_id
+  JOIN order_items oi ON o.order_id = oi.order_id
+  GROUP BY 1, 2
+)
+SELECT city, COUNT(*) AS buyers, ROUND(AVG(total_spent), 0) AS avg_ltv
+FROM ltv GROUP BY 1 ORDER BY avg_ltv DESC;</code></pre>
+              </div>
+            </div>
 
-            <li class="unit" style="--i:3;--door:#9D5328;--door-dk:#964D24;--glow:255,185,125">
-              <button type="button" aria-label="Open the GenAI &amp; RAG room" class="doorway">
-                <span class="casing"></span>
-                <span class="opening">
-                  <span class="room"></span>
-                  <span class="spill"></span>
-                  <span class="door">
-                    <span class="door__flute"></span>
-                    <span class="plate">GenAI &amp; RAG</span>
-                    <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
-                    <span class="door__shade"></span>
-                    <span class="leak"></span>
-                  </span>
-                  <span class="sill"></span>
-                </span>
-              </button>
-            </li>
+            <!-- Pane 3: Machine Learning -->
+            <div class="wb__pane" id="pane-ml" role="tabpanel" hidden>
+              <div class="wb__info">
+                <div class="wb__kicker">github.com/Devpatel7777/ML-Crop-Recommendation</div>
+                <h3>22-Class Crop Recommender (Live Simulator)</h3>
+                <p>Move the soil &amp; climate sliders to inspect how the nearest agronomy centroid shifts across XGBoost / Naive Bayes decision boundaries.</p>
+                <div class="slider-grid">
+                  <label class="sctl">
+                    <span><span>Nitrogen (N)</span><strong class="tnum" id="vN">90</strong></span>
+                    <input type="range" id="sN" min="0" max="140" value="90">
+                  </label>
+                  <label class="sctl">
+                    <span><span>Phosphorus (P)</span><strong class="tnum" id="vP">42</strong></span>
+                    <input type="range" id="sP" min="5" max="145" value="42">
+                  </label>
+                  <label class="sctl">
+                    <span><span>Soil pH</span><strong class="tnum" id="vPh">6.5</strong></span>
+                    <input type="range" id="sPh" min="3.5" max="9.0" step="0.1" value="6.5">
+                  </label>
+                  <label class="sctl">
+                    <span><span>Rainfall (mm)</span><strong class="tnum" id="vRain">200</strong></span>
+                    <input type="range" id="sRain" min="20" max="300" value="200">
+                  </label>
+                </div>
+                <div class="wb__kpis">
+                  <div class="wkpi"><span>Predicted Crop</span><strong id="cropPred">Rice</strong></div>
+                  <div class="wkpi"><span>Match Score</span><strong class="tnum" id="cropConf">96.4%</strong></div>
+                  <div class="wkpi"><span>Validation</span><strong>5-Fold CV</strong></div>
+                </div>
+                <div class="wb__links">
+                  <a class="btn btn--outline" href="machine-learning/">Full ML Benchmark ↗</a>
+                  <a class="btn btn--ghost" href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener">GitHub Repo ↗</a>
+                </div>
+              </div>
+              <div class="wb__code">
+                <div class="code-bar"><span>cv_benchmark_results.md</span><span>5-Fold Stratified CV</span></div>
+                <table class="data-tbl data-tbl--dark">
+                  <thead>
+                    <tr><th>Estimator</th><th>CV Accuracy</th><th>Latency</th><th>Role</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Gaussian Naive Bayes</td><td>99.1%</td><td>0.4 ms</td><td>Top Baseline</td></tr>
+                    <tr><td>XGBoost Classifier</td><td>99.0%</td><td>2.1 ms</td><td>Production</td></tr>
+                    <tr><td>K-Nearest Neighbors</td><td>97.6%</td><td>3.8 ms</td><td>Validated</td></tr>
+                    <tr><td>Logistic Regression</td><td>95.4%</td><td>0.3 ms</td><td>Linear Ref</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-            <li class="unit unit--secret" inert style="--i:4;--door:#36312F;--door-dk:#2B2725;--glow:245,205,145">
-              <button type="button" aria-label="Open the Open Source &amp; CLI room" class="doorway">
-                <span class="casing"></span>
-                <span class="opening">
-                  <span class="room"></span>
-                  <span class="spill"></span>
-                  <span class="door">
-                    <span class="door__flute"></span>
-                    <span class="plate">Open Source</span>
-                    <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
-                    <span class="door__shade"></span>
-                    <span class="leak"></span>
-                  </span>
-                  <span class="sill"></span>
-                </span>
-              </button>
-            </li>
-          </ul>
+            <!-- Pane 4: GenAI & CLI -->
+            <div class="wb__pane" id="pane-genai" role="tabpanel" hidden>
+              <div class="wb__info">
+                <div class="wb__kicker">github.com/Devpatel7777/Gen_AI · AI-Travel-Planner</div>
+                <h3>Multi-PDF Vector RAG &amp; Groq Agent Console</h3>
+                <p>Grounded retrieval with Gemini embeddings plus stateful LangGraph planning using Groq LPU inference and live Serper API web grounding.</p>
+                <div class="wb__slicer">
+                  <span class="wb__slbl">Inspect Architecture:</span>
+                  <div class="chip-row" id="ragTabs">
+                    <button type="button" class="chip on" data-r="arch">Multi-PDF RAG</button>
+                    <button type="button" class="chip" data-r="agent">Groq Travel Agent</button>
+                    <button type="button" class="chip" data-r="query">Grounded Citation</button>
+                  </div>
+                </div>
+                <div class="wb__links">
+                  <a class="btn btn--outline" href="genai-agents/">GenAI Case Studies ↗</a>
+                  <a class="btn btn--ghost" href="system-terminal/">Interactive CLI Page ↗</a>
+                </div>
+              </div>
+              <div class="wb__code wb__code--term">
+                <div class="code-bar"><span>rag-trace &amp; dev-cli</span><span>Try: help, skills, projects, certs</span></div>
+                <pre><code id="ragOut">[PDF Upload] -&gt; RecursiveTextSplitter(chunk=1000, overlap=150)
+             -&gt; GeminiEmbeddings -&gt; VectorStore.similarity_search(k=4)
+             -&gt; Grounded Prompt -&gt; Cited Stream Response</code></pre>
+                <div class="cli-box" id="cliBox">
+                  <div class="cli-out" id="cliOut">
+                    <div>dp-portfolio:~$ Type 'help', 'skills', 'projects', or 'certs' below.</div>
+                  </div>
+                  <form class="cli-form" id="cliForm" autocomplete="off">
+                    <span aria-hidden="true">$</span>
+                    <input id="cliInput" type="text" placeholder="help / skills / projects / certs / contact" aria-label="Portfolio command input">
+                    <button type="submit">Run</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="doors__floor"></div>
     </section>
 
-    <!-- ============ Story ============ -->
-    <section aria-labelledby="storyTitle" class="story" id="about" data-ch="0" style="--n:5">
-      <div aria-hidden="true" class="story__amb"></div>
-      <div class="shell story__track">
-        <div class="story__pin">
-          <div class="story__clock">
-            <canvas aria-hidden="true" class="story__bg"></canvas>
-            <h2 class="story__h" id="storyTitle">My story</h2>
-            <div aria-hidden="true" class="story__yr">
-              <span class="dg"><span class="dg__c" style="--d:2"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
-              <span class="dg"><span class="dg__c" style="--d:0"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
-              <span class="dg"><span class="dg__c" style="--d:2"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
-              <span class="dg"><span class="dg__c" style="--d:6"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
-            </div>
-            <p aria-hidden="true" class="story__when">May 2026 — Present</p>
-            <div aria-hidden="true" class="story__meter">
-              <svg aria-hidden="true" class="story__rw" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
-                <path d="M3 12a9 9 0 1 0 3-6.7"></path>
-                <path d="M3 4v5h5"></path>
-                <path d="M12 7v5l3 2"></path>
-              </svg>
-              <span class="story__count">01</span>
-              <span class="story__of">/ 05</span>
-              <i class="story__bar"><b></b></i>
-            </div>
+    <!-- ============ Selected Projects Grid ============ -->
+    <section class="section section--alt" id="projects">
+      <div class="shell">
+        <div class="sec-head">
+          <div>
+            <p class="eyebrow">02 / Selected Engineering Work</p>
+            <h2>Projects built cleanly for real data workloads.</h2>
+          </div>
+          <div class="filter-bar" role="group" aria-label="Filter projects by domain">
+            <button type="button" class="chip on" data-filter="all">All (6)</button>
+            <button type="button" class="chip" data-filter="bi">BI &amp; SQL</button>
+            <button type="button" class="chip" data-filter="ml">Machine Learning</button>
+            <button type="button" class="chip" data-filter="genai">GenAI &amp; Agents</button>
           </div>
         </div>
 
-        <div class="story__line">
-          <span aria-hidden="true" class="story__rail"></span>
-          <span aria-hidden="true" class="story__ttrack"><span class="story__tail"></span></span>
-          <span aria-hidden="true" class="story__dtrack"><span class="story__dot"></span></span>
-          <ol class="story__list">
-            <li class="ch on" data-when="May 2026 — Present" data-y="2026">
-              <p class="ch__date">May 2026 — Present</p>
-              <h3 class="ch__t">Open to Data &amp; ML Engineering Roles</h3>
-              <p class="ch__org">Ahmedabad / Gandhinagar · Full-time &amp; Remote Ready</p>
-              <ul class="ch__b">
-                <li>Designing decision-grade Power BI star schemas, DAX time-intelligence reports, and normalized MySQL/PostgreSQL analytical pipelines.</li>
-                <li>Deploying end-to-end Scikit-learn, XGBoost, and Multi-PDF Gemini RAG workflows across 34+ public repositories.</li>
-              </ul>
+        <div class="proj-grid" id="projGrid">
+          <article class="proj-card" data-cat="bi">
+            <div class="proj-card__top">
+              <span class="proj-num">01 · Power BI</span>
+              <span class="proj-stat">10,420+ Rows</span>
+            </div>
+            <h3>Sales Analytics Star-Schema Dashboard</h3>
+            <p>Modeled 10k+ retail transactions via Power Query ETL into normalized Fact/Dimension tables with custom DAX time-intelligence and margin drill-downs.</p>
+            <div class="tags">
+              <span>Power BI</span><span>DAX</span><span>Star Schema</span><span>Power Query</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="power-bi/">Case Study ↗</a>
+              <a href="https://github.com/Devpatel7777/power-bi-final" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="bi">
+            <div class="proj-card__top">
+              <span class="proj-num">02 · MySQL 8.0</span>
+              <span class="proj-stat">6-Table 3NF</span>
+            </div>
+            <h3>E-Commerce Relational SQL &amp; Cohort Analysis</h3>
+            <p>Designed a 6-table 3NF database (Customers, Orders, Items, Products, Payments, Categories) using CTEs, DENSE_RANK windows, and reusable LTV views.</p>
+            <div class="tags">
+              <span>MySQL</span><span>3NF Modeling</span><span>CTEs</span><span>Window Functions</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="sql-analytics/">Case Study ↗</a>
+              <a href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="ml">
+            <div class="proj-card__top">
+              <span class="proj-num">03 · Supervised ML</span>
+              <span class="proj-stat">99.1% 5-Fold CV</span>
+            </div>
+            <h3>22-Class Crop Recommendation Engine</h3>
+            <p>Benchmarked Gaussian NB, XGBoost, KNN, and Logistic Regression on NPK, pH, humidity, and rainfall with leak-free pipelines and Streamlit deployment.</p>
+            <div class="tags">
+              <span>Python</span><span>XGBoost</span><span>Scikit-learn</span><span>Streamlit</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="machine-learning/">Case Study ↗</a>
+              <a href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="bi ml">
+            <div class="proj-card__top">
+              <span class="proj-num">04 · Internship EDA</span>
+              <span class="proj-stat">500,000+ Records</span>
+            </div>
+            <h3>Large-Scale EDA Pipeline (Prodigy InfoTech)</h3>
+            <p>Standardized half a million raw records during Data Science Internship—automating schema checks, missing-value imputation, IQR outlier capping, and reports.</p>
+            <div class="tags">
+              <span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>Seaborn</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="sql-analytics/">EDA Pipeline ↗</a>
+              <a href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub Profile ↗</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="genai">
+            <div class="proj-card__top">
+              <span class="proj-num">05 · Document RAG</span>
+              <span class="proj-stat">Multi-PDF Vector</span>
+            </div>
+            <h3>GenAI Suite &amp; Grounded Multi-PDF RAG</h3>
+            <p>Recursive text chunking into dense Gemini embedding indexes for top-k similarity retrieval and citation-grounded Q&amp;A across long PDF documents.</p>
+            <div class="tags">
+              <span>LangChain</span><span>Gemini API</span><span>Vector RAG</span><span>Streamlit</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="genai-agents/">Case Study ↗</a>
+              <a href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="genai">
+            <div class="proj-card__top">
+              <span class="proj-num">06 · Agent Workflow</span>
+              <span class="proj-stat">Groq LPU + Serper</span>
+            </div>
+            <h3>Stateful AI Travel Planner Agent</h3>
+            <p>LangGraph orchestration pairing sub-second Groq Llama inference with real-time Serper API tool calls to compose budget-aware multi-day itineraries.</p>
+            <div class="tags">
+              <span>LangGraph</span><span>Groq LPU</span><span>Serper API</span><span>Tool Calling</span>
+            </div>
+            <div class="proj-card__foot">
+              <a href="genai-agents/">Case Study ↗</a>
+              <a href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Experience, Credentials & Skills ============ -->
+    <section class="section" id="experience">
+      <div class="shell exp-layout">
+        <div>
+          <p class="eyebrow">03 / Background &amp; Credentials</p>
+          <h2>Experience, Certifications &amp; Education</h2>
+          <ol class="timeline">
+            <li class="tl-item">
+              <div class="tl-date tnum">May 2026 — Present</div>
+              <div class="tl-body">
+                <h3>Open to Full-Time Data &amp; ML Engineering Roles</h3>
+                <p class="tl-org">Ahmedabad / Gandhinagar · Full-Time · Relocation Ready</p>
+                <p>Available immediately for Data Analyst, Junior Data Scientist, and ML/GenAI Engineering teams building BI models, SQL data pipelines, or applied AI workflows.</p>
+              </div>
             </li>
-            <li class="ch" data-when="May 2026 — Jun 2026" data-y="2026">
-              <p class="ch__date">May 2026 — Jun 2026</p>
-              <h3 class="ch__t">Data Science Intern</h3>
-              <p class="ch__org">Prodigy InfoTech · Awarded Outstanding Remarks</p>
-              <ul class="ch__b">
-                <li>Audited and cleaned 500,000+ raw multi-source records using automated Python &amp; SQL quality checks, reducing pipeline noise by 30%.</li>
-                <li>Built Decision Tree classifiers, K-Means segmentation cohorts, and geospatial sentiment heatmaps presented directly to mentors.</li>
-              </ul>
+            <li class="tl-item">
+              <div class="tl-date tnum">May 2026 — Jun 2026</div>
+              <div class="tl-body">
+                <h3>Data Science Intern — Prodigy InfoTech</h3>
+                <p class="tl-org">Awarded Outstanding Remarks</p>
+                <p>Cleaned, standardized, and visualized 500,000+ raw records with Pandas, NumPy, Matplotlib, and Seaborn; built reproducible IQR outlier and null-handling pipelines.</p>
+              </div>
             </li>
-            <li class="ch" data-when="Jan 2026 — Sep 2026" data-y="2026">
-              <p class="ch__date">Jan 2026 — Sep 2026</p>
-              <h3 class="ch__t">Industry Simulations &amp; GenAI Bootcamps</h3>
-              <p class="ch__org">TATA Consultancy Services · Deloitte · Nasscom thingQbator</p>
-              <ul class="ch__b">
-                <li>Completed TATA GenAI Powered Data Analytics &amp; Visualisation simulations plus Deloitte Data Analytics forensic assessments.</li>
-                <li>Shipped an AI enterprise chatbot during Nasscom thingQbator (Sep 2026) and competed at TechWar 2026 Web Design.</li>
-              </ul>
+            <li class="tl-item">
+              <div class="tl-date tnum">Jan 2026 — Sep 2026</div>
+              <div class="tl-body">
+                <h3>Industry Simulations &amp; GenAI Bootcamps</h3>
+                <p class="tl-org">TATA Consultancy Services · Deloitte · Nasscom thingQbator · TechWar 2026</p>
+                <p>Completed TATA Data Visualisation &amp; GenAI simulations, Deloitte Data Analytics virtual experience, Nasscom thingQbator Chatbot Lab, and TechWar 2026.</p>
+              </div>
             </li>
-            <li class="ch" data-when="2022 — 2025" data-y="2025">
-              <p class="ch__date">2022 — 2025</p>
-              <h3 class="ch__t">B.Tech in Computer Science &amp; Engineering</h3>
-              <p class="ch__org">Parul University · Vadodara, Gujarat</p>
-              <ul class="ch__b">
-                <li>Built capstone ML predictors (22-class Crop Recommendation, Boston Housing regression) and 6-table 3NF OLTP/OLAP SQL architectures.</li>
-                <li>Focused deeply on DBMS internals, statistical feature scaling, and reproducible Python notebooks.</li>
-              </ul>
+            <li class="tl-item">
+              <div class="tl-date tnum">2022 — 2025</div>
+              <div class="tl-body">
+                <h3>B.Tech in Computer Science &amp; Engineering</h3>
+                <p class="tl-org">Parul University · Vadodara, Gujarat</p>
+                <p>Coursework in Database Management Systems, Data Structures, Statistical Computing, and Applied Machine Learning.</p>
+              </div>
             </li>
-            <li class="ch" data-when="2019 — 2022" data-y="2019">
-              <p class="ch__date">2019 — 2022</p>
-              <h3 class="ch__t">Diploma in Computer Engineering</h3>
-              <p class="ch__org">Growmore Engineering College · Himmatnagar</p>
-              <ul class="ch__b">
-                <li>Built foundational mastery in C, Java, relational database modeling, OS internals, and structured software engineering.</li>
-              </ul>
+            <li class="tl-item">
+              <div class="tl-date tnum">2019 — 2022</div>
+              <div class="tl-body">
+                <h3>Diploma in Computer Engineering</h3>
+                <p class="tl-org">Growmore Engineering College · Himmatnagar</p>
+                <p>Built foundational programming discipline across C/C++, relational SQL schemas, and core Linux computing systems.</p>
+              </div>
             </li>
           </ol>
+        </div>
+
+        <aside class="skills-box" aria-label="Core technical stack">
+          <h3>Core Stack Matrix</h3>
+          <div class="skill-group">
+            <strong>BI &amp; Visualization</strong>
+            <p>Power BI Desktop, DAX Time Intelligence, Star Schema Modeling, Power Query ETL, Matplotlib, Seaborn</p>
+          </div>
+          <div class="skill-group">
+            <strong>Databases &amp; Data Wrangling</strong>
+            <p>MySQL 8.0, 3NF Schema Design, Recursive CTEs, Window Functions, Python, Pandas, NumPy, EDA</p>
+          </div>
+          <div class="skill-group">
+            <strong>Machine Learning</strong>
+            <p>Scikit-learn, XGBoost, Feature Engineering, Stratified K-Fold CV, Hyperparameter Tuning, Streamlit</p>
+          </div>
+          <div class="skill-group">
+            <strong>Generative AI &amp; Tooling</strong>
+            <p>LangChain, LangGraph, Gemini Embeddings, Groq LPU Inference, Multi-PDF Vector RAG, Serper API, Git/GitHub</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ Dedicated 3 Role-Tailored PDF Resumes ============ -->
+    <section class="section section--alt" id="resumes">
+      <div class="shell">
+        <div class="sec-head">
+          <div>
+            <p class="eyebrow">04 / Verified PDF Resumes</p>
+            <h2>Download the exact resume for your role.</h2>
+          </div>
+          <p class="sec-desc">Three role-tailored PDF editions—each highlighting matching projects, tooling, and internship credentials.</p>
+        </div>
+
+        <div class="resume-grid">
+          <a class="res-card" href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" rel="noopener">
+            <div class="res-card__info">
+              <strong>Data Analyst Resume (PDF)</strong>
+              <span>Power BI Star Schema, DAX, MySQL 3NF, 500k+ Row EDA</span>
+            </div>
+            <span class="res-card__dl">Open PDF ↗</span>
+          </a>
+
+          <a class="res-card" href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" rel="noopener">
+            <div class="res-card__info">
+              <strong>Data Scientist Resume (PDF)</strong>
+              <span>Statistical Modeling, Scikit-learn, Cohort &amp; Feature Engineering</span>
+            </div>
+            <span class="res-card__dl">Open PDF ↗</span>
+          </a>
+
+          <a class="res-card" href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" rel="noopener">
+            <div class="res-card__info">
+              <strong>AI / ML Engineer Resume (PDF)</strong>
+              <span>XGBoost, LangGraph, Gemini Vector RAG &amp; Groq Agents</span>
+            </div>
+            <span class="res-card__dl">Open PDF ↗</span>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ============ Footer ============ -->
-  <div class="sfw">
-    <footer aria-labelledby="sfTitle" class="sf" id="contact-footer">
-      <div class="sf__in">
-        <p class="sf__eye"><i></i> Open to Full-Time Roles · Immediate Joiner</p>
-        <h2 class="sf__h" id="sfTitle">Hiring for your Data &amp; ML team?<span>Let's connect for an interview.</span></h2>
-        <p class="sf__p">From executive Power BI semantic models and 500k+ row SQL pipelines to production ML and RAG assistants — ready to contribute to your team from day one.</p>
-        <div class="sf__cta">
-          <button type="button" class="sf__btn" data-contact="">
-            Schedule Interview
-            <b><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></b>
-          </button>
-          <button type="button" class="sf__ghost" data-go="works">See my work</button>
-          <button type="button" class="sf__ghost" data-resume="">3 PDF Resumes</button>
-        </div>
-        <div class="sf__cols">
-          <div>
-            <h3>Rooms</h3>
-            <ul class="work">
-              <li><a data-door="0" href="power-bi/">Power BI &amp; BI</a></li>
-              <li><a data-door="1" href="sql-analytics/">SQL Architecture</a></li>
-              <li><a data-door="2" href="machine-learning/">Machine Learning</a></li>
-              <li><a data-door="3" href="genai-agents/">GenAI &amp; RAG</a></li>
-              <li><a data-door="4" href="system-terminal/">Open Source &amp; CLI</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Navigate</h3>
-            <ul>
-              <li><a data-go="home" href="#home">Home</a></li>
-              <li><a data-go="about" href="#about">My story</a></li>
-              <li><button type="button" data-resume="">Resumes</button></li>
-              <li><button type="button" data-contact="">Contact</button></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Connect</h3>
-            <ul>
-              <li class="st">Ahmedabad, IN · IST</li>
-              <li class="st"><a href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub · Devpatel7777</a></li>
-              <li class="st"><a href="https://linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener">LinkedIn · Dev Patel</a></li>
-              <li class="st"><a href="tel:+919328977322">+91 93289 77322</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="sf__bot">
-          <span>© <span data-fyear="">2026</span> Dev Patel · Local time <span data-ftime="">—</span></span>
-          <button type="button" id="sfTop">Back to top ↑</button>
+  <!-- ============ Recruiter Contact Footer ============ -->
+  <footer class="footer" id="contact">
+    <div class="shell footer__top">
+      <div class="footer__cta">
+        <p class="eyebrow">Ready to Contribute From Day One</p>
+        <h2>Hiring for a Data Analyst, Data Scientist, or ML Engineer?</h2>
+        <p>Reach out directly to schedule an interview or request role-specific code walkthroughs.</p>
+        <div class="footer__btns">
+          <button type="button" class="btn btn--primary" data-contact="">Schedule Interview</button>
+          <a class="btn btn--outline" href="mailto:devpatel846211@gmail.com">devpatel846211@gmail.com</a>
         </div>
       </div>
-      <div aria-hidden="true" class="sf__word">
-        <span class="full">Dev Patel</span>
-        <span class="short">DEV</span>
-      </div>
-    </footer>
-  </div>
 
-  <!-- ============ Floating Back to Top ============ -->
-  <button type="button" aria-label="Back to top" class="totop" id="totop">
-    <svg aria-hidden="true" class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"></circle></svg>
-    <svg aria-hidden="true" class="ar" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
-    <span class="lbl">Back to top</span>
-  </button>
-
-  <!-- ============ Door cursor + walk-through layers ============ -->
-  <div aria-hidden="true" class="door-cursor" id="doorCursor">Click to enter</div>
-  <div aria-hidden="true" class="veil" hidden id="veil"></div>
-  <div aria-hidden="true" class="shade" hidden id="shade"></div>
-  <div aria-hidden="true" class="passage" hidden id="passage"></div>
-  <div class="wallv" id="wallv"></div>
-
-  <!-- ============ Mobile / Quick Nav Overlay ============ -->
-  <div aria-label="Menu" aria-modal="true" class="navm" hidden id="navm" role="dialog">
-    <div class="shell navm__top">
-      <span class="brand">
-        <svg aria-hidden="true" fill="currentColor" focusable="false" viewBox="0 0 48 48">
-          <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"></path>
-        </svg>
-        Dev Patel
-      </span>
-      <button type="button" class="close-btn" id="navClose">
-        <svg aria-hidden="true" fill="none" focusable="false" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20"></path></svg>
-        Close
-      </button>
-    </div>
-    <nav aria-label="Menu" class="shell navm__nav">
-      <ul id="navList"></ul>
-    </nav>
-    <div class="shell navm__bot">
-      <span>Local time <span data-navtime=""></span></span>
-      <div class="navm__bot-actions">
-        <button type="button" id="navTheme">Switch Theme</button>
-        <button type="button" id="navResumes">3 Resumes</button>
-        <button type="button" id="navStart">Schedule Interview →</button>
+      <div class="footer__cols">
+        <div>
+          <h3>Case Studies</h3>
+          <ul>
+            <li><a href="power-bi/">Power BI Star Schema</a></li>
+            <li><a href="sql-analytics/">MySQL 3NF &amp; EDA</a></li>
+            <li><a href="machine-learning/">Crop ML Benchmark</a></li>
+            <li><a href="genai-agents/">GenAI &amp; Vector RAG</a></li>
+            <li><a href="system-terminal/">DP-Systems CLI Lab</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Direct Profiles</h3>
+          <ul>
+            <li><a href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub · Devpatel7777</a></li>
+            <li><a href="https://linkedin.com/in/dev-patel-0a1291216" target="_blank" rel="noopener">LinkedIn · Dev Patel</a></li>
+            <li><a href="tel:+919328977322">+91 93289 77322</a></li>
+            <li><span>Ahmedabad, Gujarat · India</span></li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- ============ Ability card (#holo) ============ -->
-  <div aria-label="Dev Patel's ability card" aria-modal="true" class="holo" hidden id="holo" role="dialog">
-    <canvas aria-hidden="true" class="holo__sparks" id="holoSparks"></canvas>
-    <div class="holo__id">
-      <strong>DEV PATEL</strong>
-      <span>Ability card</span>
+    <div class="shell footer__bot">
+      <span>© <span id="fYear">2026</span> Dev Patel · Built for full-time Data &amp; ML opportunities</span>
+      <button type="button" class="top-link" id="backToTop">Back to top ↑</button>
     </div>
-    <button type="button" class="holo__x holo__x--top" id="holoClose">
-      <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"></path></svg>
-      Close
-    </button>
-    <div class="holo__lite" id="holoLite">
-      <button type="button" aria-label="Dev Patel's ability card: Power BI 92, SQL & Analytics 94, ML & Python 88, GenAI & RAG 86. Tap to flip." class="hc" id="hc">
-        <i class="hc__aura"></i>
-        <span class="hc__in">
-          <span class="hc__face hc__front">
-            <svg aria-hidden="true" class="hc__filigree" viewBox="0 0 340 475" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="hcGold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f6deb1"/>
-                  <stop offset="35%" stop-color="#c99b56"/>
-                  <stop offset="70%" stop-color="#fff0cd"/>
-                  <stop offset="100%" stop-color="#9e743b"/>
-                </linearGradient>
-              </defs>
-              <rect x="6" y="6" width="328" height="463" rx="16" fill="none" stroke="url(#hcGold)" stroke-width="3.2"/>
-              <rect x="13" y="13" width="314" height="449" rx="12" fill="none" stroke="url(#hcGold)" stroke-opacity=".68" stroke-width="1"/>
-              <!-- Corner ornate filigree flourishes -->
-              <path d="M16 44 C16 24, 24 16, 44 16 M22 36 C22 24, 26 20, 36 20 M16 28 Q26 28 28 16" fill="none" stroke="url(#hcGold)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M296 16 C316 16, 324 24, 324 44 M304 20 C314 20, 318 24, 318 36 M312 16 Q312 28 324 28" fill="none" stroke="url(#hcGold)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M16 431 C16 451, 24 459, 44 459 M22 439 C22 451, 26 455, 36 455 M16 447 Q26 447 28 459" fill="none" stroke="url(#hcGold)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M296 459 C316 459, 324 451, 324 431 M304 455 C314 455, 318 451, 318 439 M312 459 Q312 447 324 447" fill="none" stroke="url(#hcGold)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="hc__nameplate">Dev Patel</span>
-            <span class="hc__win">
-              <span aria-hidden="true" class="hc__bg"></span>
-              <img alt="Dev Patel studio portrait" class="hc__sub" src="assets/portrait-cutout.png">
-              <i aria-hidden="true" class="hc__wsh"></i>
-            </span>
-            <span class="hc__stats">
-              <span class="hc__row">
-                <span class="hc__name">Power BI &amp; DAX</span>
-                <span class="hc__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i></span>
-                <span class="hc__num">92</span>
-              </span>
-              <span class="hc__row">
-                <span class="hc__name">SQL &amp; Analytics</span>
-                <span class="hc__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i></span>
-                <span class="hc__num">94</span>
-              </span>
-              <span class="hc__row">
-                <span class="hc__name">ML &amp; Python</span>
-                <span class="hc__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span>
-                <span class="hc__num">88</span>
-              </span>
-              <span class="hc__row">
-                <span class="hc__name">GenAI &amp; RAG</span>
-                <span class="hc__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span>
-                <span class="hc__num">86</span>
-              </span>
-            </span>
-            <span class="hc__footbar">
-              <span><small>BASED</small><b>India</b></span>
-              <span><small>ROLE</small><b>Full-Time</b></span>
-              <span><small>JOIN</small><b>Immediate</b></span>
-            </span>
-            <i class="hc__foil"></i>
-            <i class="hc__glare"></i>
-          </span>
-
-          <span class="hc__face hc__back">
-            <svg aria-hidden="true" class="hc__filigree" viewBox="0 0 340 475" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="hcGoldBack" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f6deb1"/>
-                  <stop offset="50%" stop-color="#c99b56"/>
-                  <stop offset="100%" stop-color="#9e743b"/>
-                </linearGradient>
-              </defs>
-              <rect x="6" y="6" width="328" height="463" rx="16" fill="none" stroke="url(#hcGoldBack)" stroke-width="3.2"/>
-              <rect x="13" y="13" width="314" height="449" rx="12" fill="none" stroke="url(#hcGoldBack)" stroke-opacity=".55" stroke-width="1"/>
-            </svg>
-            <div class="hc__top">
-              <span class="hc__tag">VERIFIED RECORD</span>
-              <span class="hc__lvl">2019–2026</span>
-            </div>
-            <div class="hc__back-list">
-              <div class="hc__bi">
-                <small>Internship</small>
-                <strong>Prodigy InfoTech · Data Science Intern</strong>
-              </div>
-              <div class="hc__bi">
-                <small>Credentials</small>
-                <strong>TATA GenAI · Deloitte · thingQbator</strong>
-              </div>
-              <div class="hc__bi">
-                <small>Education</small>
-                <strong>B.Tech CSE · Parul University (2025)</strong>
-              </div>
-              <div class="hc__bi">
-                <small>Direct Reach</small>
-                <strong>devpatel846211@gmail.com</strong>
-              </div>
-            </div>
-            <div class="hc__foot">
-              <span>Ahmedabad, India</span>
-              <span>Tap to return</span>
-            </div>
-            <i class="hc__foil"></i>
-            <i class="hc__glare"></i>
-          </span>
-        </span>
-      </button>
-      <p class="hc__hint">
-        <span class="hc__hm">Move across the card</span>
-        <span class="hc__ht">Tilt or drag it</span> · tap to flip
-      </p>
-      <div class="holo__actions">
-        <button type="button" class="holo__cv" id="holoResumes">Download 3 PDF Resumes</button>
-      </div>
-    </div>
-  </div>
+  </footer>
 
   <!-- ============ Contact Modal ============ -->
   <div aria-labelledby="mTitle" aria-modal="true" class="modal" hidden id="modal" role="dialog">
     <div class="modal__panel" id="mPanel">
-      <button type="button" aria-label="Close contact dialog" class="x-btn" id="mClose">×</button>
+      <button type="button" aria-label="Close dialog" class="x-btn" id="mClose">×</button>
       <div id="mFormWrap">
         <div class="mhead">
-          <p>Full-Time &amp; Internship Opportunities · Ahmedabad, IN</p>
+          <p>Full-Time &amp; Internship Hiring · Ahmedabad, IN</p>
           <h2 id="mTitle">Schedule an interview</h2>
         </div>
         <form class="mform" id="reqForm">
@@ -603,7 +650,7 @@
           <label>
             <span>Target role track</span>
             <select name="role">
-              <option value="Data Analyst / BI Role">Data Analyst / Power BI Role</option>
+              <option value="Data Analyst / Power BI Role">Data Analyst / Power BI Role</option>
               <option value="Data Scientist Role">Data Scientist Role</option>
               <option value="ML / AI Engineering Role">ML / AI Engineering Role</option>
               <option value="Data Analytics Internship / Trainee">Data Analytics Internship / Trainee</option>
@@ -614,12 +661,12 @@
             <textarea name="message" rows="3" required placeholder="Share company name, role description, or interview timing..."></textarea>
           </label>
           <div class="mform__bot">
-            <small id="eqStatus" style="opacity:.6">Replies within 24 hours</small>
-            <button type="submit" class="mform__submit">Prepare message →</button>
+            <small>Replies within 24 hours</small>
+            <button type="submit" class="btn btn--primary">Prepare message →</button>
           </div>
         </form>
         <div class="mform__direct">
-          <span>Or reach directly: <a data-mail="" href="mailto:devpatel846211@gmail.com">devpatel846211@gmail.com</a></span>
+          <span>Or reach directly: <a href="mailto:devpatel846211@gmail.com">devpatel846211@gmail.com</a></span>
           <a href="tel:+919328977322">+91 93289 77322</a>
         </div>
       </div>
@@ -627,13 +674,13 @@
       <div class="msuccess" hidden id="mSuccess">
         <div class="msuccess__badge">✓</div>
         <h2>Message ready to send</h2>
-        <p id="eqCopyNote">Your details have been formatted and copied to clipboard so you can send directly even without a desktop mail client.</p>
+        <p>Your interview inquiry has been formatted and copied to clipboard so you can send directly in one click.</p>
         <div class="msuccess__links">
           <a class="prim" id="eqGmailLink" target="_blank" rel="noopener" href="#">Open in Gmail Web ↗</a>
           <a id="eqMailtoLink" href="#">Default Mail App</a>
           <button type="button" id="eqCopyBtn">Copy text</button>
         </div>
-        <button type="button" class="holo__cv" id="mDone" style="margin-top:.5rem">Close</button>
+        <button type="button" class="btn btn--outline" id="mDone">Done</button>
       </div>
     </div>
   </div>
@@ -648,21 +695,21 @@
       </div>
       <div class="resumes">
         <a class="res-card" href="assets/resumes/Dev_Patel_Data_Analyst_Resume.pdf" target="_blank" rel="noopener">
-          <div>
+          <div class="res-card__info">
             <strong>Data Analyst Resume (PDF)</strong>
             <span>Power BI Star Schema, DAX, SQL 3NF, 500k+ Row EDA</span>
           </div>
           <span class="res-card__dl">Open PDF ↗</span>
         </a>
         <a class="res-card" href="assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" rel="noopener">
-          <div>
+          <div class="res-card__info">
             <strong>Data Scientist Resume (PDF)</strong>
             <span>Statistical Modeling, Scikit-learn, Cohort &amp; Feature Engineering</span>
           </div>
           <span class="res-card__dl">Open PDF ↗</span>
         </a>
         <a class="res-card" href="assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" rel="noopener">
-          <div>
+          <div class="res-card__info">
             <strong>AI / ML Engineer Resume (PDF)</strong>
             <span>XGBoost, LangGraph, Gemini Vector RAG &amp; Groq Agents</span>
           </div>
