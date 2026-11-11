@@ -410,6 +410,7 @@
 
     const local = e => { const r = wrap.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
     function startDrag(e, idx) {
+      dropped = true; live = true;
       wake();
       grab = idx;
       const p = local(e), g = pts[idx];
@@ -439,7 +440,7 @@
       removeEventListener('pointercancel', endDrag);
       if (tap) tug();
     }
-    function tug() { wake(); extV = EXT_MAX * 44; pts[N].px = pts[N].x + 1.5; }
+    function tug() { dropped = true; live = true; wake(); extV = EXT_MAX * 48; pts[N].px = pts[N].x + 1.5; }
 
     hit.addEventListener('pointerdown', e => {
       if (!dropped) return;
