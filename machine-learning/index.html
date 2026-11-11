@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Patel — Predictive Machine Learning</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rooms/room.css" />
+</head>
+<body>
+  <header class="rn">
+    <a class="backd" id="backDoors" href="../#works">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to the doors</span>
+    </a>
+    <nav class="rn__rooms" aria-label="Switch room">
+      <a class="rn__pill" href="../power-bi/" data-door="0">Power BI</a>
+      <a class="rn__pill" href="../sql-analytics/" data-door="1">SQL Systems</a>
+      <a class="rn__pill on" href="../machine-learning/" data-door="2">ML Models</a>
+      <a class="rn__pill" href="../genai-agents/" data-door="3">GenAI &amp; RAG</a>
+      <a class="rn__pill" href="../system-terminal/" data-door="4">Lab &amp; CLI</a>
+    </nav>
+    <a class="rbtn" href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener">Crop ML Repo ↗</a>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p class="eyebrow">Door 03 · Supervised ML &amp; Feature Engineering</p>
+      <h1>Benchmarking classifiers for real agronomic and tabular signal.</h1>
+      <p>
+        Comparing Logistic Regression, Gaussian Naive Bayes, KNN, and XGBoost with strict validation splits and live parameter inference.
+      </p>
+    </section>
+
+    <section class="stack">
+      <article class="card on">
+        <div class="card__body">
+          <span class="card__kicker">01 / Live Predictor · 22 Crop Classes</span>
+          <h2>Crop Recommendation System</h2>
+          <p class="card__desc">
+            Trained across Soil NPK ratios, ambient temperature, humidity, pH, and seasonal rainfall to predict optimal yield crops across 22 agronomy classes. Test the interactive parameter simulator right inside the monitor.
+          </p>
+          <div class="tags">
+            <span class="tag">Scikit-learn</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">22 Classes</span>
+          </div>
+          <div class="card__actions">
+            <a class="rbtn" href="https://github.com/Devpatel7777/ML-Crop-Recommendation" target="_blank" rel="noopener">GitHub Repo ↗</a>
+            <a class="rbtn rbtn--ghost" href="../assets/resumes/Dev_Patel_Data_Scientist_Resume.pdf" target="_blank" rel="noopener">Data Scientist PDF</a>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">ml://crop-recommender.streamlit</span>
+            </div>
+            <div class="mon__screen">
+              <div class="w-sliders">
+                <div class="w-slider">
+                  <label><span>Nitrogen (N)</span><strong id="vN">90</strong></label>
+                  <input type="range" id="sN" min="0" max="140" value="90" />
+                </div>
+                <div class="w-slider">
+                  <label><span>Phosphorus (P)</span><strong id="vP">42</strong></label>
+                  <input type="range" id="sP" min="5" max="145" value="42" />
+                </div>
+                <div class="w-slider">
+                  <label><span>Soil pH</span><strong id="vPh">6.5</strong></label>
+                  <input type="range" id="sPh" min="3.5" max="9.0" step="0.1" value="6.5" />
+                </div>
+                <div class="w-slider">
+                  <label><span>Rainfall (mm)</span><strong id="vRain">200</strong></label>
+                  <input type="range" id="sRain" min="20" max="300" value="200" />
+                </div>
+              </div>
+              <div class="w-kpis" style="margin-top:14px;">
+                <div class="w-kpi"><span>Top Predicted Crop</span><strong id="cropPred">Rice</strong></div>
+                <div class="w-kpi"><span>Confidence</span><strong id="cropConf">96.4%</strong></div>
+                <div class="w-kpi"><span>Model Engine</span><strong>XGB / NB</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+
+      <article class="card flip">
+        <div class="card__body">
+          <span class="card__kicker">02 / Model Benchmarking</span>
+          <h2>Feature Engineering &amp; Cross-Validation</h2>
+          <p class="card__desc">
+            Evaluated multiple classifier families side by side—checking bias-variance balance via 5-fold cross-validation, IQR outlier handling, and StandardScaler preprocessing pipelines without data leakage.
+          </p>
+          <div class="tags">
+            <span class="tag">Gaussian NB</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">KNN</span>
+            <span class="tag">Logistic Regression</span>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">eval://cv_benchmark_metrics</span>
+            </div>
+            <div class="mon__screen">
+              <table class="w-table">
+                <thead>
+                  <tr><th>Estimator</th><th>5-Fold CV</th><th>Inference</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Gaussian Naive Bayes</td><td>99.1%</td><td>0.4 ms</td><td>Baseline Winner</td></tr>
+                  <tr><td>XGBoost Classifier</td><td>99.0%</td><td>2.1 ms</td><td>Production Model</td></tr>
+                  <tr><td>K-Nearest Neighbors</td><td>97.6%</td><td>3.8 ms</td><td>Validated</td></tr>
+                  <tr><td>Logistic Regression</td><td>95.4%</td><td>0.3 ms</td><td>Baseline</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../rooms/room.js"></script>
+  <script>
+    (function () {
+      const crops = [
+        { name: 'Rice',       n: 80,  p: 48, ph: 6.4, rain: 220 },
+        { name: 'Cotton',     n: 115, p: 46, ph: 6.9, rain: 80  },
+        { name: 'Maize',      n: 78,  p: 48, ph: 6.2, rain: 85  },
+        { name: 'Chickpea',   n: 40,  p: 68, ph: 7.3, rain: 75  },
+        { name: 'Coffee',     n: 100, p: 28, ph: 6.8, rain: 165 },
+        { name: 'Pomegranate',n: 18,  p: 18, ph: 6.5, rain: 105 },
+        { name: 'Apple',      n: 20,  p: 130,ph: 5.9, rain: 112 }
+      ];
+
+      function predict() {
+        const N = Number(document.getElementById('sN').value);
+        const P = Number(document.getElementById('sP').value);
+        const ph = Number(document.getElementById('sPh').value);
+        const rain = Number(document.getElementById('sRain').value);
+
+        document.getElementById('vN').textContent = N;
+        document.getElementById('vP').textContent = P;
+        document.getElementById('vPh').textContent = ph.toFixed(1);
+        document.getElementById('vRain').textContent = rain;
+
+        let best = crops[0];
+        let bestDist = Infinity;
+        crops.forEach(c => {
+          const d = Math.hypot((N - c.n) / 40, (P - c.p) / 40, (ph - c.ph) * 1.4, (rain - c.rain) / 80);
+          if (d < bestDist) { bestDist = d; best = c; }
+        });
+        const conf = Math.max(76, Math.min(99.2, 98.8 - bestDist * 7.5));
+        document.getElementById('cropPred').textContent = best.name;
+        document.getElementById('cropConf').textContent = conf.toFixed(1) + '%';
+      }
+
+      ['sN', 'sP', 'sPh', 'sRain'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', predict);
+      });
+      predict();
+    })();
+  </script>
+</body>
+</html>

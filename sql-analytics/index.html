@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Patel — SQL Architecture &amp; 500K EDA</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rooms/room.css" />
+</head>
+<body>
+  <header class="rn">
+    <a class="backd" id="backDoors" href="../#works">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to the doors</span>
+    </a>
+    <nav class="rn__rooms" aria-label="Switch room">
+      <a class="rn__pill" href="../power-bi/" data-door="0">Power BI</a>
+      <a class="rn__pill on" href="../sql-analytics/" data-door="1">SQL Systems</a>
+      <a class="rn__pill" href="../machine-learning/" data-door="2">ML Models</a>
+      <a class="rn__pill" href="../genai-agents/" data-door="3">GenAI &amp; RAG</a>
+      <a class="rn__pill" href="../system-terminal/" data-door="4">Lab &amp; CLI</a>
+    </nav>
+    <a class="rbtn" href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener">SQL Repo ↗</a>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p class="eyebrow">Door 02 · Relational SQL &amp; EDA</p>
+      <h1>Normalized MySQL schemas and high-volume Python data auditing.</h1>
+      <p>
+        From 6-table 3NF transaction systems using CTEs and window functions to 500,000+ record data standardization during my Prodigy InfoTech internship.
+      </p>
+    </section>
+
+    <section class="stack">
+      <article class="card on">
+        <div class="card__body">
+          <span class="card__kicker">01 / Database Engineering</span>
+          <h2>E-Commerce 6-Table 3NF SQL Analysis</h2>
+          <p class="card__desc">
+            Designed an ACID-compliant 6-table relational schema (Customers, Orders, Items, Products, Payments, Categories) in MySQL. Built recursive CTEs, DENSE_RANK window queries, and reusable analytical views for cohort &amp; repeat-buyer retention.
+          </p>
+          <div class="tags">
+            <span class="tag">MySQL 8.0</span>
+            <span class="tag">3NF Schema</span>
+            <span class="tag">CTEs &amp; Windows</span>
+            <span class="tag">Views &amp; Indexes</span>
+          </div>
+          <div class="card__actions">
+            <a class="rbtn" href="https://github.com/Devpatel7777/ecommerce-sql-analysis" target="_blank" rel="noopener">View on GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">mysql://ecommerce_3nf</span>
+            </div>
+            <div class="mon__screen">
+              <div class="w-tabs" id="sqlTabs">
+                <button type="button" class="w-tab on" data-q="ltv">Customer LTV</button>
+                <button type="button" class="w-tab" data-q="cat">Category Rank</button>
+                <button type="button" class="w-tab" data-q="ret">Monthly Cohort</button>
+              </div>
+              <pre class="w-pre" id="sqlCode">WITH ltv AS (
+  SELECT c.customer_id, c.city, SUM(oi.net_total) AS total_spent
+  FROM customers c
+  JOIN orders o ON c.customer_id = o.customer_id
+  JOIN order_items oi ON o.order_id = oi.order_id
+  GROUP BY 1, 2
+)
+SELECT city, COUNT(*) AS buyers, ROUND(AVG(total_spent), 0) AS avg_ltv
+FROM ltv GROUP BY 1 ORDER BY avg_ltv DESC;</pre>
+              <table class="w-table" id="sqlOut"></table>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+
+      <article class="card flip">
+        <div class="card__body">
+          <span class="card__kicker">02 / Internship · Outstanding Remarks</span>
+          <h2>500,000+ Records EDA — Prodigy InfoTech</h2>
+          <p class="card__desc">
+            Processed half a million raw records during my Data Science Internship (May–Jun 2026). Standardized string schemas, imputed missing continuous values, flagged IQR outliers, and produced clean visual EDA briefings.
+          </p>
+          <div class="tags">
+            <span class="tag">500K+ Records</span>
+            <span class="tag">Pandas / NumPy</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+          </div>
+          <div class="card__actions">
+            <a class="rbtn" href="https://github.com/Devpatel7777" target="_blank" rel="noopener">GitHub Profile ↗</a>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">python://eda_pipeline_audit.py</span>
+            </div>
+            <div class="mon__screen">
+              <div class="w-kpis">
+                <div class="w-kpi"><span>Rows Audited</span><strong>500,000+</strong></div>
+                <div class="w-kpi"><span>Null Anomaly Fix</span><strong>99.8%</strong></div>
+                <div class="w-kpi"><span>Recognition</span><strong>Outstanding</strong></div>
+              </div>
+              <pre class="w-pre">pipeline = (
+  df.pipe(normalize_headers)
+    .pipe(impute_numeric_medians, cols=num_cols)
+    .pipe(clamp_iqr_outliers, factor=1.5)
+    .drop_duplicates(subset=['record_id'])
+)
+print(f"Verified rows ready: {len(pipeline):,}")</pre>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../rooms/room.js"></script>
+  <script>
+    (function () {
+      const queries = {
+        ltv: {
+          sql: `WITH ltv AS (\n  SELECT c.customer_id, c.city, SUM(oi.net_total) AS total_spent\n  FROM customers c JOIN orders o USING(customer_id)\n  JOIN order_items oi USING(order_id) GROUP BY 1, 2\n)\nSELECT city, COUNT(*) AS buyers, ROUND(AVG(total_spent),0) AS avg_ltv\nFROM ltv GROUP BY 1 ORDER BY avg_ltv DESC;`,
+          head: ['city', 'buyers', 'avg_ltv'],
+          rows: [['Ahmedabad', '1,240', '₹14,820'], ['Bengaluru', '980', '₹13,950'], ['Pune', '745', '₹11,400']]
+        },
+        cat: {
+          sql: `SELECT category, COUNT(DISTINCT order_id) AS orders,\n  DENSE_RANK() OVER(ORDER BY SUM(net_total) DESC) AS rk\nFROM order_items oi JOIN products p USING(product_id)\nGROUP BY category;`,
+          head: ['category', 'orders', 'rk'],
+          rows: [['Electronics', '4,120', '#1'], ['Home & Living', '2,890', '#2'], ['Apparel', '1,910', '#3']]
+        },
+        ret: {
+          sql: `SELECT DATE_FORMAT(first_order,'%Y-%m') AS cohort,\n  ROUND(100.0 * repeat_cnt / cohort_size, 1) AS repeat_pct\nFROM vw_cohort_retention ORDER BY cohort DESC LIMIT 3;`,
+          head: ['cohort', 'repeat_pct'],
+          rows: [['2026-08', '38.4%'], ['2026-07', '36.1%'], ['2026-06', '34.9%']]
+        }
+      };
+
+      const out = document.getElementById('sqlOut');
+      const code = document.getElementById('sqlCode');
+      const tabs = document.getElementById('sqlTabs');
+
+      function render(key) {
+        const q = queries[key] || queries.ltv;
+        if (code) code.textContent = q.sql;
+        if (out) {
+          out.innerHTML =
+            `<thead><tr>${q.head.map(h => `<th>${h}</th>`).join('')}</tr></thead>` +
+            `<tbody>${q.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+        }
+      }
+      render('ltv');
+
+      if (tabs) {
+        tabs.addEventListener('click', e => {
+          const b = e.target.closest('[data-q]');
+          if (!b) return;
+          tabs.querySelectorAll('.w-tab').forEach(x => x.classList.remove('on'));
+          b.classList.add('on');
+          render(b.dataset.q);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

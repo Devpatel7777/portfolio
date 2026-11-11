@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Patel — GenAI, RAG &amp; Autonomous Agents</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../rooms/room.css" />
+</head>
+<body>
+  <header class="rn">
+    <a class="backd" id="backDoors" href="../#works">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to the doors</span>
+    </a>
+    <nav class="rn__rooms" aria-label="Switch room">
+      <a class="rn__pill" href="../power-bi/" data-door="0">Power BI</a>
+      <a class="rn__pill" href="../sql-analytics/" data-door="1">SQL Systems</a>
+      <a class="rn__pill" href="../machine-learning/" data-door="2">ML Models</a>
+      <a class="rn__pill on" href="../genai-agents/" data-door="3">GenAI &amp; RAG</a>
+      <a class="rn__pill" href="../system-terminal/" data-door="4">Lab &amp; CLI</a>
+    </nav>
+    <a class="rbtn" href="../assets/resumes/Dev_Patel_AI_ML_Resume.pdf" target="_blank" rel="noopener">AI / ML PDF ↗</a>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p class="eyebrow">Door 04 · Generative AI &amp; Retrieval Systems</p>
+      <h1>Grounded Multi-PDF RAG pipelines and fast tool-calling agents.</h1>
+      <p>
+        Built with LangChain, LangGraph, Gemini embeddings, Groq LPU inference, and real-time Serper API orchestration.
+      </p>
+    </section>
+
+    <section class="stack">
+      <article class="card on">
+        <div class="card__body">
+          <span class="card__kicker">01 / Document Intelligence</span>
+          <h2>GenAI Application Suite &amp; Multi-PDF RAG</h2>
+          <p class="card__desc">
+            Engineered a multi-document retrieval pipeline chunking uploaded PDFs into dense vector indexes, retrieving top-k grounded passages via Gemini embeddings, and streaming verifiable citation answers in Streamlit.
+          </p>
+          <div class="tags">
+            <span class="tag">LangChain</span>
+            <span class="tag">Gemini API</span>
+            <span class="tag">Vector RAG</span>
+            <span class="tag">Streamlit</span>
+          </div>
+          <div class="card__actions">
+            <a class="rbtn" href="https://github.com/Devpatel7777/Gen_AI" target="_blank" rel="noopener">GitHub Repo ↗</a>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">rag://multi-pdf-retriever</span>
+            </div>
+            <div class="mon__screen">
+              <div class="w-tabs" id="ragTabs">
+                <button type="button" class="w-tab on" data-r="arch">RAG Pipeline</button>
+                <button type="button" class="w-tab" data-r="query">Trace Sample</button>
+              </div>
+              <pre class="w-pre" id="ragOut">[PDF Upload] -> RecursiveTextSplitter(chunk=1000, overlap=150)
+             -> GeminiEmbeddings -> VectorStore.similarity_search(k=4)
+             -> Grounded Prompt -> Cited Stream Response</pre>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+
+      <article class="card flip">
+        <div class="card__body">
+          <span class="card__kicker">02 / Multi-Step Agent · Groq LPU</span>
+          <h2>AI Travel Planner Agent</h2>
+          <p class="card__desc">
+            Stateful agent orchestrating sub-second Groq inference with live Serper search tools—turning city preferences, budget tiers, and travel dates into structured multi-day itineraries without stale hallucinations.
+          </p>
+          <div class="tags">
+            <span class="tag">Groq LPU</span>
+            <span class="tag">LangGraph</span>
+            <span class="tag">Serper API</span>
+            <span class="tag">Python</span>
+          </div>
+          <div class="card__actions">
+            <a class="rbtn" href="https://github.com/Devpatel7777/AI-Travel-Planner" target="_blank" rel="noopener">GitHub Repo ↗</a>
+          </div>
+        </div>
+
+        <div class="mon">
+          <div class="mon__bezel">
+            <div class="mon__bar">
+              <div class="mon__dots"><i></i><i></i><i></i></div>
+              <span class="mon__path">agent://travel-planner-graph</span>
+            </div>
+            <div class="mon__screen">
+              <div class="w-kpis">
+                <div class="w-kpi"><span>Inference</span><strong>Groq LPU</strong></div>
+                <div class="w-kpi"><span>Live Grounding</span><strong>Serper API</strong></div>
+                <div class="w-kpi"><span>Also Built</span><strong>thingQbator</strong></div>
+              </div>
+              <pre class="w-pre">state = {"city": "Udaipur", "days": 3, "budget": "Moderate"}
+-> node_search_venues(Serper) [280ms]
+-> node_compose_itinerary(Groq Llama-3) [410ms]
+-> return structured_markdown_plan</pre>
+            </div>
+          </div>
+          <div class="mon__neck"></div>
+          <div class="mon__base"></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../rooms/room.js"></script>
+  <script>
+    (function () {
+      const views = {
+        arch: `[PDF Upload] -> RecursiveTextSplitter(chunk=1000, overlap=150)\n             -> GeminiEmbeddings -> VectorStore.similarity_search(k=4)\n             -> Grounded Prompt -> Cited Stream Response`,
+        query: `Query: "Compare Q3 operating cash flow in the uploaded annual report."\nMatched Chunks: doc_01#p14 (score 0.91), doc_01#p27 (score 0.88)\nAnswer: Grounded strictly to retrieved tables [p.14, p.27].`
+      };
+      const tabs = document.getElementById('ragTabs');
+      const out = document.getElementById('ragOut');
+      if (tabs && out) {
+        tabs.addEventListener('click', e => {
+          const b = e.target.closest('[data-r]');
+          if (!b) return;
+          tabs.querySelectorAll('.w-tab').forEach(x => x.classList.remove('on'));
+          b.classList.add('on');
+          out.textContent = views[b.dataset.r] || views.arch;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
