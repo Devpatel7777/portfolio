@@ -177,10 +177,10 @@
     const fd = new FormData(form);
     const name = String(fd.get('name') || '').trim();
     const email = String(fd.get('email') || '').trim();
-    const role = String(fd.get('role') || 'Data / ML Opportunity').trim();
+    const role = String(fd.get('role') || 'Full-Time Data / ML Role').trim();
     const message = String(fd.get('message') || '').trim();
-    const subject = `[Portfolio] ${role} — ${name}`;
-    const body = `Hi Dev,\n\n${message}\n\nFrom: ${name} (${email})\nFocus: ${role}\n`;
+    const subject = `[Interview / Role] ${role} — ${name}`;
+    const body = `Hi Dev,\n\n${message}\n\nRecruiter / Contact: ${name} (${email})\nTarget Role: ${role}\n`;
     lastMailText = `To: ${EMAIL}\nSubject: ${subject}\n\n${body}`;
 
     $('#eqGmailLink').href = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(EMAIL)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -637,15 +637,8 @@
       const dw = base.naturalWidth * s, dh = base.naturalHeight * s;
       const dx = (W - dw) / 2, dy = H - dh;
       colX.save();
-      colX.filter = 'contrast(1.1) saturate(1.35) brightness(1.04)';
+      colX.filter = 'contrast(1.06) saturate(1.22) brightness(1.03)';
       colX.drawImage(base, dx, dy, dw, dh);
-      colX.globalCompositeOperation = 'source-atop';
-      const grad = colX.createLinearGradient(0, dy, W, H);
-      grad.addColorStop(0, 'rgba(92, 164, 198, .28)');
-      grad.addColorStop(.55, 'rgba(214, 148, 92, .32)');
-      grad.addColorStop(1, 'rgba(130, 175, 145, .24)');
-      colX.fillStyle = grad;
-      colX.fillRect(0, 0, W, H);
       colX.restore();
     }
     function measure() {
@@ -1225,11 +1218,56 @@
       hc.classList.remove('flip');
       openLayer(layer, hide);
       spin(true);
+      startSparks(true);
       setTimeout(() => hc.focus(), 100);
     }
     function hide() {
-      isOpen = false; spin(false);
+      isOpen = false; spin(false); startSparks(false);
       closeLayer(layer, () => open?.focus());
+    }
+
+    const sparkCv = $('#holoSparks');
+    const sparkCtx = sparkCv?.getContext?.('2d');
+    const motes = Array.from({ length: 44 }, (_, idx) => ({
+      x: (idx * 73) % 100 / 100,
+      y: (idx * 37) % 100 / 100,
+      r: 0.9 + (idx % 4) * 0.65,
+      vy: 0.014 + (idx % 5) * 0.006,
+      vx: ((idx % 3) - 1) * 0.005,
+      a: 0.28 + (idx % 4) * 0.16,
+      ph: idx * 0.8
+    }));
+    let sparkRaf = 0, sparkLast = 0;
+    function startSparks(on) {
+      cancelAnimationFrame(sparkRaf); sparkRaf = 0;
+      if (!on || !sparkCtx || reduced) return;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const fit = () => {
+        if (!sparkCv) return;
+        sparkCv.width = Math.max(1, Math.round(innerWidth * dpr));
+        sparkCv.height = Math.max(1, Math.round(innerHeight * dpr));
+      };
+      fit();
+      sparkLast = performance.now();
+      sparkRaf = requestAnimationFrame(function drawSparks(now) {
+        if (!isOpen) return;
+        const dt = Math.min(.05, (now - sparkLast) / 1000); sparkLast = now;
+        const w = sparkCv.width, h = sparkCv.height;
+        sparkCtx.clearRect(0, 0, w, h);
+        for (const m of motes) {
+          m.y -= m.vy * dt; m.x += (m.vx + Math.sin(now * .0008 + m.ph) * .004) * dt;
+          if (m.y < -0.05) { m.y = 1.05; }
+          if (m.x < 0) m.x += 1; if (m.x > 1) m.x -= 1;
+          const tw = 0.65 + 0.35 * Math.sin(now * .002 + m.ph);
+          const x = m.x * w, y = m.y * h, r = m.r * dpr;
+          const g = sparkCtx.createRadialGradient(x, y, 0, x, y, r * 2.4);
+          g.addColorStop(0, `rgba(255, 224, 152, ${(m.a * tw).toFixed(3)})`);
+          g.addColorStop(1, 'rgba(255, 200, 110, 0)');
+          sparkCtx.fillStyle = g;
+          sparkCtx.beginPath(); sparkCtx.arc(x, y, r * 2.4, 0, Math.PI * 2); sparkCtx.fill();
+        }
+        sparkRaf = requestAnimationFrame(drawSparks);
+      });
     }
 
     layer.addEventListener('pointermove', e => {
