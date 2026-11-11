@@ -17,11 +17,13 @@
 
   try {
     const t = params.get('theme') || localStorage.getItem('dev-mode');
-    if (t) applyTheme(t);
+    if (t !== 'light') applyTheme('dark');
   } catch (e) {}
 
   window.addEventListener('message', e => {
-    if (e.data && e.data.theme) applyTheme(e.data.theme);
+    if (!e.data) return;
+    if (e.data.wall === 'mode') applyTheme(e.data.mode);
+    else if (e.data.theme) applyTheme(e.data.theme);
   });
 
   // Notify parent frame immediately once interactive DOM + styles are painted
