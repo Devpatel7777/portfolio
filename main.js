@@ -440,6 +440,27 @@
       initOrShift(bulbCord, bulbAx, bL, bExt);
     }
 
+    let audioCtx = null;
+    function playSnapSound(toMode) {
+      if (reduced) return;
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = audioCtx || new AC();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(toMode === 'light' ? 1480 : 620, now);
+        osc.frequency.exponentialRampToValueAtTime(toMode === 'light' ? 420 : 190, now + .042);
+        gain.gain.setValueAtTime(.09, now);
+        gain.gain.exponentialRampToValueAtTime(.0001, now + .048);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + .05);
+      } catch (_) {}
+    }
+
     function stepCord(cr, dt, wind) {
       if (cr.grab < 0) {
         const K = 760, C = 21;
@@ -449,7 +470,8 @@
       if (cr.ext > cr.maxExt * cr.thresh && cr.armed && live) {
         cr.armed = false;
         setMode(cr.mode);
-        try { navigator.vibrate?.(12); } catch (e) {}
+        playSnapSound(cr.mode);
+        try { if (navigator.userActivation?.isActive) navigator.vibrate?.(12); } catch (e) {}
       }
       if (cr.ext < cr.maxExt * .2) cr.armed = true;
 
@@ -1101,11 +1123,15 @@
       d.way.addEventListener('click', () => enter(i));
     });
 
+    const DOOR_ACCENTS = ['#2DD4BF', '#D8B4FE', '#6EE7B7', '#FB923C', '#94A3B8'];
+    const DOOR_ACCENTS_LIGHT = ['#0E7490', '#6B21A8', '#047857', '#C2410C', '#334155'];
     const dinfo = $('#dinfo'), wallEl = $('.doors__wall', sec), MOB = matchMedia('(max-width: 639.98px)');
     const setInfo = i => {
       dinfo.querySelector('.dinfo__h').textContent = INFO[i][0];
       dinfo.querySelector('.dinfo__t').textContent = INFO[i][1];
       dinfo.querySelector('.dinfo__p').innerHTML = INFO[i][2].map(s => `<li>${s}</li>`).join('');
+      const col = getMode() === 'dark' ? DOOR_ACCENTS[i] : DOOR_ACCENTS_LIGHT[i];
+      if (col) dinfo.style.setProperty('--dinfo-accent', col);
     };
 
     if (canHover && dinfo && wallEl) {
@@ -1136,10 +1162,19 @@
       const hide = () => { token++; sec.classList.remove('focus'); units.forEach(u => u.classList.remove('on')); dinfo.classList.remove('on'); };
       const set = i => { if (busy) i = -1; if (i === active) return; active = i; if (i < 0) hide(); else show(i); };
       const under = el => { const w = el && el.closest ? el.closest('.doorway') : null; return w ? units.findIndex(u => u.contains(w)) : -1; };
-      addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; set(under(e.target)); }, { passive: true });
+      addEventListener('pointermove', e => {
+        px = e.clientX; py = e.clientY; set(under(e.target));
+        const sr = sec.getBoundingClientRect();
+        const inside = sr.top < innerHeight && sr.bottom > 0 && px >= sr.left && px <= sr.right && py >= sr.top && py <= sr.bottom;
+        sec.classList.toggle('lit', inside);
+        if (inside) {
+          sec.style.setProperty('--lx', `${(px - sr.left).toFixed(1)}px`);
+          sec.style.setProperty('--ly', `${(py - sr.top).toFixed(1)}px`);
+        }
+      }, { passive: true });
       addEventListener('scroll', () => { if (px >= 0) set(under(document.elementFromPoint(px, py))); }, { passive: true });
-      document.documentElement.addEventListener('pointerleave', () => set(-1));
-      addEventListener('blur', () => set(-1));
+      document.documentElement.addEventListener('pointerleave', () => { set(-1); sec.classList.remove('lit'); });
+      addEventListener('blur', () => { set(-1); sec.classList.remove('lit'); });
       window.__doorHover = set;
     }
 
@@ -1613,6 +1648,161 @@
     fig?.addEventListener('click', e => { if (!e.target.closest('.fig__card')) show(); });
     $('#holoClose')?.addEventListener('click', hide);
     $('#holoResumes')?.addEventListener('click', () => { hide(); setTimeout(openResumeModal, 240); });
+
+    // Offline ISO-18004 SVG QR Code (Ver 1-4 Byte Mode L) + 1-Click .vcf Contact Card
+    function buildQrSvg(text) {
+      const bytes = [...new TextEncoder().encode(text)];
+      const SPECS = [
+        null,
+        { size: 21, data: 19, ec: 7, align: [] },
+        { size: 25, data: 34, ec: 10, align: [6, 18] },
+        { size: 29, data: 55, ec: 15, align: [6, 22] },
+        { size: 33, data: 80, ec: 20, align: [6, 26] }
+      ];
+      const spec = SPECS.find(s => s && bytes.length <= s.data - 2);
+      if (!spec) return '';
+      const { size: N, data: DATA_CW, ec: EC_CW, align } = spec;
+      const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+      for (let i = 0, x = 1; i < 255; i++) { EXP[i] = EXP[i + 255] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 0x11d; }
+      const mul = (a, b) => (a && b) ? EXP[LOG[a] + LOG[b]] : 0;
+      let gen = [1];
+      for (let i = 0; i < EC_CW; i++) {
+        const next = new Array(gen.length + 1).fill(0);
+        for (let j = 0; j < gen.length; j++) { next[j] ^= gen[j]; next[j + 1] ^= mul(gen[j], EXP[i]); }
+        gen = next;
+      }
+      const bits = [];
+      const push = (v, n) => { for (let i = n - 1; i >= 0; i--) bits.push((v >> i) & 1); };
+      push(4, 4); push(bytes.length, 8); bytes.forEach(b => push(b, 8));
+      for (let i = 0; i < 4 && bits.length < DATA_CW * 8; i++) bits.push(0);
+      while (bits.length % 8) bits.push(0);
+      const cw = [];
+      for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; cw.push(b); }
+      for (let pi = 0; cw.length < DATA_CW; pi ^= 1) cw.push(pi ? 0x11 : 0xec);
+      const msg = cw.concat(new Array(EC_CW).fill(0));
+      for (let i = 0; i < DATA_CW; i++) {
+        const coef = msg[i];
+        if (coef) for (let j = 0; j < gen.length; j++) msg[i + j] ^= mul(gen[j], coef);
+      }
+      const allBits = [];
+      cw.concat(msg.slice(DATA_CW)).forEach(v => { for (let i = 7; i >= 0; i--) allBits.push((v >> i) & 1); });
+      const mat = Array.from({ length: N }, () => new Int8Array(N));
+      const fn = Array.from({ length: N }, () => new Uint8Array(N));
+      const setFn = (r, c, v) => { if (r >= 0 && r < N && c >= 0 && c < N) { mat[r][c] = v ? 1 : 0; fn[r][c] = 1; } };
+      const finder = (r0, c0) => {
+        for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+          setFn(r0 + dr, c0 + dc, dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6 && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4)));
+        }
+      };
+      finder(0, 0); finder(0, N - 7); finder(N - 7, 0);
+      for (let i = 8; i < N - 8; i++) { setFn(6, i, (i & 1) === 0); setFn(i, 6, (i & 1) === 0); }
+      for (const ar of align) for (const ac of align) {
+        if (fn[ar][ac]) continue;
+        for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) setFn(ar + dr, ac + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1);
+      }
+      setFn(N - 8, 8, 1);
+      for (let i = 0; i < 9; i++) { if (i !== 6) { setFn(8, i, 0); setFn(i, 8, 0); } }
+      for (let i = 0; i < 8; i++) { setFn(8, N - 1 - i, 0); if (i < 7) setFn(N - 1 - i, 8, 0); }
+      let bi = 0, dir = -1;
+      for (let col = N - 1; col > 0; col -= 2) {
+        if (col === 6) col--;
+        for (let k = 0; k < N; k++) {
+          const r = dir < 0 ? N - 1 - k : k;
+          for (const c of [col, col - 1]) if (!fn[r][c]) mat[r][c] = bi < allBits.length ? allBits[bi++] : 0;
+        }
+        dir *= -1;
+      }
+      const MASKS = [
+        (r, c) => (r + c) % 2 === 0, r => r % 2 === 0, (_, c) => c % 3 === 0, (r, c) => (r + c) % 3 === 0,
+        (r, c) => ((r >> 1) + ((c / 3) | 0)) % 2 === 0, (r, c) => ((r * c) % 2) + ((r * c) % 3) === 0,
+        (r, c) => (((r * c) % 2) + ((r * c) % 3)) % 2 === 0, (r, c) => (((r + c) % 2) + ((r * c) % 3)) % 2 === 0
+      ];
+      let bestG = null, bestPen = Infinity;
+      for (let m = 0; m < 8; m++) {
+        const g = mat.map((row, r) => row.map((v, c) => fn[r][c] ? v : (v ^ (MASKS[m](r, c) ? 1 : 0))));
+        const d5 = (1 << 3) | m; let rem = d5 << 10;
+        for (let i = 14; i >= 10; i--) if ((rem >> i) & 1) rem ^= (0x537 << (i - 10));
+        const fmt = ((d5 << 10) | rem) ^ 0x5412;
+        for (let i = 0; i < 15; i++) {
+          const bit = (fmt >> (14 - i)) & 1;
+          if (i < 6) g[8][i] = bit; else if (i === 6) g[8][7] = bit; else if (i === 7) g[8][8] = bit; else if (i === 8) g[7][8] = bit; else g[14 - i][8] = bit;
+          if (i < 7) g[N - 1 - i][8] = bit; else g[8][N - 15 + i] = bit;
+        }
+        let pen = 0, dark = 0;
+        for (let i = 0; i < N; i++) {
+          let rc = 1, cc = 1;
+          for (let j = 1; j < N; j++) {
+            rc = g[i][j] === g[i][j - 1] ? rc + 1 : 1; if (rc === 5) pen += 3; else if (rc > 5) pen += 1;
+            cc = g[j][i] === g[j - 1][i] ? cc + 1 : 1; if (cc === 5) pen += 3; else if (cc > 5) pen += 1;
+          }
+          for (let j = 0; j < N; j++) dark += g[i][j];
+        }
+        for (let r = 0; r < N - 1; r++) for (let c = 0; c < N - 1; c++) {
+          const s = g[r][c] + g[r][c + 1] + g[r + 1][c] + g[r + 1][c + 1];
+          if (s === 0 || s === 4) pen += 3;
+        }
+        pen += Math.floor(Math.abs(dark * 100 / (N * N) - 50) / 5) * 10;
+        if (pen < bestPen) { bestPen = pen; bestG = g; }
+      }
+      let pathD = '';
+      for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (bestG[r][c]) pathD += `M${c},${r}h1v1h-1z`;
+      return `<svg viewBox="-1 -1 ${N + 2} ${N + 2}" shape-rendering="crispEdges" role="img" aria-label="QR Code for Dev Patel Portfolio"><rect x="-1" y="-1" width="${N + 2}" height="${N + 2}" fill="#f8f5ef"/><path d="${pathD}" fill="#1a1410"/></svg>`;
+    }
+
+    const qrSlot = $('#hcQr');
+    const targetUrl = (location.protocol === 'https:' && location.origin.length <= 64)
+      ? `${location.origin}/` : 'https://dev-7-patel-portfolio.vercel.app/';
+    if (qrSlot) qrSlot.innerHTML = buildQrSvg(targetUrl);
+
+    $('#holoVcf')?.addEventListener('click', () => {
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Patel;Dev;;;',
+        'FN:Dev Patel',
+        'TITLE:GenAI, AI/ML & Data Systems Engineer',
+        'TEL;TYPE=CELL:+919328977322',
+        'EMAIL;TYPE=INTERNET:devpatel846211@gmail.com',
+        `URL:${targetUrl}`,
+        'ADR;TYPE=HOME:;;Ahmedabad;Gujarat;;India',
+        'NOTE:Power BI | 3NF MySQL | 99.1% Crop ML | Multi-PDF Vector RAG | github.com/Devpatel7777',
+        'END:VCARD'
+      ].join('\r\n');
+      const a = document.createElement('a');
+      a.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcard);
+      a.download = 'Dev_Patel.vcf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      const btn = $('#holoVcf');
+      if (btn) {
+        const prev = btn.textContent;
+        btn.textContent = 'Saved Contact ✓';
+        setTimeout(() => { btn.textContent = prev; }, 1800);
+      }
+    });
+  })();
+
+  /* ---------- Architectural Blueprint Grid Toggle (Press B) ---------- */
+  (function initBlueprintMode() {
+    const pill = $('#bpPill');
+    const sync = () => {
+      const on = root.dataset.blueprint === 'on';
+      document.querySelectorAll('[data-blueprint]').forEach(b => b.setAttribute('aria-pressed', String(on)));
+      if (pill) pill.hidden = !on;
+    };
+    const toggle = () => {
+      root.dataset.blueprint = root.dataset.blueprint === 'on' ? 'off' : 'on';
+      sync();
+    };
+    document.querySelectorAll('[data-blueprint]').forEach(b => b.addEventListener('click', toggle));
+    addEventListener('keydown', e => {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'b') return;
+      const t = document.activeElement?.tagName;
+      if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || document.activeElement?.isContentEditable) return;
+      toggle();
+    });
+    sync();
   })();
 
   /* ---------- Dev-AI Atelier Concierge Studio (Role Lenses, Match Scorecard, RAG Pipeline & Handoff) ---------- */
@@ -1795,6 +1985,23 @@
         resumes: ['aiml', 'ds', 'analyst'],
         door: 4,
         chunks: [{ id: 'profile-hiring', score: .97 }, { id: 'eda-prodigy', score: .88 }, { id: 'genai-rag', score: .84 }]
+      },
+      'qna': {
+        userLabel: 'Interview Cross-Questions & Architecture Trade-offs',
+        intent: 'interview_cross_examination',
+        score: 99,
+        text: 'Ask Dev tough **engineering & design trade-off questions** before scheduling. Here are the sharpest system decisions across his 3 flagship stacks:',
+        qna: [
+          ['Why recursive 1000/150 chunking over semantic chunking in RAG?', 'Deterministic chunk bounds predictably fit Groq/Gemini context windows with 4 cited top-k spans (~410ms LPU turnaround), avoiding variable latency spikes from an extra embedding pass on every paragraph boundary.'],
+          ['How did you verify 99.1% Crop ML had zero data leakage?', 'StandardScaler & IQR/Z-score statistics fit strictly inside each fold of 5-fold CV (never on global train+val). Crop N/P/K & rainfall clusters naturally separate 22 crops, with XGBoost (99.0%) confirming consistency.'],
+          ['Why maintain 6-table 3NF MySQL AND a Power BI Star Schema?', 'OLTP writes normalize into 3NF to stop update anomalies; analytical slicing aggregates cleanly into FactSales + DimDate/Product/Region so DAX YoY measures run against clean integer joins.']
+        ],
+        kpis: [['Zero Leak', 'Fold-Isolated CV'], ['1000 / 150', 'Chunk / Overlap'], ['3NF → Star', 'OLTP to OLAP']],
+        skills: ['System Trade-offs', 'Zero Leakage Proof', 'Citation Guardrails'],
+        followups: [['rag', 'Multi-PDF RAG stack'], ['ml', '99.1% ML benchmarks']],
+        resumes: ['aiml', 'ds', 'analyst'],
+        door: 3,
+        chunks: [{ id: 'genai-rag', score: .99 }, { id: 'ml-crop', score: .96 }, { id: 'sql-3nf', score: .94 }]
       }
     };
 
@@ -1909,7 +2116,7 @@
       const sig = document.createElement('span');
       sig.className = 'cp-sig';
       const sigTxt = document.createElement('span');
-      sigTxt.textContent = `GROUNDED · ${pct}% MATCH`;
+      sigTxt.textContent = res.live ? `LIVE LLM · GROUNDED` : `GROUNDED · ${pct}% MATCH`;
       const barMeter = document.createElement('span');
       barMeter.className = 'cp-sig__bar';
       const barFill = document.createElement('i');
@@ -1955,6 +2162,16 @@
             kpiGrid.appendChild(tile);
           });
           body.appendChild(kpiGrid);
+        }
+        if (res.qna?.length) {
+          res.qna.forEach(([qq, ans]) => {
+            const box = document.createElement('div');
+            box.className = 'cp-qna-box';
+            const qb = document.createElement('b'); qb.textContent = `Q: ${qq}`;
+            const qa = document.createElement('span'); qa.textContent = ans;
+            box.append(qb, qa);
+            body.appendChild(box);
+          });
         }
         if (res.bullets?.length) {
           const ul = document.createElement('ul');
@@ -2106,13 +2323,42 @@
     modalEl.querySelectorAll('.cp-lens').forEach(b => b.addEventListener('click', () => runPreset(`role:${b.dataset.cpLens}`, false)));
     modalEl.querySelectorAll('.cp-chip').forEach(b => b.addEventListener('click', () => runPreset(b.dataset.cpQ, false)));
 
-    formEl?.addEventListener('submit', e => {
+    formEl?.addEventListener('submit', async e => {
       e.preventDefault();
       const q = String(inp?.value || '').trim();
       if (!q) return;
       inp.value = '';
       modalEl.querySelectorAll('.cp-chip').forEach(c => c.classList.remove('active'));
+      const low = q.toLowerCase();
+      if (/\b(why|challenge|weakness|tradeoff|trade-off|leakage|interview|cross.?question)\b/.test(low)) {
+        runPreset('qna', false);
+        return;
+      }
       const res = retrieve(q);
+      const lens = modalEl.querySelector('.cp-lens.active')?.dataset.cpLens || (res.resumes?.[0] || 'aiml');
+      const isHosted = /^https?:$/i.test(location.protocol) && !/^(localhost|127\.0\.0\.1)$/i.test(location.hostname);
+      if (isHosted) {
+        try {
+          const ctrl = new AbortController();
+          const tid = setTimeout(() => ctrl.abort(), 1800);
+          const apiRes = await fetch('/api/chat/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: q, lens }),
+            signal: ctrl.signal
+          });
+          clearTimeout(tid);
+          if (apiRes.ok) {
+            const data = await apiRes.json();
+            if (data?.live && data.answer) {
+              res.live = true;
+              res.score = 99;
+              res.intent = `live_llm:${data.model || 'edge'}`;
+              res.text = data.answer;
+            }
+          }
+        } catch (_) {}
+      }
       if (res.resumes?.length) setActiveLens(res.resumes[0]);
       appendMessage(res, q, false);
     });
