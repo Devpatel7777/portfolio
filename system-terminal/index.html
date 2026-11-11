@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Dev Patel — Secret Room: Open Source, CLI &amp; Resumes</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <script src="../rooms/prepaint.js"></script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -77,39 +77,5 @@
   </main>
 
   <script src="../rooms/room.js"></script>
-  <script>
-    (function () {
-      const cmds = {
-        help: 'Commands: about · skills · projects · certs · contact · clear',
-        about: 'Dev Patel · B.Tech CSE (Parul University) · Data Analyst & ML Engineer · Prodigy InfoTech Intern (Outstanding Remarks).',
-        skills: 'Power BI, DAX, MySQL (3NF), Python, Pandas, NumPy, Scikit-learn, XGBoost, LangChain, Gemini, Groq.',
-        projects: '1) power-bi-final (10K+ rows) · 2) ecommerce-sql-analysis (6-table 3NF) · 3) ML-Crop-Recommendation (22 classes) · 4) Gen_AI (Multi-PDF RAG) · 5) AI-Travel-Planner (Groq + Serper).',
-        certs: 'TATA GenAI & Data Vis · Deloitte Data Analytics · Nasscom thingQbator Chatbot · TechWar 2026.',
-        contact: 'Email: devpatel846211@gmail.com | Phone: +91 93289 77322 | github.com/Devpatel7777'
-      };
-      const out = document.getElementById('termOut');
-      const form = document.getElementById('termForm');
-      const inp = document.getElementById('termInput');
-
-      if (form && inp && out) {
-        form.addEventListener('submit', e => {
-          e.preventDefault();
-          const raw = inp.value.trim().toLowerCase();
-          inp.value = '';
-          if (!raw) return;
-          if (raw === 'clear') { out.innerHTML = ''; return; }
-          const echo = document.createElement('div');
-          echo.textContent = `$ ${raw}`;
-          out.appendChild(echo);
-          const rep = document.createElement('div');
-          rep.style.color = '#C4B0B0';
-          rep.style.marginBottom = '6px';
-          rep.textContent = cmds[raw] || `Unknown command '${raw}'. Try: help`;
-          out.appendChild(rep);
-          out.scrollTop = out.scrollHeight;
-        });
-      }
-    })();
-  </script>
 </body>
 </html>

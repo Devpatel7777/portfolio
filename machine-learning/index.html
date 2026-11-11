@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dev Patel — Predictive Machine Learning</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <link rel="canonical" href="https://dev-7-patel-portfolio.vercel.app/machine-learning/" />
+  <meta property="og:url" content="https://dev-7-patel-portfolio.vercel.app/machine-learning/" />
+  <meta property="og:title" content="Dev Patel — Predictive Machine Learning" />
+  <script src="../rooms/prepaint.js"></script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,6 +37,9 @@
       <p>
         Comparing Logistic Regression, Gaussian Naive Bayes, KNN, and XGBoost with strict validation splits and live parameter inference.
       </p>
+      <div class="intro__acts">
+        <button type="button" class="rbtn" data-arch="ml">Architecture &amp; Metrics ↗</button>
+      </div>
     </section>
 
     <section class="stack">
@@ -136,46 +142,5 @@
   </main>
 
   <script src="../rooms/room.js"></script>
-  <script>
-    (function () {
-      const crops = [
-        { name: 'Rice',       n: 80,  p: 48, ph: 6.4, rain: 220 },
-        { name: 'Cotton',     n: 115, p: 46, ph: 6.9, rain: 80  },
-        { name: 'Maize',      n: 78,  p: 48, ph: 6.2, rain: 85  },
-        { name: 'Chickpea',   n: 40,  p: 68, ph: 7.3, rain: 75  },
-        { name: 'Coffee',     n: 100, p: 28, ph: 6.8, rain: 165 },
-        { name: 'Pomegranate',n: 18,  p: 18, ph: 6.5, rain: 105 },
-        { name: 'Apple',      n: 20,  p: 130,ph: 5.9, rain: 112 }
-      ];
-
-      function predict() {
-        const N = Number(document.getElementById('sN').value);
-        const P = Number(document.getElementById('sP').value);
-        const ph = Number(document.getElementById('sPh').value);
-        const rain = Number(document.getElementById('sRain').value);
-
-        document.getElementById('vN').textContent = N;
-        document.getElementById('vP').textContent = P;
-        document.getElementById('vPh').textContent = ph.toFixed(1);
-        document.getElementById('vRain').textContent = rain;
-
-        let best = crops[0];
-        let bestDist = Infinity;
-        crops.forEach(c => {
-          const d = Math.hypot((N - c.n) / 40, (P - c.p) / 40, (ph - c.ph) * 1.4, (rain - c.rain) / 80);
-          if (d < bestDist) { bestDist = d; best = c; }
-        });
-        const conf = Math.max(76, Math.min(99.2, 98.8 - bestDist * 7.5));
-        document.getElementById('cropPred').textContent = best.name;
-        document.getElementById('cropConf').textContent = conf.toFixed(1) + '%';
-      }
-
-      ['sN', 'sP', 'sPh', 'sRain'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', predict);
-      });
-      predict();
-    })();
-  </script>
 </body>
 </html>

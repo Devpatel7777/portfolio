@@ -435,6 +435,67 @@ html, body {
 
 .w-slider input { width: 100%; accent-color: #C4B0B0; }
 
+/* Architecture & Live Metrics Popup Modal */
+.intro__acts { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+.arch-modal {
+  position: fixed; inset: 0; z-index: 90; padding: 18px;
+  display: grid; place-items: center;
+  background: rgba(12, 11, 11, .72); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity .22s ease;
+}
+.arch-modal.on { opacity: 1; }
+.arch-modal[hidden] { display: none; }
+.arch-modal__panel {
+  width: min(760px, 100%); max-height: 90svh; overflow-y: auto;
+  padding: 24px clamp(18px, 3vw, 28px); border-radius: 18px;
+  background: var(--ground); color: var(--ink);
+  border: 1px solid rgba(var(--ink-rgb), .16);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .42);
+}
+.arch-modal__head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--hairline);
+}
+.arch-modal__eye {
+  margin: 0 0 4px; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--accent);
+}
+.arch-modal__title { margin: 0; font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.2; }
+.arch-modal__x {
+  flex: none; width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--hairline);
+  background: var(--surface); color: var(--ink); font-size: 1.1rem; cursor: pointer;
+}
+.arch-flow {
+  margin: 18px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px; align-items: stretch;
+}
+.arch-node {
+  position: relative; padding: 12px; border-radius: 12px;
+  background: var(--surface); border: 1px solid rgba(var(--ink-rgb), .12);
+}
+.arch-node small {
+  display: block; font-family: var(--mono); font-size: .66rem;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+}
+.arch-node strong { display: block; font-size: .86rem; line-height: 1.35; }
+.arch-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;
+  margin-top: 12px;
+}
+.arch-metric {
+  padding: 10px 12px; border-radius: 10px;
+  border: 1px dashed rgba(var(--ink-rgb), .18); font-family: var(--mono); font-size: .74rem;
+}
+.arch-metric b { display: block; color: var(--ink); font-size: .84rem; margin-bottom: 2px; }
+.arch-metric span { color: var(--accent); font-size: .7rem; }
+
+/* 404 Utility Route */
+.nf-body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 1.5rem; text-align: center; }
+.nf-card { max-width: 28rem; }
+.nf-card small { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.nf-card h1 { font-size: clamp(2.4rem, 7vw, 4rem); margin: .4rem 0 .7rem; letter-spacing: -.03em; line-height: 1.05; }
+.nf-card p { margin: 0 0 1.6rem; color: var(--accent); line-height: 1.6; }
+
 /* Terminal inside System Lab Room */
 .term-out {
   height: 195px;

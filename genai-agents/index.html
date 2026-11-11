@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dev Patel — GenAI, RAG &amp; Autonomous Agents</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <link rel="canonical" href="https://dev-7-patel-portfolio.vercel.app/genai-agents/" />
+  <meta property="og:url" content="https://dev-7-patel-portfolio.vercel.app/genai-agents/" />
+  <meta property="og:title" content="Dev Patel — GenAI, RAG &amp; Autonomous Agents" />
+  <script src="../rooms/prepaint.js"></script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,6 +37,9 @@
       <p>
         Built with LangChain, LangGraph, Gemini embeddings, Groq LPU inference, and real-time Serper API orchestration.
       </p>
+      <div class="intro__acts">
+        <button type="button" class="rbtn" data-arch="rag">Architecture &amp; Metrics ↗</button>
+      </div>
     </section>
 
     <section class="stack">
@@ -120,24 +126,5 @@
   </main>
 
   <script src="../rooms/room.js"></script>
-  <script>
-    (function () {
-      const views = {
-        arch: `[PDF Upload] -> RecursiveTextSplitter(chunk=1000, overlap=150)\n             -> GeminiEmbeddings -> VectorStore.similarity_search(k=4)\n             -> Grounded Prompt -> Cited Stream Response`,
-        query: `Query: "Compare Q3 operating cash flow in the uploaded annual report."\nMatched Chunks: doc_01#p14 (score 0.91), doc_01#p27 (score 0.88)\nAnswer: Grounded strictly to retrieved tables [p.14, p.27].`
-      };
-      const tabs = document.getElementById('ragTabs');
-      const out = document.getElementById('ragOut');
-      if (tabs && out) {
-        tabs.addEventListener('click', e => {
-          const b = e.target.closest('[data-r]');
-          if (!b) return;
-          tabs.querySelectorAll('.w-tab').forEach(x => x.classList.remove('on'));
-          b.classList.add('on');
-          out.textContent = views[b.dataset.r] || views.arch;
-        });
-      }
-    })();
-  </script>
 </body>
 </html>

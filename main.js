@@ -233,6 +233,16 @@
   resumeModal?.addEventListener('click', closeResumeModal);
   $('#rPanel')?.addEventListener('click', e => e.stopPropagation());
   $('#rClose')?.addEventListener('click', closeResumeModal);
+  $('#rvShareLink')?.addEventListener('click', () => {
+    const shareUrl = `${location.origin}/?role=${encodeURIComponent(currentResumeTrack)}`;
+    const btn = $('#rvShareLink');
+    navigator.clipboard?.writeText(shareUrl).then(() => {
+      if (!btn) return;
+      const prev = btn.textContent;
+      btn.textContent = 'Copied link ✓';
+      setTimeout(() => { btn.textContent = prev; }, 1800);
+    }).catch(() => {});
+  });
 
   document.querySelectorAll('[data-contact]').forEach(b => b.addEventListener('click', openModal));
   document.querySelectorAll('[data-resume]').forEach(b => b.addEventListener('click', () => openResumeModal()));
@@ -377,13 +387,13 @@
       let offset;
       if (vw >= 1024) {
         offset = 4.25 * rem; L = Math.min(265, Math.max(195, vh * .29)); EXT_MAX = 72; BULB_MAX = 46; thick = 3.7; knobS = 1.3;
-        lampY = 110; bulbSc = 1;
+        lampY = 92; bulbSc = 1;
       } else if (vw >= 640) {
         offset = 5.9 * rem; L = Math.min(210, Math.max(155, vh * .21)); EXT_MAX = 62; BULB_MAX = 38; thick = 3.4; knobS = 1.2;
-        lampY = 92; bulbSc = .88;
+        lampY = 76; bulbSc = .88;
       } else {
         L = 44; EXT_MAX = 34; BULB_MAX = 26; thick = 2.7; knobS = .82;
-        lampY = 30; bulbSc = .6;
+        lampY = 26; bulbSc = .6;
       }
       HIDDEN = EXT_MAX + 18;
       W = vw < 1024 ? vw : Math.min(vw, 340);
@@ -395,11 +405,11 @@
 
       const ck = document.querySelector('.hdr .clock');
       if (vw >= 1200 && ck && ck.offsetWidth) {
-        offset = Math.max(1.2 * rem, vw - ck.getBoundingClientRect().right - 1.4 * rem);
+        offset = Math.max(1.85 * rem, Math.min(3.1 * rem, vw - ck.getBoundingClientRect().right - 2.4 * rem));
       } else if (vw < 1024) {
         offset = W - 2.35 * rem;
       } else if (ck && ck.offsetWidth) {
-        offset = Math.max(1.5 * rem, vw - ck.getBoundingClientRect().left + 1.4 * rem);
+        offset = Math.max(1.85 * rem, vw - ck.getBoundingClientRect().right - 1.2 * rem);
       } else {
         offset = 2.3 * rem;
       }
@@ -518,13 +528,10 @@
       removeEventListener('pointercancel', endDrag);
       if (tap) tug();
     }
-    const splitIdx = () => Math.min(N - 2, Math.max(1, Math.round(N * (HIDDEN + L * .36) / (HIDDEN + L))));
     function tug() { dropped = true; live = true; wake(); extV = EXT_MAX * 48; pts[N].px = pts[N].x + 1.5; }
     function tugBulb() {
       dropped = true; live = true; wake();
       bulbExtV = BULB_MAX * 42;
-      const ji = splitIdx();
-      if (pts[ji]) pts[ji].px = pts[ji].x - 1.4;
     }
 
     hit.addEventListener('pointerdown', e => {
@@ -544,8 +551,6 @@
         const dy = Math.max(0, Math.min(BULB_MAX * 1.15, p.y - bulbDrag.y0));
         bulbMoved = Math.max(bulbMoved, Math.hypot(p.x - bulbDrag.x0, p.y - bulbDrag.y0));
         bulbExt += (dy - bulbExt) * .55;
-        const ji = splitIdx();
-        if (pts[ji]) pts[ji].x += (p.x - bulbDrag.x0) * .04;
       };
       const endBulbDrag = () => {
         if (!bulbDrag) return;
@@ -650,16 +655,15 @@
       c.bezierCurveTo(12.8, 14.5, 6.2, 11, 6.2, 6);
       c.closePath();
     }
-    function drawBulb(c, jx, jy, bx, by, sc, lit, dir, sway) {
-      // Connected brushed brass collar + flexible braided lead straight from moving rope node to Edison socket
+    function drawBulb(c, bx, by, sc, lit, sway) {
+      // Independent ceiling drop wire hanging cleanly beside the braided rope
+      const topY = -14;
+      const ctrlX = bx - sway * 24;
       c.save();
-      c.strokeStyle = '#6f6455'; c.lineWidth = 3.2 * sc; c.lineCap = 'round';
-      c.beginPath(); c.moveTo(jx, jy); c.quadraticCurveTo(jx + dir * 14 * sc, jy + 12 * sc, bx, by - 5 * sc); c.stroke();
-      c.strokeStyle = '#c8b896'; c.lineWidth = 1.6 * sc;
-      c.beginPath(); c.moveTo(jx, jy); c.quadraticCurveTo(jx + dir * 14 * sc, jy + 12 * sc, bx, by - 5 * sc); c.stroke();
-      c.fillStyle = '#d4b46c';
-      c.beginPath(); c.arc(jx, jy, 4.1 * sc, 0, Math.PI * 2); c.fill();
-      c.strokeStyle = '#3b2e1b'; c.lineWidth = .8 * sc; c.stroke();
+      c.strokeStyle = '#3b332b'; c.lineWidth = 2.4 * sc; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(bx, topY); c.quadraticCurveTo(ctrlX, by * .52, bx, by - 5 * sc); c.stroke();
+      c.strokeStyle = 'rgba(255,252,244,.22)'; c.lineWidth = .75 * sc;
+      c.beginPath(); c.moveTo(bx - .5 * sc, topY); c.quadraticCurveTo(ctrlX - .5 * sc, by * .52, bx - .5 * sc, by - 5 * sc); c.stroke();
       c.restore();
 
       c.save();
@@ -748,12 +752,9 @@
       c.strokeStyle = 'rgba(255,252,244,.55)'; c.lineWidth = thick * .28; c.stroke();
       c.restore();
       const dir = innerWidth < 640 ? 1 : -1;
-      const ji = splitIdx();
-      const jPt = ps[ji] || { x: ax, y: Math.max(12, lampY - 22 * bulbSc) };
-      const jy = Math.max(10, jPt.y);
-      const bx = jPt.x + dir * 23 * bulbSc, by = Math.max(jy + 18 * bulbSc, lampY + Math.max(0, bulbExt));
-      const sway = Math.max(-.16, Math.min(.16, (jPt.x - ax) * .022 + Math.sin(t * 1.1) * .018));
-      drawBulb(c, jPt.x, jy, bx, by, bulbSc, bulbLit, dir, sway);
+      const bx = ax + dir * 24 * bulbSc, by = lampY + Math.max(0, bulbExt);
+      const sway = Math.max(-.12, Math.min(.12, Math.sin(t * 1.15) * .022 + Math.min(.08, bulbExtV * .0004)));
+      drawBulb(c, bx, by, bulbSc, bulbLit, sway);
       drawKnob(c, last.x, last.y, ang, false);
       const kx = last.x + Math.cos(ang) * 20 * knobS, ky = last.y + Math.sin(ang) * 20 * knobS;
       hit.style.transform = `translate(${kx}px, ${ky}px)`;

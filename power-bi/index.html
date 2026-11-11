@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dev Patel — Power BI &amp; Business Intelligence</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <link rel="canonical" href="https://dev-7-patel-portfolio.vercel.app/power-bi/" />
+  <meta property="og:url" content="https://dev-7-patel-portfolio.vercel.app/power-bi/" />
+  <meta property="og:title" content="Dev Patel — Power BI &amp; Business Intelligence" />
+  <script src="../rooms/prepaint.js"></script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,6 +37,9 @@
       <p>
         Designed to replace spreadsheet guesswork with cross-filtered regional telemetry, cohort retention tracking, and clear YoY margin visibility.
       </p>
+      <div class="intro__acts">
+        <button type="button" class="rbtn" data-arch="powerbi">Architecture &amp; Metrics ↗</button>
+      </div>
     </section>
 
     <section class="stack">
@@ -132,27 +138,5 @@ RETURN DIVIDE(CurrRev - PrevRev, PrevRev)</pre>
   </main>
 
   <script src="../rooms/room.js"></script>
-  <script>
-    (function () {
-      const data = {
-        ALL:   { rev: '₹48.6L', ord: '10,420', mgn: '31.4%' },
-        WEST:  { rev: '₹19.2L', ord: '4,110',  mgn: '33.8%' },
-        SOUTH: { rev: '₹16.8L', ord: '3,590',  mgn: '30.9%' },
-        EAST:  { rev: '₹12.6L', ord: '2,720',  mgn: '28.5%' }
-      };
-      const wrap = document.getElementById('biFilter');
-      if (!wrap) return;
-      wrap.addEventListener('click', e => {
-        const b = e.target.closest('[data-reg]');
-        if (!b) return;
-        wrap.querySelectorAll('.w-tab').forEach(x => x.classList.remove('on'));
-        b.classList.add('on');
-        const d = data[b.dataset.reg] || data.ALL;
-        document.getElementById('biRev').textContent = d.rev;
-        document.getElementById('biOrd').textContent = d.ord;
-        document.getElementById('biMgn').textContent = d.mgn;
-      });
-    })();
-  </script>
 </body>
 </html>

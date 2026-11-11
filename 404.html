@@ -6,34 +6,15 @@
   <meta name="theme-color" content="#1A1818">
   <title>404 — Page Not Found | Dev Patel</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <script>(function(){try{if(localStorage.getItem('dev-mode')==='light')delete document.documentElement.dataset.mode;}catch(e){}})();</script>
-  <style>
-    :root { --bg: #E8E4E0; --fg: #1A1818; --sub: rgba(26,24,24,.65); --btn: #1A1818; --btnfg: #E8E4E0; }
-    html[data-mode="dark"] { --bg: #1A1818; --fg: #E8E4E0; --sub: rgba(232,228,224,.65); --btn: #E8E4E0; --btnfg: #1A1818; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 1.5rem;
-      background: var(--bg); color: var(--fg);
-      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; text-align: center;
-    }
-    .card { max-width: 28rem; }
-    small { font-family: ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--sub); }
-    h1 { font-size: clamp(2.4rem, 7vw, 4rem); margin: .4rem 0 .7rem; letter-spacing: -.03em; }
-    p { margin: 0 0 1.6rem; color: var(--sub); line-height: 1.6; }
-    a {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .85rem 1.5rem; border-radius: 999px;
-      background: var(--btn); color: var(--btnfg);
-      font-weight: 600; font-size: .92rem; text-decoration: none;
-    }
-  </style>
+  <script src="/rooms/prepaint.js"></script>
+  <link rel="stylesheet" href="/rooms/room.css">
 </head>
-<body>
-  <main class="card">
+<body class="nf-body">
+  <main class="nf-card">
     <small>Error 404 · Route Not Found</small>
     <h1>Wrong door.</h1>
     <p>The page you requested does not exist. Return to the main architectural portfolio or explore the live case study rooms.</p>
-    <a href="/">← Back to Dev Patel Portfolio</a>
+    <a class="backd" href="/">← Back to Dev Patel Portfolio</a>
   </main>
 </body>
 </html>

@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dev Patel — SQL Architecture &amp; 500K EDA</title>
-  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p!=='light')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
+  <link rel="canonical" href="https://dev-7-patel-portfolio.vercel.app/sql-analytics/" />
+  <meta property="og:url" content="https://dev-7-patel-portfolio.vercel.app/sql-analytics/" />
+  <meta property="og:title" content="Dev Patel — SQL Architecture &amp; 500K EDA" />
+  <script src="../rooms/prepaint.js"></script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,6 +37,9 @@
       <p>
         From 6-table 3NF transaction systems using CTEs and window functions to 500,000+ record data standardization during my Prodigy InfoTech internship.
       </p>
+      <div class="intro__acts">
+        <button type="button" class="rbtn" data-arch="sql">Architecture &amp; Metrics ↗</button>
+      </div>
     </section>
 
     <section class="stack">
@@ -131,51 +137,5 @@ print(f"Verified rows ready: {len(pipeline):,}")</pre>
   </main>
 
   <script src="../rooms/room.js"></script>
-  <script>
-    (function () {
-      const queries = {
-        ltv: {
-          sql: `WITH ltv AS (\n  SELECT c.customer_id, c.city, SUM(oi.net_total) AS total_spent\n  FROM customers c JOIN orders o USING(customer_id)\n  JOIN order_items oi USING(order_id) GROUP BY 1, 2\n)\nSELECT city, COUNT(*) AS buyers, ROUND(AVG(total_spent),0) AS avg_ltv\nFROM ltv GROUP BY 1 ORDER BY avg_ltv DESC;`,
-          head: ['city', 'buyers', 'avg_ltv'],
-          rows: [['Ahmedabad', '1,240', '₹14,820'], ['Bengaluru', '980', '₹13,950'], ['Pune', '745', '₹11,400']]
-        },
-        cat: {
-          sql: `SELECT category, COUNT(DISTINCT order_id) AS orders,\n  DENSE_RANK() OVER(ORDER BY SUM(net_total) DESC) AS rk\nFROM order_items oi JOIN products p USING(product_id)\nGROUP BY category;`,
-          head: ['category', 'orders', 'rk'],
-          rows: [['Electronics', '4,120', '#1'], ['Home & Living', '2,890', '#2'], ['Apparel', '1,910', '#3']]
-        },
-        ret: {
-          sql: `SELECT DATE_FORMAT(first_order,'%Y-%m') AS cohort,\n  ROUND(100.0 * repeat_cnt / cohort_size, 1) AS repeat_pct\nFROM vw_cohort_retention ORDER BY cohort DESC LIMIT 3;`,
-          head: ['cohort', 'repeat_pct'],
-          rows: [['2026-08', '38.4%'], ['2026-07', '36.1%'], ['2026-06', '34.9%']]
-        }
-      };
-
-      const out = document.getElementById('sqlOut');
-      const code = document.getElementById('sqlCode');
-      const tabs = document.getElementById('sqlTabs');
-
-      function render(key) {
-        const q = queries[key] || queries.ltv;
-        if (code) code.textContent = q.sql;
-        if (out) {
-          out.innerHTML =
-            `<thead><tr>${q.head.map(h => `<th>${h}</th>`).join('')}</tr></thead>` +
-            `<tbody>${q.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
-        }
-      }
-      render('ltv');
-
-      if (tabs) {
-        tabs.addEventListener('click', e => {
-          const b = e.target.closest('[data-q]');
-          if (!b) return;
-          tabs.querySelectorAll('.w-tab').forEach(x => x.classList.remove('on'));
-          b.classList.add('on');
-          render(b.dataset.q);
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
