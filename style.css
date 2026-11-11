@@ -62,6 +62,7 @@ html {
   -webkit-text-size-adjust: 100%;
   background: var(--ground);
   color: var(--ink);
+  overflow-x: clip;
 }
 
 body {
@@ -71,7 +72,7 @@ body {
   line-height: 1.55;
   color: var(--ink);
   background: var(--ground);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -103,7 +104,7 @@ body::before {
   display: grid;
   place-items: center;
   padding: 24px;
-  transition: opacity .65s var(--ease-out), visibility 0s linear .65s;
+  transition: opacity .38s var(--ease-out), visibility 0s linear .38s;
 }
 
 .loader.gone {
@@ -575,6 +576,11 @@ html[data-mode="dark"] .cal__face {
   transform-style: preserve-3d;
   pointer-events: none;
   z-index: 3;
+  opacity: 0;
+}
+
+.cal.flipping .cal__leaf {
+  opacity: 1;
 }
 
 .cal__leaf-f,
@@ -936,6 +942,7 @@ html[data-mode="dark"] .fig__photo {
   position: relative;
   z-index: 2;
   padding: clamp(68px, 10vw, 130px) var(--gut-lg) clamp(76px, 11vw, 140px);
+  scroll-margin-top: calc(var(--bar-h) + 8px);
 }
 
 .doors__head {
@@ -1268,21 +1275,24 @@ html[data-mode="dark"] .fig__photo {
 
 @media (hover: none), (max-width: 899.98px) {
   .door-cursor { display: none; }
+  .doors { padding: 48px var(--gut-lg) 64px; }
+  .doors__head { margin-bottom: 24px; }
   .wall {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 18px;
-    padding: 24px calc(50% - 105px) 0;
+    gap: 16px;
+    padding: 18px calc(50% - 84px) 0;
     scrollbar-width: none;
   }
   .wall::-webkit-scrollbar { display: none; }
   .unit {
-    flex: 0 0 210px;
+    flex: 0 0 168px;
     scroll-snap-align: center;
   }
-  .doors__dots { display: flex; }
-  .dinfo { grid-template-columns: 1fr; padding: 18px; }
+  .unit__tag { margin-bottom: 10px; }
+  .doors__dots { display: flex; margin-top: 14px; }
+  .dinfo { margin-top: 16px; grid-template-columns: 1fr; padding: 16px; gap: 12px; }
 }
 
 /* ==========================================================================
@@ -1325,6 +1335,7 @@ html[data-mode="dark"] .fig__photo {
   border-top: 1px solid var(--hairline);
   background: radial-gradient(circle at 22% 30%, var(--story-wash), transparent 64%);
   transition: background .8s ease;
+  scroll-margin-top: calc(var(--bar-h) + 8px);
 }
 
 .story__cv {
@@ -1520,6 +1531,7 @@ html[data-mode="dark"] .fig__photo {
   padding: clamp(54px, 8vw, 96px) var(--gut-lg) 0;
   overflow: hidden;
   box-shadow: 0 -24px 60px -30px rgba(0, 0, 0, .35);
+  scroll-margin-top: calc(var(--bar-h) + 8px);
 }
 
 .sf__top {
@@ -2120,6 +2132,24 @@ html[data-mode="dark"] .fig__photo {
 }
 
 .copy-pill:hover { border-color: var(--ink); color: var(--ink); }
+
+.modal__fb {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid rgba(var(--ink-rgb), .2);
+  font-size: .84rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__fb-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 /* Resume List Cards inside #resume-modal */
 .res-grid {

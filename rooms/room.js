@@ -15,7 +15,6 @@
     }
   }
 
-  // Initial sync from query param or localStorage
   try {
     const t = params.get('theme') || localStorage.getItem('dev-mode');
     if (t) applyTheme(t);
@@ -25,7 +24,13 @@
     if (e.data && e.data.theme) applyTheme(e.data.theme);
   });
 
-  // "Back to the doors" handler
+  // Notify parent frame immediately once interactive DOM + styles are painted
+  if (embedded) {
+    requestAnimationFrame(() => {
+      try { window.parent.postMessage({ roomReady: true }, '*'); } catch (e) {}
+    });
+  }
+
   const backBtn = document.getElementById('backDoors');
   if (backBtn) {
     backBtn.addEventListener('click', e => {
@@ -36,7 +41,6 @@
     });
   }
 
-  // Smooth room-to-room switching when embedded inside #wallv
   document.querySelectorAll('.rn__pill[data-door]').forEach(pill => {
     pill.addEventListener('click', e => {
       if (embedded) {
@@ -49,14 +53,12 @@
     });
   });
 
-  // Escape key returns to doors when embedded
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape' && embedded) {
       window.parent.postMessage({ wall: 'go' }, '*');
     }
   });
 
-  // Scroll-reveal cards
   const cards = Array.from(document.querySelectorAll('.card'));
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
@@ -66,7 +68,7 @@
           io.unobserve(en.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.02, rootMargin: '80px 0px' });
     cards.forEach(c => io.observe(c));
   } else {
     cards.forEach(c => c.classList.add('on'));

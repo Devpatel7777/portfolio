@@ -30,7 +30,7 @@
         }
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           document.documentElement.dataset.skipLoader = '1';
-        } else if (location.hash === '#works' || location.hash === '#about') {
+        } else if (location.hash === '#works' || location.hash === '#about' || sessionStorage.getItem('dev-loaded') === '1') {
           document.documentElement.dataset.skipLoader = '1';
         }
       } catch (e) {}
@@ -651,6 +651,13 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </span>
           </button>
+        </div>
+
+        <div class="modal__fb" id="eqFallback" hidden>
+          <span><strong>Ready!</strong> Inquiry details copied. If your mail app didn't open:</span>
+          <div class="modal__fb-links">
+            <a class="copy-pill" id="eqGmailLink" href="#" target="_blank" rel="noopener">Open in Gmail Web ↗</a>
+          </div>
         </div>
       </form>
 

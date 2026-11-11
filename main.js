@@ -59,9 +59,10 @@
     const loader = $('#loader');
     const ready = () => {
       document.body.classList.add('ready');
+      try { sessionStorage.setItem('dev-loaded', '1'); } catch (e) {}
       if (loader) {
         loader.classList.add('gone');
-        setTimeout(() => loader.setAttribute('hidden', ''), 700);
+        setTimeout(() => loader.setAttribute('hidden', ''), 420);
       }
     };
 
@@ -73,7 +74,7 @@
     const pills = $$('#loaderPills .loader__pill');
     const pctEl = $('#loaderPct');
     const fillEl = $('#loaderFill');
-    const totalMs = 1050;
+    const totalMs = 650;
     const start = performance.now();
 
     pills.forEach((p, idx) => {
@@ -81,7 +82,7 @@
         p.classList.add('on');
         pills.forEach(x => x.classList.remove('active'));
         p.classList.add('active');
-      }, idx * 125);
+      }, idx * 80);
     });
 
     function tick(now) {
@@ -93,13 +94,12 @@
       if (t < 1) {
         requestAnimationFrame(tick);
       } else {
-        setTimeout(ready, 140);
+        setTimeout(ready, 90);
       }
     }
     requestAnimationFrame(tick);
 
-    // Failsafe guarantee
-    setTimeout(ready, 2400);
+    setTimeout(ready, 1600);
   }
 
   /* ----------------------------------------------------------------------
@@ -256,7 +256,7 @@
       const r = wrap.getBoundingClientRect();
       dragX = Math.max(10, Math.min(W - 10, e.clientX - r.left));
       dragY = Math.max(40, Math.min(H - 18, e.clientY - r.top));
-      if (!pullTriggered && e.clientY - pointerStartY > 36) {
+      if (!pullTriggered && e.clientY - pointerStartY >= 16) {
         pullTriggered = true;
         fireFromCord();
       }
@@ -265,8 +265,8 @@
     const releaseDrag = e => {
       if (!dragging) return;
       dragging = false;
-      if (!pullTriggered && Math.abs(e.clientY - pointerStartY) < 10) {
-        // Quick click activates toggle + subtle kick
+      const deltaY = e.clientY - pointerStartY;
+      if (!pullTriggered && (Math.abs(deltaY) < 16 || deltaY >= 12)) {
         nodes[N - 1].py -= 14;
         fireFromCord();
       }
@@ -413,13 +413,20 @@
       void cal.offsetWidth;
       cal.classList.add('flipping');
 
-      setTimeout(() => {
+      let done = false;
+      const finishFlip = () => {
+        if (done) return;
+        done = true;
         idx = nextIdx;
         botCurr.textContent = next;
         leafFront.textContent = next;
         measureWidth(next);
         cal.classList.remove('flipping');
-      }, 610);
+      };
+
+      const leaf = $('.cal__leaf', cal);
+      if (leaf) leaf.addEventListener('animationend', finishFlip, { once: true });
+      setTimeout(finishFlip, 720);
     }, 2800);
   }
 
@@ -535,27 +542,34 @@
 
       const unit = units[idx];
       const isVisible = unit && unit.getBoundingClientRect().width > 0;
+      if (cursor) cursor.classList.remove('on');
 
-      // Pass current theme via query string as fallback + postMessage on load
       const mode = document.documentElement.dataset.mode === 'dark' ? 'dark' : 'light';
-      wallvFr.src = `${meta.href}?embed=1&theme=${mode}`;
-
+      let shown = false;
       const revealRoom = () => {
+        if (shown) return;
+        shown = true;
         wallv.hidden = false;
         void wallv.offsetWidth;
         wallv.classList.add('on');
         lockScroll(true);
         wallvFr.focus();
+        if (unit) setTimeout(() => unit.classList.remove('open'), 450);
       };
+
+      const minSwing = isVisible && !REDUCED ? 260 : 0;
+      const tStart = performance.now();
+      const tryReveal = () => {
+        const wait = Math.max(0, minSwing - (performance.now() - tStart));
+        setTimeout(revealRoom, wait);
+      };
+
+      wallvFr.addEventListener('load', tryReveal, { once: true });
+      setTimeout(revealRoom, 850);
+      wallvFr.src = `${meta.href}?embed=1&theme=${mode}`;
 
       if (isVisible && !REDUCED) {
         unit.classList.add('open');
-        setTimeout(() => {
-          revealRoom();
-          setTimeout(() => unit.classList.remove('open'), 500);
-        }, 280);
-      } else {
-        revealRoom();
       }
     }
 
@@ -587,6 +601,7 @@
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
       });
+      window.addEventListener('scroll', () => cursor.classList.remove('on'), { passive: true });
     }
 
     units.forEach((unit, idx) => {
@@ -958,26 +973,45 @@
       });
     });
 
+    const fbBox = $('#eqFallback');
+    const gmailLink = $('#eqGmailLink');
+
     if (backBtn) backBtn.addEventListener('click', () => showStep(stepIdx - 1));
     if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
+      nextBtn.addEventListener('click', async () => {
         if (stepIdx < panes.length - 1) {
           showStep(stepIdx + 1);
           return;
         }
+        const nameEl = $('#eqName');
+        const emailEl = $('#eqEmail');
+        const name = (nameEl?.value || '').trim();
+        const email = (emailEl?.value || '').trim();
+        if (!name || !email) {
+          if (!name && nameEl) nameEl.focus();
+          else if (!email && emailEl) emailEl.focus();
+          nextLbl.textContent = 'Enter name & email';
+          setTimeout(() => { nextLbl.textContent = 'Open Email Composer'; }, 1800);
+          return;
+        }
+
         const intent = $('#enquiryForm [data-group="intent"] .chip.on')?.dataset.val || 'Hiring / Project Inquiry';
         const stacks = $$('#enquiryForm [data-group="stack"] .chip.on').map(c => c.dataset.val).join(', ') || 'General Data / ML';
-        const name = ($('#eqName')?.value || '').trim() || 'Visitor';
-        const email = ($('#eqEmail')?.value || '').trim() || 'Not specified';
         const msg = ($('#eqMsg')?.value || '').trim() || 'Looking forward to connecting.';
 
-        const subject = encodeURIComponent(`[Portfolio] ${intent} — ${name}`);
-        const body = encodeURIComponent(
-          `Hi Dev,\n\nIntent: ${intent}\nFocus Stack: ${stacks}\nFrom: ${name} (${email})\n\n${msg}\n`
-        );
-        window.location.href = `mailto:devpatel846211@gmail.com?subject=${subject}&body=${body}`;
-        nextLbl.textContent = 'Mail App Opened ✓';
-        setTimeout(() => { nextLbl.textContent = 'Open Email Composer'; }, 2400);
+        const subjText = `[Portfolio] ${intent} — ${name}`;
+        const bodyText = `Hi Dev,\n\nIntent: ${intent}\nFocus Stack: ${stacks}\nFrom: ${name} (${email})\n\n${msg}\n`;
+
+        try { await navigator.clipboard.writeText(`${subjText}\n\n${bodyText}`); } catch (e) {}
+
+        if (gmailLink) {
+          gmailLink.href = `https://mail.google.com/mail/?view=cm&fs=1&to=devpatel846211@gmail.com&su=${encodeURIComponent(subjText)}&body=${encodeURIComponent(bodyText)}`;
+        }
+        if (fbBox) fbBox.hidden = false;
+
+        window.location.href = `mailto:devpatel846211@gmail.com?subject=${encodeURIComponent(subjText)}&body=${encodeURIComponent(bodyText)}`;
+        nextLbl.textContent = 'Ready · Copied ✓';
+        setTimeout(() => { nextLbl.textContent = 'Open Email Composer'; }, 2800);
       });
     }
 

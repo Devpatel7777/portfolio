@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dev Patel — Power BI &amp; Business Intelligence</title>
+  <script>(function(){try{var p=new URLSearchParams(location.search).get('theme')||localStorage.getItem('dev-mode');if(p==='dark')document.documentElement.dataset.mode='dark';}catch(e){}})();</script>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -76,7 +77,10 @@
               </div>
               <pre class="w-pre" id="biDax">YoY Growth % :=
 VAR CurrRev = SUM(FactSales[NetAmount])
-VAR PrevRev = CALCULATE(CurrRev, SAMEPERIODLASTYEAR(DimDate[Date]))
+VAR PrevRev = CALCULATE(
+  CurrRev,
+  SAMEPERIODLASTYEAR(DimDate[Date])
+)
 RETURN DIVIDE(CurrRev - PrevRev, PrevRev)</pre>
             </div>
           </div>
