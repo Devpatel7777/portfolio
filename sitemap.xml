@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc><priority>1.0</priority></url>
-  <url><loc>/power-bi/</loc><priority>0.8</priority></url>
-  <url><loc>/sql-analytics/</loc><priority>0.8</priority></url>
-  <url><loc>/machine-learning/</loc><priority>0.8</priority></url>
-  <url><loc>/genai-agents/</loc><priority>0.9</priority></url>
+  <url><loc>https://dev-7-patel-portfolio.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://dev-7-patel-portfolio.vercel.app/power-bi/</loc><priority>0.8</priority></url>
+  <url><loc>https://dev-7-patel-portfolio.vercel.app/sql-analytics/</loc><priority>0.8</priority></url>
+  <url><loc>https://dev-7-patel-portfolio.vercel.app/machine-learning/</loc><priority>0.8</priority></url>
+  <url><loc>https://dev-7-patel-portfolio.vercel.app/genai-agents/</loc><priority>0.9</priority></url>
 </urlset>

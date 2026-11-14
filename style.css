@@ -281,7 +281,39 @@ html[data-mode="dark"] .hdr.stuck {
 .menu-btn svg { width: 1.05rem; height: 1.05rem; }
 @media (min-width: 1024px) { .menu-btn { display: none; } }
 
-/* ---------- Pull Cord ---------- */
+/* ---------- Pull Cord & Ambient Lamp Lighting ---------- */
+.lamp-ambient {
+  position: fixed;
+  top: -120px;
+  right: -80px;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 15;
+  background: radial-gradient(circle, rgba(255, 196, 92, .26) 0%, rgba(245, 158, 11, .1) 38%, transparent 70%);
+  filter: blur(52px);
+  opacity: 0;
+  transition: opacity .45s cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity;
+}
+.lamp-ambient.lit {
+  opacity: 1;
+}
+html:not([data-mode="dark"]) .lamp-ambient.lit {
+  opacity: .55;
+  background: radial-gradient(circle, rgba(255, 224, 138, .34) 0%, rgba(251, 191, 36, .14) 40%, transparent 70%);
+}
+@media (max-width: 639.98px) {
+  .lamp-ambient {
+    width: 380px;
+    height: 380px;
+    top: -80px;
+    right: -60px;
+    filter: blur(36px);
+  }
+}
+
 .cord {
   position: fixed; top: 0; right: 0; z-index: 45;
   width: 340px; height: 420px;
@@ -981,19 +1013,19 @@ html[data-mode="dark"] .door { filter: saturate(.96) brightness(.92); }
   box-shadow: inset 0 1cqi 2.2cqi rgba(0, 0, 0, .34), inset 0 0 0 1.4cqi rgba(0, 0, 0, .14);
 }
 .unit--bi {
-  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23ebce8a' stroke-opacity='.42'%3E%3Cpath d='M60 12v126M22 46h76M22 96h76' stroke-width='.9' stroke-dasharray='3 4'/%3E%3Crect x='28' y='88' width='12' height='36' rx='2' stroke-width='1.2'/%3E%3Crect x='54' y='64' width='12' height='60' rx='2' stroke-width='1.2'/%3E%3Crect x='80' y='44' width='12' height='80' rx='2' stroke-width='1.2'/%3E%3Ccircle cx='60' cy='28' r='9' stroke-width='1.2'/%3E%3C/svg%3E");
+  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23facc15' stroke-opacity='.52'%3E%3Cpath d='M60 10v130M20 45h80M20 95h80' stroke-width='.9' stroke-dasharray='3 4'/%3E%3Crect x='26' y='82' width='14' height='45' rx='3' stroke-width='1.4' fill='%23eab308' fill-opacity='.12'/%3E%3Crect x='53' y='58' width='14' height='69' rx='3' stroke-width='1.4' fill='%23eab308' fill-opacity='.18'/%3E%3Crect x='80' y='36' width='14' height='91' rx='3' stroke-width='1.4' fill='%23eab308' fill-opacity='.24'/%3E%3Ccircle cx='60' cy='24' r='10' stroke-width='1.4' fill='%23facc15' fill-opacity='.15'/%3E%3C/svg%3E");
 }
 .unit--sql {
-  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23f2d69c' stroke-opacity='.42'%3E%3Cellipse cx='60' cy='42' rx='30' ry='11' stroke-width='1.2'/%3E%3Cellipse cx='60' cy='68' rx='30' ry='11' stroke-width='1.1'/%3E%3Cellipse cx='60' cy='94' rx='30' ry='11' stroke-width='1.1'/%3E%3Cellipse cx='60' cy='120' rx='30' ry='11' stroke-width='1.2'/%3E%3Cpath d='M30 42v78M90 42v78' stroke-width='1.1'/%3E%3C/svg%3E");
+  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%2338bdf8' stroke-opacity='.55'%3E%3Cellipse cx='60' cy='36' rx='34' ry='12' stroke-width='1.4' fill='%2338bdf8' fill-opacity='.12'/%3E%3Cellipse cx='60' cy='64' rx='34' ry='12' stroke-width='1.2' fill='%2338bdf8' fill-opacity='.1'/%3E%3Cellipse cx='60' cy='92' rx='34' ry='12' stroke-width='1.2' fill='%2338bdf8' fill-opacity='.1'/%3E%3Cellipse cx='60' cy='120' rx='34' ry='12' stroke-width='1.4' fill='%2338bdf8' fill-opacity='.14'/%3E%3Cpath d='M26 36v84M94 36v84' stroke-width='1.3'/%3E%3Cpath d='M42 64h36M42 92h36' stroke-width='1' stroke-dasharray='2 3'/%3E%3C/svg%3E");
 }
 .unit--ml {
-  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23ebce8a' stroke-opacity='.42'%3E%3Cpath d='M60 28L30 68l30 56 30-56-30-40ZM30 68h60M60 28v96' stroke-width='1.1'/%3E%3Ccircle cx='60' cy='28' r='4.5' fill='%23ebce8a' fill-opacity='.45'/%3E%3Ccircle cx='30' cy='68' r='4.5' fill='%23ebce8a' fill-opacity='.45'/%3E%3Ccircle cx='90' cy='68' r='4.5' fill='%23ebce8a' fill-opacity='.45'/%3E%3Ccircle cx='60' cy='124' r='4.5' fill='%23ebce8a' fill-opacity='.45'/%3E%3C/svg%3E");
+  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%2334d399' stroke-opacity='.52'%3E%3Cpolygon points='60,22 24,66 60,128 96,66' stroke-width='1.4' fill='%2334d399' fill-opacity='.08'/%3E%3Cline x1='24' y1='66' x2='96' y2='66' stroke-width='1.2'/%3E%3Cline x1='60' y1='22' x2='60' y2='128' stroke-width='1.2'/%3E%3Ccircle cx='60' cy='22' r='6' fill='%2334d399' fill-opacity='.5' stroke-width='1.2'/%3E%3Ccircle cx='24' cy='66' r='6' fill='%2334d399' fill-opacity='.5' stroke-width='1.2'/%3E%3Ccircle cx='96' cy='66' r='6' fill='%2334d399' fill-opacity='.5' stroke-width='1.2'/%3E%3Ccircle cx='60' cy='128' r='6' fill='%2334d399' fill-opacity='.5' stroke-width='1.2'/%3E%3Ccircle cx='60' cy='66' r='7.5' stroke-width='1.2' stroke-dasharray='3 2'/%3E%3C/svg%3E");
 }
 .unit--rag {
-  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23f7e0a6' stroke-opacity='.46'%3E%3Ccircle cx='60' cy='76' r='28' stroke-width='1.1' stroke-dasharray='4 3'/%3E%3Ccircle cx='60' cy='76' r='12' stroke-width='1.3'/%3E%3Cpath d='M60 18v116M18 76h84M30 46l60 60M90 46L30 106' stroke-width='1'/%3E%3C/svg%3E");
+  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23c084fc' stroke-opacity='.58'%3E%3Ccircle cx='60' cy='75' r='32' stroke-width='1.2' stroke-dasharray='4 3'/%3E%3Ccircle cx='60' cy='75' r='14' stroke-width='1.5' fill='%23c084fc' fill-opacity='.2'/%3E%3Cpath d='M60 14v122M14 75h92M27 42l66 66M93 42L27 108' stroke-width='1.1'/%3E%3Ccircle cx='60' cy='14' r='4' fill='%23c084fc' fill-opacity='.6'/%3E%3Ccircle cx='106' cy='75' r='4' fill='%23c084fc' fill-opacity='.6'/%3E%3Ccircle cx='60' cy='136' r='4' fill='%23c084fc' fill-opacity='.6'/%3E%3Ccircle cx='14' cy='75' r='4' fill='%23c084fc' fill-opacity='.6'/%3E%3C/svg%3E");
 }
 .unit--cli {
-  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%23d6e1f0' stroke-opacity='.4'%3E%3Cpath d='M26 36h68v86H26z' stroke-width='1' stroke-dasharray='3 3'/%3E%3Cpath d='M42 66l16 14-16 14M64 94h18' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --door-inlay: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150' fill='none' stroke='%234ade80' stroke-opacity='.55'%3E%3Crect x='20' y='32' width='80' height='90' rx='6' stroke-width='1.3' fill='%234ade80' fill-opacity='.06'/%3E%3Cpath d='M20 52h80' stroke-width='1'/%3E%3Ccircle cx='30' cy='42' r='2' fill='%234ade80' fill-opacity='.7'/%3E%3Ccircle cx='38' cy='42' r='2' fill='%234ade80' fill-opacity='.7'/%3E%3Ccircle cx='46' cy='42' r='2' fill='%234ade80' fill-opacity='.7'/%3E%3Cpath d='M36 72l14 12-14 12M58 96h24' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .door__shade {
   position: absolute; inset: 0; border-radius: inherit; background: #000;
@@ -1122,7 +1154,7 @@ html[data-mode="dark"] .sill { opacity: .82; }
 
 /* Phones: sticky door carousel */
 @media (max-width: 639.98px) {
-  .doors { padding-top: 0; overflow: clip; height: calc(100svh + 3 * 55svh); }
+  .doors { padding-top: 0; overflow: clip; height: calc(100svh + 4 * 55svh); }
   .doors__pin {
     --uw: min(56vw, calc((100svh - 30rem) / 2.25));
     --ug: calc(50vw - var(--uw) / 2 + .75rem);
@@ -1135,10 +1167,11 @@ html[data-mode="dark"] .sill { opacity: .82; }
     display: flex; gap: var(--ug); overflow: visible;
     padding-inline: calc(50% - var(--uw) / 2); margin-inline: -1.25rem; width: calc(100% + 2.5rem);
     padding-top: 1.5rem; margin-top: -.75rem; transition: none; will-change: transform;
+    -webkit-overflow-scrolling: touch;
   }
   .doors__row::after { left: 0; right: auto; width: 700vw; }
   .unit { flex: 0 0 var(--uw); max-width: none; }
-  .unit.unit--secret { position: relative; left: auto; bottom: auto; width: auto; display: none; visibility: visible; opacity: 1; }
+  .unit.unit--secret { position: relative; left: auto; bottom: auto; width: auto; display: block; visibility: visible; opacity: 1; }
   .doors.reveal .unit.unit--secret { display: block; }
   .unit::before { display: none; }
   .dinfo {
@@ -1898,6 +1931,31 @@ html[data-mode="dark"] .cp-modal {
 @media (max-width: 639px) { .cp-kbd, #cpHoloBtn { display: none; } }
 .cp__head h2 { font-size: clamp(1.02rem, 3.8vw, 1.2rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
 .cp__head-acts { display: flex; align-items: center; gap: .38rem; flex: none; }
+.cp__audio-btn {
+  display: inline-flex; align-items: center; gap: .42rem;
+  height: 2.05rem; padding: 0 .72rem; border-radius: 999px;
+  background: rgba(var(--fg-rgb), .06); border: 1px solid var(--line);
+  color: var(--foreground); font-family: 'JetBrains Mono', monospace;
+  font-size: .67rem; font-weight: 600; cursor: pointer; transition: all .2s ease;
+}
+.cp__audio-btn:hover { background: rgba(var(--fg-rgb), .12); border-color: var(--cp-brass); }
+.cp__audio-btn.playing { background: rgba(197, 160, 89, .22); border-color: var(--cp-brass); color: var(--cp-brass); }
+.audio-wave { display: inline-flex; align-items: center; gap: 2px; height: 10px; }
+.audio-wave span { width: 2px; height: 3px; background: currentColor; border-radius: 1px; transition: height .15s ease; }
+.cp__audio-btn.playing .audio-wave span:nth-child(1) { animation: wave 0.8s ease-in-out infinite; }
+.cp__audio-btn.playing .audio-wave span:nth-child(2) { animation: wave 0.8s ease-in-out infinite .2s; }
+.cp__audio-btn.playing .audio-wave span:nth-child(3) { animation: wave 0.8s ease-in-out infinite .4s; }
+@keyframes wave { 0%, 100% { height: 3px; } 50% { height: 10px; } }
+.cp-chip--tour {
+  background: linear-gradient(135deg, rgba(197, 160, 89, .2), rgba(197, 160, 89, .06)) !important;
+  border-color: rgba(197, 160, 89, .55) !important; color: var(--cp-brass) !important; font-weight: 600 !important;
+}
+.cp-chip--tour:hover { background: rgba(197, 160, 89, .28) !important; border-color: var(--cp-brass) !important; }
+.cp-chip--ats {
+  background: linear-gradient(135deg, rgba(56, 189, 248, .18), rgba(56, 189, 248, .05)) !important;
+  border-color: rgba(56, 189, 248, .45) !important; color: #38bdf8 !important; font-weight: 600 !important;
+}
+.cp-chip--ats:hover { background: rgba(56, 189, 248, .28) !important; border-color: #38bdf8 !important; }
 .cp__act-btn, .cp__brief-btn {
   height: 2.05rem; padding: 0 .72rem; border-radius: 999px;
   border: 1px solid var(--line); background: var(--surface); color: var(--foreground);

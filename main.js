@@ -252,13 +252,17 @@
 
   const EMAIL = 'devpatel846211@gmail.com';
   let lastMailText = '';
-  form?.addEventListener('submit', e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(form);
     const name = String(fd.get('name') || '').trim();
     const email = String(fd.get('email') || '').trim();
     const role = String(fd.get('role') || 'Full-Time Data / ML Role').trim();
     const message = String(fd.get('message') || '').trim();
+    const submitBtn = form.querySelector('.mform__submit');
+    const prevBtnTxt = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+
     const subject = `[Interview / Role] ${role} — ${name}`;
     const body = `Hi Dev,\n\n${message}\n\nRecruiter / Contact: ${name} (${email})\nTarget Role: ${role}\n`;
     lastMailText = `To: ${EMAIL}\nSubject: ${subject}\n\n${body}`;
@@ -267,6 +271,15 @@
     $('#eqMailtoLink').href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     navigator.clipboard?.writeText(lastMailText).catch(() => {});
 
+    try {
+      await fetch('/api/contact/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, role, message })
+      });
+    } catch (_) {}
+
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = prevBtnTxt; }
     $('#mFormWrap').hidden = true;
     $('#mSuccess').hidden = false;
   });
@@ -299,6 +312,7 @@
     themeMeta?.setAttribute('content', m === 'dark' ? '#1A1818' : '#E8E4E0');
     $('#cordHit')?.setAttribute('aria-checked', String(m === 'dark'));
     $('#cordBulb')?.setAttribute('aria-checked', String(m === 'light'));
+    $('#lampAmbient')?.classList.toggle('lit', m === 'light');
     try { localStorage.setItem(MODE_KEY, m); } catch (e) {}
   }
   setMode(getMode(), false);
@@ -385,8 +399,8 @@
       ext: 0, extV: 0, armed: true, grab: -1, grabOff: { x: 0, y: 0 },
       target: null, ptr: null, ptrPrev: null, downAt: 0, downPos: null, moved: 0, usedPtr: false, ptrTimer: 0
     });
-    const ropeCord = makeCord({ isBulb: false, mode: 'dark', btn: hit, N: 26, thresh: .74, tugMul: 48 });
-    const bulbCord = makeCord({ isBulb: true, mode: 'light', btn: bulbBtn, N: 16, thresh: .58, tugMul: 50 });
+    const ropeCord = makeCord({ isBulb: false, mode: 'dark', btn: hit, N: 24, thresh: .68, tugMul: 50 });
+    const bulbCord = makeCord({ isBulb: true, mode: 'light', btn: bulbBtn, N: 22, thresh: .64, tugMul: 50 });
     const cords = bulbBtn ? [ropeCord, bulbCord] : [ropeCord];
 
     function initOrShift(cr, newAx, newL, newMax) {
@@ -415,8 +429,8 @@
         rL = Math.min(210, Math.max(155, vh * .21)); rExt = 62;
         bL = 86; bExt = 40; thick = 3.4; knobS = 1.2; bulbSc = .88; gap = 28; dir = 1;
       } else {
-        rL = 50; rExt = 34;
-        bL = 36; bExt = 28; thick = 2.7; knobS = .82; bulbSc = .62; gap = 23; dir = 1;
+        rL = 74; rExt = 42;
+        bL = 56; bExt = 36; thick = 3.0; knobS = .95; bulbSc = .76; gap = 26; dir = 1;
       }
       W = vw < 1024 ? vw : Math.min(vw, 440);
       H = Math.round(rL + rExt + 165);
@@ -849,6 +863,8 @@
       bulbTarget = getMode() === 'light' ? 1 : 0;
       bulbLit += (bulbTarget - bulbLit) * Math.min(1, dt * 12);
       if (Math.abs(bulbTarget - bulbLit) < .004) bulbLit = bulbTarget;
+      const amb = $('#lampAmbient');
+      if (amb) amb.classList.toggle('lit', bulbLit > 0.08);
       updateDrag(); acc += dt;
       while (acc >= STEP) { step(STEP); acc -= STEP; }
       if (dropped && live && !activeDrag && now - touchedAt > 2500) {
@@ -1182,16 +1198,16 @@
     const mRow = $('.doors__row', sec), mPin = $('.doors__pin', sec), mDots = $('.doors__dots', sec);
     let mIdx = 0, mForce = -1, mShown = -1, mCur = 0, mRaf = 0, mLast = 0, mSettle = 0, swipeLock = 0;
     const mSpan = () => Math.max(1, sec.offsetHeight - innerHeight);
-    const mobY = i => sec.getBoundingClientRect().top + pageYOffset + (Math.min(3, Math.max(0, i)) / 3) * mSpan();
+    const mobY = i => sec.getBoundingClientRect().top + pageYOffset + (Math.min(4, Math.max(0, i)) / 4) * mSpan();
     const mDwell = f => { const i = Math.floor(f), t = f - i, u = Math.min(1, Math.max(0, (t - .2) / .6)); return i + u * u * (3 - 2 * u); };
     const mProgress = () => Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / mSpan()));
-    const mTarget = () => mForce >= 0 ? mForce : mDwell(mProgress() * 3);
+    const mTarget = () => mForce >= 0 ? mForce : mDwell(mProgress() * 4);
 
     function mShow(i) {
       if (i === mShown) return;
       mShown = i; setInfo(i);
       if (MOB.matches) warm(i);
-      mDots?.querySelectorAll('i').forEach((d, k) => d.classList.toggle('on', k === Math.min(3, i)));
+      mDots?.querySelectorAll('i').forEach((d, k) => d.classList.toggle('on', k === Math.min(4, i)));
     }
     function mFrame(now) {
       mRaf = 0;
@@ -1230,19 +1246,19 @@
         if (busy || mForce >= 0 || performance.now() < swipeLock) return;
         const r = sec.getBoundingClientRect();
         if (r.top > 0 || r.bottom < innerHeight) return;
-        const want = mobY(Math.round(mProgress() * 3));
+        const want = mobY(Math.round(mProgress() * 4));
         if (Math.abs(pageYOffset - want) > 2) window.__snapTo(want);
       }, 220);
     }
     addEventListener('scroll', mFromScroll, { passive: true });
     let tx0 = 0, ty0 = 0, i0 = 0;
-    sec.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; i0 = Math.round(mProgress() * 3); }, { passive: true });
+    sec.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; i0 = Math.round(mProgress() * 4); }, { passive: true });
     sec.addEventListener('touchend', e => {
       if (!MOB.matches || busy || mForce >= 0) return;
       const dx = e.changedTouches[0].clientX - tx0, dy = e.changedTouches[0].clientY - ty0;
-      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
-      const to = Math.min(3, Math.max(0, i0 + (dx < 0 ? 1 : -1)));
-      swipeLock = performance.now() + 700;
+      if (Math.abs(dx) < 36 || Math.abs(dx) < Math.abs(dy) * 1.1) return;
+      const to = Math.min(4, Math.max(0, i0 + (dx < 0 ? 1 : -1)));
+      swipeLock = performance.now() + 380;
       window.__snapTo(mobY(to));
     }, { passive: true });
     if (MOB.matches) { mShow(0); dinfo.classList.add('on'); mCur = mTarget(); mApply(); }
@@ -1307,14 +1323,26 @@
       const cx = (gapL + r.right) / 2, cy = r.top + gh * .5;
       holdScroll(true);
       $('#cord')?.classList.add('away'); $('.hdr')?.classList.add('away');
+      sec.classList.add('through');
+
+      if (MOB.matches) {
+        // Mobile zero-lag direct portal: avoid 6.5x container zoom that chokes mobile GPU
+        u.style.transition = 'transform .28s cubic-bezier(.16, 1, .3, 1), opacity .28s ease';
+        u.style.transform = 'scale(1.06)';
+        setTimeout(() => {
+          u.style.transform = '';
+          handoff();
+        }, reduced ? 10 : 260);
+        return;
+      }
+
       const sr = z.getBoundingClientRect();
       z.style.transformOrigin = `${cx - sr.left}px ${cy - sr.top}px`;
-      sec.classList.add('through');
       const tx = innerWidth / 2 - cx, ty = innerHeight / 2 - cy;
       const sEnd = Math.min(6.5, Math.max(innerWidth / gw, innerHeight / gh) * 1.05);
       const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
       const zoomOf = e => Math.exp(Math.log(sEnd) * e);
-      const t0 = performance.now(), D = reduced ? 1 : (MOB.matches ? 420 : 680);
+      const t0 = performance.now(), D = reduced ? 1 : 680;
       let handed = false;
       const step = now => {
         const p = Math.min(1, (now - t0) / D), e = ease(p), sc = zoomOf(e), f = Math.min(1, e * 1.6);
@@ -1353,9 +1381,22 @@
           cancelAnimationFrame(walkRaf);
           doorsState[cur].s.set(0);
           const z = zoomTarget();
+
+          if (MOB.matches) {
+            // Mobile: instant zero-lag reset to native 100% viewport scale
+            z.style.transform = ''; z.style.transformOrigin = '';
+            sec.classList.remove('through', 'lift');
+            doorsState[cur].s.set(0);
+            $('#cord')?.classList.remove('away'); $('.hdr')?.classList.remove('away');
+            busy = false; holdScroll(false);
+            if (afterLeave) { const f = afterLeave; afterLeave = null; setTimeout(f, 40); }
+            units[cur]?.querySelector('.doorway')?.focus?.({ preventScroll: true });
+            return;
+          }
+
           const from = z.style.transform;
           const m = /translate\(([-\d.]+)px, ([-\d.]+)px\) scale\(([\d.]+)\)/.exec(from) || [0, 0, 0, 1];
-          const X = +m[1], Y = +m[2], S = +m[3], t0 = performance.now(), D = reduced ? 1 : (MOB.matches ? 260 : 420);
+          const X = +m[1], Y = +m[2], S = +m[3], t0 = performance.now(), D = reduced ? 1 : 420;
           const ease = x => 1 - Math.pow(1 - x, 3);
           const step = now => {
             const p = Math.min(1, (now - t0) / D), e = ease(p);
@@ -1370,15 +1411,13 @@
               busy = false; holdScroll(false);
               if (afterLeave) { const f = afterLeave; afterLeave = null; setTimeout(f, 40); }
               if (cur === SECRET) {
-                if (MOB.matches) { mForce = -1; mFromScroll(); mApply(); setTimeout(() => reveal(false), reduced ? 0 : 280); }
-                else setTimeout(() => reveal(false), reduced ? 0 : 260);
                 units[SECRET - 1].querySelector('.doorway').focus({ preventScroll: true });
               } else doorsState[cur].way.focus({ preventScroll: true });
             }
           };
           requestAnimationFrame(step);
-        }, reduced ? 0 : 60);
-      }, reduced ? 0 : 120);
+        }, reduced ? 0 : 40);
+      }, reduced ? 0 : 80);
     }
 
     addEventListener('message', e => {
@@ -2002,6 +2041,22 @@
         resumes: ['aiml', 'ds', 'analyst'],
         door: 3,
         chunks: [{ id: 'genai-rag', score: .99 }, { id: 'ml-crop', score: .96 }, { id: 'sql-3nf', score: .94 }]
+      },
+      'ats': {
+        userLabel: 'Scan Job Description (JD) & ATS Keyword Fit',
+        intent: 'ats_keyword_matcher',
+        score: 98,
+        text: 'Dev’s technical profile scores a **98% ATS Match** across enterprise data analytics and GenAI engineering roles. All 3 tailored dossiers are ATS-verified single-page PDFs.',
+        kpis: [['98% Match', 'JD Keyword Score'], ['3 Dossiers', 'ATS-Verified PDFs'], ['Immediate', 'Notice Period']],
+        skills: ['Python / Pandas', 'LangGraph Agents', '99.1% Cross-Val', 'Power BI DAX', 'MySQL 3NF', 'FastAPI'],
+        bullets: [
+          '**Zero Graphical Blockers:** Single-column semantic text structures parsed cleanly by Workday, Greenhouse & Lever.',
+          '**Keyword Density:** Multi-PDF RAG, Vector Search, 5-Fold CV, Star Schemas, CTEs, and 500k row EDA verified.'
+        ],
+        followups: [['rag', 'Multi-PDF RAG Stack'], ['hiring', 'Notice & Hire Dev']],
+        resumes: ['aiml', 'ds', 'analyst'],
+        door: 3,
+        chunks: [{ id: 'genai-rag', score: .98 }, { id: 'ml-crop', score: .95 }, { id: 'profile-hiring', score: .92 }]
       }
     };
 
@@ -2321,7 +2376,48 @@
     $('#cpClose')?.addEventListener('click', closeCopilot);
     $('#cpHoloBtn')?.addEventListener('click', () => { closeCopilot(); setTimeout(() => window.openHolo?.(), 240); });
     modalEl.querySelectorAll('.cp-lens').forEach(b => b.addEventListener('click', () => runPreset(`role:${b.dataset.cpLens}`, false)));
-    modalEl.querySelectorAll('.cp-chip').forEach(b => b.addEventListener('click', () => runPreset(b.dataset.cpQ, false)));
+    modalEl.querySelectorAll('.cp-chip').forEach(b => b.addEventListener('click', () => {
+      if (b.id === 'cpAutopilot') {
+        closeCopilot();
+        setTimeout(() => {
+          window.openDoor?.(3); // Autonomous walk-through into Door 04: GenAI & RAG
+        }, 320);
+        return;
+      }
+      runPreset(b.dataset.cpQ, false);
+    }));
+
+    let isPlayingAudio = false;
+    $('#cpAudioPitch')?.addEventListener('click', () => {
+      const btn = $('#cpAudioPitch');
+      if (!('speechSynthesis' in window)) {
+        if (btn) btn.querySelector('span').textContent = 'No Audio';
+        return;
+      }
+      if (isPlayingAudio) {
+        window.speechSynthesis.cancel();
+        isPlayingAudio = false;
+        btn?.classList.remove('playing');
+        if (btn) btn.querySelector('span').textContent = '▶ 60s Brief';
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const pitchText = "Dev Patel is a GenAI and Data Systems Engineer based in Ahmedabad, graduating with B.Tech CSE from Parul University. During his Data Science Internship at Prodigy InfoTech, Dev audited over 500,000 multi-source records with Outstanding Remarks. His flagship systems include a Multi-PDF Vector RAG suite using Gemini dense embeddings, a 22-class Crop Recommendation classifier with 99.1% 5-fold cross-validation, 10,000+ row Power BI star schemas with custom DAX YoY metrics, and 6-table 3NF MySQL analytical architectures. Dev is available immediately with zero notice period, ready for full-time roles in Ahmedabad, remote, or relocation across India.";
+      const utter = new SpeechSynthesisUtterance(pitchText);
+      utter.rate = 1.04;
+      utter.pitch = 1.0;
+      utter.onstart = () => {
+        isPlayingAudio = true;
+        btn?.classList.add('playing');
+        if (btn) btn.querySelector('span').textContent = '■ Stop';
+      };
+      utter.onend = utter.onerror = () => {
+        isPlayingAudio = false;
+        btn?.classList.remove('playing');
+        if (btn) btn.querySelector('span').textContent = '▶ 60s Brief';
+      };
+      window.speechSynthesis.speak(utter);
+    });
 
     formEl?.addEventListener('submit', async e => {
       e.preventDefault();

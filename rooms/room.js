@@ -48,7 +48,10 @@
   });
 
   const cards = Array.from(document.querySelectorAll('.card'));
-  if ('IntersectionObserver' in window) {
+  if (embedded) {
+    // If running inside portal iframe, immediately show cards without IntersectionObserver delay
+    cards.forEach(c => c.classList.add('on'));
+  } else if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
         if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }

@@ -103,6 +103,7 @@
   </header>
 
   <!-- ============ Connected Rope & Edison Bulb: Pull Bulb -> Light | Pull Rope -> Dark ============ -->
+  <div class="lamp-ambient" id="lampAmbient" aria-hidden="true"></div>
   <div class="cord" id="cord">
     <canvas aria-hidden="true" class="cord__cv"></canvas>
     <button type="button" aria-checked="false" aria-label="Pull Edison bulb for Light mode" title="Pull bulb → Light mode" class="cord__bulb" id="cordBulb" role="switch"></button>
@@ -213,10 +214,10 @@
               <li>Live telemetry simulator</li>
             </ul>
           </div>
-          <p aria-hidden="true" class="doors__dots"><i class="on"></i><i></i><i></i><i></i></p>
+          <p aria-hidden="true" class="doors__dots"><i class="on"></i><i></i><i></i><i></i><i></i></p>
 
           <ul class="doors__row">
-            <li class="unit unit--bi" style="--i:0;--door:#0E5860;--door-hi:#167984;--door-dk:#093E44;--glow:45,212,191;--trim:236,206,138">
+            <li class="unit unit--bi" style="--i:0;--door:#1C1917;--door-hi:#2D2620;--door-dk:#100E0C;--glow:234,179,8;--trim:245,212,120">
               <button type="button" aria-label="Open the Power BI room" class="doorway">
                 <span class="casing"><span class="casing__key" aria-hidden="true">01</span></span>
                 <span class="opening">
@@ -224,7 +225,7 @@
                   <span class="spill"></span>
                   <span class="door">
                     <span class="door__flute"></span>
-                    <span class="plate"><small>01 · BI &amp; DAX</small><b>Power BI</b></span>
+                    <span class="plate"><small>01 · EXECUTIVE BI</small><b>Power BI</b></span>
                     <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
                     <span class="door__shade"></span>
                     <span class="leak"></span>
@@ -234,7 +235,7 @@
               </button>
             </li>
 
-            <li class="unit unit--sql" style="--i:1;--door:#572454;--door-hi:#773672;--door-dk:#3D163B;--glow:216,180,254;--trim:242,214,156">
+            <li class="unit unit--sql" style="--i:1;--door:#0F172A;--door-hi:#1E293B;--door-dk:#080D1A;--glow:56,189,248;--trim:186,230,253">
               <button type="button" aria-label="Open the SQL Systems room" class="doorway">
                 <span class="casing"><span class="casing__key" aria-hidden="true">02</span></span>
                 <span class="opening">
@@ -242,7 +243,7 @@
                   <span class="spill"></span>
                   <span class="door">
                     <span class="door__flute"></span>
-                    <span class="plate"><small>02 · 3NF &amp; CTE</small><b>SQL Systems</b></span>
+                    <span class="plate"><small>02 · 3NF &amp; 500K</small><b>SQL Systems</b></span>
                     <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
                     <span class="door__shade"></span>
                     <span class="leak"></span>
@@ -252,7 +253,7 @@
               </button>
             </li>
 
-            <li class="unit unit--ml" style="--i:2;--door:#1B5A42;--door-hi:#297B5C;--door-dk:#123F2E;--glow:110,231,183;--trim:236,206,138">
+            <li class="unit unit--ml" style="--i:2;--door:#062C22;--door-hi:#0E4B3D;--door-dk:#021B14;--glow:52,211,153;--trim:167,243,208">
               <button type="button" aria-label="Open the ML Engineer room" class="doorway">
                 <span class="casing"><span class="casing__key" aria-hidden="true">03</span></span>
                 <span class="opening">
@@ -260,7 +261,7 @@
                   <span class="spill"></span>
                   <span class="door">
                     <span class="door__flute"></span>
-                    <span class="plate"><small>03 · 5-FOLD CV</small><b>ML Engineer</b></span>
+                    <span class="plate"><small>03 · 99.1% CV</small><b>ML Engineer</b></span>
                     <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
                     <span class="door__shade"></span>
                     <span class="leak"></span>
@@ -270,7 +271,7 @@
               </button>
             </li>
 
-            <li class="unit unit--rag" style="--i:3;--door:#B5461E;--door-hi:#D95B2E;--door-dk:#843011;--glow:251,146,60;--trim:247,224,166">
+            <li class="unit unit--rag" style="--i:3;--door:#1C1033;--door-hi:#2E1A52;--door-dk:#110920;--glow:192,132,252;--trim:233,213,255">
               <button type="button" aria-label="Open the GenAI &amp; RAG room" class="doorway">
                 <span class="casing"><span class="casing__key" aria-hidden="true">04</span></span>
                 <span class="opening">
@@ -288,7 +289,7 @@
               </button>
             </li>
 
-            <li class="unit unit--secret unit--cli" inert style="--i:4;--door:#232A38;--door-hi:#343E52;--door-dk:#151A24;--glow:148,163,184;--trim:214,225,240">
+            <li class="unit unit--secret unit--cli" style="--i:4;--door:#111815;--door-hi:#1A2722;--door-dk:#0A0F0D;--glow:74,222,128;--trim:134,239,172">
               <button type="button" aria-label="Open the Open Source &amp; CLI room" class="doorway">
                 <span class="casing"><span class="casing__key" aria-hidden="true">05</span></span>
                 <span class="opening">
@@ -296,7 +297,7 @@
                   <span class="spill"></span>
                   <span class="door">
                     <span class="door__flute"></span>
-                    <span class="plate"><small>05 · GIT &amp; CLI</small><b>Open Source</b></span>
+                    <span class="plate"><small>05 · TERMINAL &amp; CV</small><b>Lab &amp; CLI</b></span>
                     <span class="handle"><span class="handle__lever"></span><span class="handle__lock"></span></span>
                     <span class="door__shade"></span>
                     <span class="leak"></span>
@@ -742,6 +743,7 @@
           </div>
         </div>
         <div class="cp__head-acts">
+          <button type="button" class="cp__audio-btn" id="cpAudioPitch" aria-label="Play 60-second audio summary"><span>▶ 60s Brief</span><i class="audio-wave"><span></span><span></span><span></span></i></button>
           <button type="button" class="cp__act-btn" id="cpHoloBtn" title="Inspect 3D Gold Ability Card">Ability Card</button>
           <button type="button" class="cp__brief-btn" id="cpCopyBrief" title="Copy formatted hiring summary">Copy Brief</button>
           <button type="button" aria-label="Close AI Concierge" class="cp__x" id="cpClose">×</button>
@@ -755,6 +757,8 @@
           <button type="button" class="cp-lens" role="tab" aria-selected="false" data-cp-lens="analyst">Data Analyst</button>
         </div>
         <div class="cp__prompts" id="cpChips" aria-label="Quick recruiter probes">
+          <button type="button" class="cp-chip cp-chip--tour" id="cpAutopilot">✨ Autopilot Tour</button>
+          <button type="button" class="cp-chip cp-chip--ats" data-cp-q="ats">🎯 ATS Matcher</button>
           <button type="button" class="cp-chip" data-cp-q="summary"><i>01</i> 30s Brief</button>
           <button type="button" class="cp-chip" data-cp-q="rag"><i>02</i> Multi-PDF RAG</button>
           <button type="button" class="cp-chip" data-cp-q="ml"><i>03</i> 99.1% Crop ML</button>
