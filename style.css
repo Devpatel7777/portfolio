@@ -401,17 +401,6 @@ html:not([data-mode="dark"]) .hero__vig { opacity: .2; }
   display: flex; align-items: flex-end; justify-content: center;
   cursor: pointer;
 }
-.fig__bgtype {
-  position: absolute;
-  bottom: 14%;
-  font-size: clamp(7rem, 15vw, 14rem);
-  font-weight: 800;
-  letter-spacing: -.06em;
-  line-height: .82;
-  color: rgba(var(--fg-rgb), .035);
-  user-select: none;
-  pointer-events: none;
-}
 
 .fig img {
   position: relative; z-index: 1;
@@ -763,15 +752,6 @@ html:not([data-mode="dark"]) .cal__back {
 .hero__bar .mid { display: none; }
 @media (min-width: 640px) { .hero__bar .mid { display: inline; } }
 .hero__bar-acts { display: inline-flex; align-items: center; gap: .95rem; }
-.bp-btn {
-  padding: .22rem .58rem; border-radius: 999px;
-  border: 1px solid rgba(var(--fg-rgb), .18);
-  font-family: 'JetBrains Mono', monospace; font-size: .64rem; letter-spacing: .06em;
-  color: rgba(var(--fg-rgb), .68); transition: border-color .2s, color .2s, background .2s;
-}
-.bp-btn:hover, .bp-btn[aria-pressed="true"] {
-  color: var(--foreground); border-color: rgba(125, 211, 252, .65); background: rgba(56, 189, 248, .12);
-}
 .hero__bar .scroll { display: inline-flex; align-items: center; gap: .4rem; }
 .hero__bar .scroll i { font-style: normal; display: inline-block; animation: floatDown 2s ease-in-out infinite; }
 @keyframes floatDown {
@@ -1414,37 +1394,6 @@ html[data-mode="dark"] .sf { --sf-bg: #0F0E0E; box-shadow: inset 0 1px 0 rgba(23
 .sf__bot-acts { display: inline-flex; align-items: center; gap: 1rem; }
 .sf__bot button { color: inherit; }
 .sf__bot button:hover { color: var(--sf-fg); }
-
-/* ---------- Architectural Blueprint Overlay Mode (Press B) ---------- */
-html[data-blueprint="on"] body::after {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 75;
-  background-image:
-    linear-gradient(rgba(56, 189, 248, .085) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, .085) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-html[data-blueprint="on"] .doorway,
-html[data-blueprint="on"] .cal__body,
-html[data-blueprint="on"] .fig {
-  outline: 1px dashed rgba(56, 189, 248, .48);
-  outline-offset: 4px;
-}
-html[data-blueprint="on"] .unit::after {
-  content: "ARCH 1:2.25 · 70° SWING"; position: absolute; left: 50%; bottom: 1.9rem; translate: -50% 0; z-index: 5;
-  padding: .14rem .42rem; border-radius: 4px; pointer-events: none;
-  background: rgba(8, 26, 40, .86); border: 1px solid rgba(56, 189, 248, .48);
-  color: #7dd3fc; font-family: 'JetBrains Mono', monospace; font-size: .56rem; white-space: nowrap;
-}
-.bp-pill {
-  position: fixed; left: max(1.25rem, env(safe-area-inset-left)); bottom: max(4.65rem, calc(env(safe-area-inset-bottom) + 4.65rem)); z-index: 80;
-  display: inline-flex; align-items: center; gap: .42rem;
-  padding: .42rem .82rem; border-radius: 999px;
-  background: rgba(8, 24, 38, .92); color: #bae6fd;
-  border: 1px solid rgba(56, 189, 248, .55);
-  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, .5);
-  font-family: 'JetBrains Mono', monospace; font-size: .64rem; font-weight: 600; letter-spacing: .05em;
-}
-.bp-pill i { width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
 
 /* ---------- Floating Back to Top ---------- */
 .totop {

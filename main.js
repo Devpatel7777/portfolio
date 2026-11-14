@@ -1819,28 +1819,6 @@
     });
   })();
 
-  /* ---------- Architectural Blueprint Grid Toggle (Press B) ---------- */
-  (function initBlueprintMode() {
-    const pill = $('#bpPill');
-    const sync = () => {
-      const on = root.dataset.blueprint === 'on';
-      document.querySelectorAll('[data-blueprint]').forEach(b => b.setAttribute('aria-pressed', String(on)));
-      if (pill) pill.hidden = !on;
-    };
-    const toggle = () => {
-      root.dataset.blueprint = root.dataset.blueprint === 'on' ? 'off' : 'on';
-      sync();
-    };
-    document.querySelectorAll('[data-blueprint]').forEach(b => b.addEventListener('click', toggle));
-    addEventListener('keydown', e => {
-      if (e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'b') return;
-      const t = document.activeElement?.tagName;
-      if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || document.activeElement?.isContentEditable) return;
-      toggle();
-    });
-    sync();
-  })();
-
   /* ---------- Dev-AI Atelier Concierge Studio (Role Lenses, Match Scorecard, RAG Pipeline & Handoff) ---------- */
   (function initRecruiterCopilot() {
     const modalEl = $('#copilot'), panel = $('#cpPanel'), log = $('#cpLog');
